@@ -1,4 +1,4 @@
-import { RuleEngineTypes as Type } from './types.d.ts'
+import { ExtensionSystemTypes as Type } from './types.d.ts'
 import { logColor } from './declare_colors.ts'
 
 /**
