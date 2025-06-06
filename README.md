@@ -1,40 +1,32 @@
 <!-- markdownlint-disable MD041 -->
 <!-- markdownlint-disable MD012 -->
 
-# Typescript Edge TEMPLATE
-
-## Repository Template for Deno
+# Extensions
 
 [![Docker Image Version (tag latest semver)](https://img.shields.io/badge/CI%20build%20passing-green)](https://hub.docker.com/r/lynsei/devcontainer.deno)
 [![GitHub release (latest SemVer)](https://img.shields.io/badge/github-repo-8A2BE2)](https://github.com/orchestras/deno)
+
+This is a reporting & scoring extensions toolkit that comes compiled as a JSR package for use on our Rules Engine software.
+The Rules Engine simply runs pass/fail tests on a variety of dynamic code executions.  The code executions utilize dynamic 
+reporting functions, thus the need for a re-usable package that provides them.
+
+## Reporting methods
+
+This repo houses extensions for external reporting functions that occur as async calls through dynamic deno code evaluations.
+The purpose here is to abstract the reporting methods into a re-usable package which can be used for any dynamic code evals.
+
 
 ### What is this?
 
 > [!IMPORTANT]
 >
-> This is a microservice template for DENO
+> This is a GENERIC library with no proprietary information inside it.  It can be re-used for any purpose and is open source.
 
-This project is a re-usable repository template for Typescript using Deno
-deployment environment for edge-compiled applications. It is ideally suited for
-Github actions and composite workflows because it compiles single-purpose binary
-CLIs that are easily released with Brew using a Tap.
+This is a library for reporting and scoring tools.  They can be used for any purpose as a standard library that gets included.
+The goal is to provide a variety of reporting and scoring functions that occur and can be modified outside the rules engine itself.
 
-This makes distribution very simple, as any action can re-utilize the homebrew
-tap to install the latest release from Github releases.
 
-### Supported Platforms
-
-- darwin
-  - amd64
-  - arm64
-- linux
-  - amd64
-  - arm64
-- windows
-  - amd64
-  - -arm64- (unsupported)
-
-## Features
+## Repo Features
 
 | Feature Name       | Purpose                                                                                             |
 | ------------------ | --------------------------------------------------------------------------------------------------- |
