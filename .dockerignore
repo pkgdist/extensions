@@ -1,0 +1,16 @@
+.envrc
+.envcrypt
+.hogignore
+.gitignore
+.dockerignore
+docker-bake.hcl
+.devcontainer/*
+Makefile
+README.md
+release-notes.md
+lefthook.yml
+Dockerfile.package
+.semver*
+.gitattributes
+scripts/*
+bin/*
