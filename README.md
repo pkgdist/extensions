@@ -6,25 +6,30 @@
 [![Docker Image Version (tag latest semver)](https://img.shields.io/badge/CI%20build%20passing-green)](https://hub.docker.com/r/lynsei/devcontainer.deno)
 [![GitHub release (latest SemVer)](https://img.shields.io/badge/github-repo-8A2BE2)](https://github.com/orchestras/deno)
 
-This is a reporting & scoring extensions toolkit that comes compiled as a JSR package for use on our Rules Engine software.
-The Rules Engine simply runs pass/fail tests on a variety of dynamic code executions.  The code executions utilize dynamic 
-reporting functions, thus the need for a re-usable package that provides them.
+This is a reporting & scoring extensions toolkit that comes compiled as a JSR
+package for use on our Rules Engine software. The Rules Engine simply runs
+pass/fail tests on a variety of dynamic code executions. The code executions
+utilize dynamic reporting functions, thus the need for a re-usable package that
+provides them.
 
 ## Reporting methods
 
-This repo houses extensions for external reporting functions that occur as async calls through dynamic deno code evaluations.
-The purpose here is to abstract the reporting methods into a re-usable package which can be used for any dynamic code evals.
-
+This repo houses extensions for external reporting functions that occur as async
+calls through dynamic deno code evaluations. The purpose here is to abstract the
+reporting methods into a re-usable package which can be used for any dynamic
+code evals.
 
 ### What is this?
 
 > [!IMPORTANT]
 >
-> This is a GENERIC library with no proprietary information inside it.  It can be re-used for any purpose and is open source.
+> This is a GENERIC library with no proprietary information inside it. It can be
+> re-used for any purpose and is open source.
 
-This is a library for reporting and scoring tools.  They can be used for any purpose as a standard library that gets included.
-The goal is to provide a variety of reporting and scoring functions that occur and can be modified outside the rules engine itself.
-
+This is a library for reporting and scoring tools. They can be used for any
+purpose as a standard library that gets included. The goal is to provide a
+variety of reporting and scoring functions that occur and can be modified
+outside the rules engine itself.
 
 ## Repo Features
 
@@ -61,4 +66,4 @@ title: Deno Repo Template
 
 # LICENSE
 
-MIT License.  © Lynsei Asynynivynya 2025.
+MIT License. © Lynsei Asynynivynya 2025.

@@ -2,9 +2,11 @@
 
 ## Generic Comparison & Reporting Functions
 
-This system is a generic comparison and reporting module that plugs into external systems we manage.
-It contains no private data nor proprietary information.  It is specifically for calling error display, report scoring, deep object
-comparison, and other helper functions that are generic and multi-purpose.
+This system is a generic comparison and reporting module that plugs into
+external systems we manage. It contains no private data nor proprietary
+information. It is specifically for calling error display, report scoring, deep
+object comparison, and other helper functions that are generic and
+multi-purpose.
 
 ### Features
 
@@ -16,8 +18,6 @@ comparison, and other helper functions that are generic and multi-purpose.
 6. report - reporting mechanism
 7. webhook - generic webhooks
 8. types.d - types and interfaces
-
-Notes:  This release makes the development experience a lot better moving back and forth between many repos and syncing changes where necessary, updating the template as needed.   It flows a lot better in general.  This is critical because I'm going to be adding a lot of Typescript reflection code for testing and comparing objects, and the config may need updated more frequently in the future so this makes the workflow a lot smoother.
 
 ## Platforms
 
