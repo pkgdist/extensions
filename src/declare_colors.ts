@@ -1,0 +1,51 @@
+import {
+  every,
+  FileStream,
+  JsonFormatter,
+  LevDev,
+  Level,
+  levelToName,
+  Logger,
+  nameToLevel,
+  of,
+  PropertyRedaction,
+  streamInit,
+} from './func_streams.ts'
+import * as colors from 'jsr:@std/fmt/colors'
+
+const ALL_COLORS = new Set(Object.keys(colors))
+
+/**
+ * @function logColor [anonymous]
+ * @description An elegant way to define log colors as a type and reflect them into a function for displaying colorful messages.
+ * @param color [string] The color to use for logging.
+ * @param item [string] The message to log.
+ * @returns void
+ */
+const logColor = (color: keyof typeof colors, item: string) => {
+  const safeColor = ALL_COLORS.has(color) ? color : 'gray'
+  const colorFn = colors[safeColor as keyof typeof colors]
+  if (typeof colorFn === 'function') {
+    console.log(
+      (colorFn as (text: string) => string)(item ? `\n${item}` : '\n'),
+    )
+  } else {
+    console.error(`Invalid color function: ${color}`)
+  }
+}
+
+export {
+  ALL_COLORS,
+  every,
+  FileStream,
+  JsonFormatter,
+  LevDev,
+  Level,
+  levelToName,
+  logColor,
+  Logger,
+  nameToLevel,
+  of,
+  PropertyRedaction,
+  streamInit,
+}

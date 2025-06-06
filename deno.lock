@@ -1,5 +1,5 @@
 {
-  "version": "4",
+  "version": "5",
   "specifiers": {
     "jsr:@cliffy/ansi@1.0.0-rc.7": "1.0.0-rc.7",
     "jsr:@cliffy/command@^1.0.0-rc.7": "1.0.0-rc.7",
@@ -56,6 +56,7 @@
     "jsr:@ts-morph/bootstrap@0.24": "0.24.0",
     "jsr:@ts-morph/common@0.24": "0.24.0",
     "npm:@stdlib/string-replace@~0.2.2": "0.2.2",
+    "npm:@types/node@*": "22.15.15",
     "npm:fs@^0.0.1-security": "0.0.1-security",
     "npm:lefthook@*": "1.11.12",
     "npm:lefthook@^1.11.12": "1.11.12",
@@ -313,7 +314,8 @@
         "long",
         "protobufjs",
         "yargs"
-      ]
+      ],
+      "bin": true
     },
     "@isaacs/cliui@8.0.2": {
       "integrity": "sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==",
@@ -370,22 +372,26 @@
       "integrity": "sha512-t09vSN3MdfsyCHoFcTRCH/iUtG7OJ0CsjzB8cjAmKc/va/kIgeDI/TxsigdncE/4be734m0cvIYwNaV4i2XqAw=="
     },
     "@stdlib/assert-has-own-property@0.2.2": {
-      "integrity": "sha512-m5rV4Z2/iNkwx2vRsNheM6sQZMzc8rQQOo90LieICXovXZy8wA5jNld4kRKjMNcRt/TjrNP7i2Rhh8hruRDlHg=="
+      "integrity": "sha512-m5rV4Z2/iNkwx2vRsNheM6sQZMzc8rQQOo90LieICXovXZy8wA5jNld4kRKjMNcRt/TjrNP7i2Rhh8hruRDlHg==",
+      "os": ["aix", "darwin", "freebsd", "linux", "macos", "openbsd", "sunos", "win32", "windows"]
     },
     "@stdlib/assert-has-symbol-support@0.2.2": {
-      "integrity": "sha512-vCsGGmDZz5dikGgdF26rIL0y0nHvH7qaVf89HLLTybceuZijAqFSJEqcB3Gpl5uaeueLNAWExHi2EkoUVqKHGg=="
+      "integrity": "sha512-vCsGGmDZz5dikGgdF26rIL0y0nHvH7qaVf89HLLTybceuZijAqFSJEqcB3Gpl5uaeueLNAWExHi2EkoUVqKHGg==",
+      "os": ["aix", "darwin", "freebsd", "linux", "macos", "openbsd", "sunos", "win32", "windows"]
     },
     "@stdlib/assert-has-tostringtag-support@0.2.2": {
       "integrity": "sha512-bSHGqku11VH0swPEzO4Y2Dr+lTYEtjSWjamwqCTC8udOiOIOHKoxuU4uaMGKJjVfXG1L+XefLHqzuO5azxdRaA==",
       "dependencies": [
         "@stdlib/assert-has-symbol-support"
-      ]
+      ],
+      "os": ["aix", "darwin", "freebsd", "linux", "macos", "openbsd", "sunos", "win32", "windows"]
     },
     "@stdlib/assert-is-array@0.2.2": {
       "integrity": "sha512-aJyTX2U3JqAGCATgaAX9ygvDHc97GCIKkIhiZm/AZaLoFHPtMA1atQ4bKcefEC8Um9eefryxTHfFPfSr9CoNQQ==",
       "dependencies": [
         "@stdlib/utils-native-class"
-      ]
+      ],
+      "os": ["aix", "darwin", "freebsd", "linux", "macos", "openbsd", "sunos", "win32", "windows"]
     },
     "@stdlib/assert-is-boolean@0.2.2": {
       "integrity": "sha512-3KFLRTYZpX6u95baZ6PubBvjehJs2xBU6+zrenR0jx8KToUYCnJPxqqj7JXRhSD+cOURmcjj9rocVaG9Nz18Pg==",
@@ -394,33 +400,38 @@
         "@stdlib/boolean-ctor",
         "@stdlib/utils-define-nonenumerable-read-only-property",
         "@stdlib/utils-native-class"
-      ]
+      ],
+      "os": ["aix", "darwin", "freebsd", "linux", "macos", "openbsd", "sunos", "win32", "windows"]
     },
     "@stdlib/assert-is-buffer@0.2.2": {
       "integrity": "sha512-4/WMFTEcDYlVbRhxY8Wlqag4S70QCnn6WmQ4wmfiLW92kqQHsLvTNvdt/qqh/SDyDV31R/cpd3QPsVN534dNEA==",
       "dependencies": [
         "@stdlib/assert-is-object-like"
-      ]
+      ],
+      "os": ["aix", "darwin", "freebsd", "linux", "macos", "openbsd", "sunos", "win32", "windows"]
     },
     "@stdlib/assert-is-function@0.2.2": {
       "integrity": "sha512-whY69DUYWljCJ79Cvygp7VzWGOtGTsh3SQhzNuGt+ut6EsOW+8nwiRkyBXYKf/MOF+NRn15pxg8cJEoeRgsPcA==",
       "dependencies": [
         "@stdlib/utils-type-of"
-      ]
+      ],
+      "os": ["aix", "darwin", "freebsd", "linux", "macos", "openbsd", "sunos", "win32", "windows"]
     },
     "@stdlib/assert-is-object-like@0.2.2": {
       "integrity": "sha512-MjQBpHdEebbJwLlxh/BKNH8IEHqY0YlcCMRKOQU0UOlILSJg0vG+GL4fDDqtx9FSXxcTqC+w3keHx8kAKvQhzg==",
       "dependencies": [
         "@stdlib/assert-tools-array-function",
         "@stdlib/utils-define-nonenumerable-read-only-property"
-      ]
+      ],
+      "os": ["aix", "darwin", "freebsd", "linux", "macos", "openbsd", "sunos", "win32", "windows"]
     },
     "@stdlib/assert-is-regexp@0.2.2": {
       "integrity": "sha512-2JtiUtRJxPaVXL7dkWoV3n5jouI65DwYDXsDXg3xo23TXlTNGgU/HhKO4FWC1Yqju7YMZi0hcZSW6E9v8ISqeQ==",
       "dependencies": [
         "@stdlib/assert-has-tostringtag-support",
         "@stdlib/utils-native-class"
-      ]
+      ],
+      "os": ["aix", "darwin", "freebsd", "linux", "macos", "openbsd", "sunos", "win32", "windows"]
     },
     "@stdlib/assert-is-string@0.2.2": {
       "integrity": "sha512-SOkFg4Hq443hkadM4tzcwTHWvTyKP9ULOZ8MSnnqmU0nBX1zLVFLFGY8jnF6Cary0dL0V7QQBCfuxqKFM6u2PQ==",
@@ -428,7 +439,8 @@
         "@stdlib/assert-has-tostringtag-support",
         "@stdlib/utils-define-nonenumerable-read-only-property",
         "@stdlib/utils-native-class"
-      ]
+      ],
+      "os": ["aix", "darwin", "freebsd", "linux", "macos", "openbsd", "sunos", "win32", "windows"]
     },
     "@stdlib/assert-tools-array-function@0.2.2": {
       "integrity": "sha512-FYeT7X9x0C8Nh+MN6IJUDz+7i7yB6mio2/SDlrvyepjyPSU/cfHfwW0GEOnQhxZ+keLZC/YqDD930WjRODwMdA==",
@@ -436,35 +448,43 @@
         "@stdlib/assert-is-array",
         "@stdlib/error-tools-fmtprodmsg",
         "@stdlib/string-format"
-      ]
+      ],
+      "os": ["aix", "darwin", "freebsd", "linux", "macos", "openbsd", "sunos", "win32", "windows"]
     },
     "@stdlib/boolean-ctor@0.2.2": {
-      "integrity": "sha512-qIkHzmfxDvGzQ3XI9R7sZG97QSaWG5TvWVlrvcysOGT1cs6HtQgnf4D//SRzZ52VLm8oICP+6OKtd8Hpm6G7Ww=="
+      "integrity": "sha512-qIkHzmfxDvGzQ3XI9R7sZG97QSaWG5TvWVlrvcysOGT1cs6HtQgnf4D//SRzZ52VLm8oICP+6OKtd8Hpm6G7Ww==",
+      "os": ["aix", "darwin", "freebsd", "linux", "macos", "openbsd", "sunos", "win32", "windows"]
     },
     "@stdlib/error-tools-fmtprodmsg@0.2.2": {
-      "integrity": "sha512-2IliQfTes4WV5odPidZFGD5eYDswZrPXob7oOu95Q69ERqImo8WzSwnG2EDbHPyOyYCewuMfM5Ha6Ggf+u944Q=="
+      "integrity": "sha512-2IliQfTes4WV5odPidZFGD5eYDswZrPXob7oOu95Q69ERqImo8WzSwnG2EDbHPyOyYCewuMfM5Ha6Ggf+u944Q==",
+      "os": ["aix", "darwin", "freebsd", "linux", "macos", "openbsd", "sunos", "win32", "windows"]
     },
     "@stdlib/regexp-function-name@0.2.2": {
       "integrity": "sha512-0z/KRsgHJJ3UQkmBeLH+Nin0hXIeA+Fw1T+mnG2V5CHnTA6FKlpxJxWrvwLEsRX7mR/DNtDp06zGyzMFE/4kig==",
       "dependencies": [
         "@stdlib/utils-define-nonenumerable-read-only-property"
-      ]
+      ],
+      "os": ["aix", "darwin", "freebsd", "linux", "macos", "openbsd", "sunos", "win32", "windows"]
     },
     "@stdlib/string-base-format-interpolate@0.2.2": {
-      "integrity": "sha512-i9nU9rAB2+o/RR66TS9iQ8x+YzeUDL1SGiAo6GY3hP6Umz5Dx9Qp/v8T69gWVsb4a1YSclz5+YeCWaFgwvPjKA=="
+      "integrity": "sha512-i9nU9rAB2+o/RR66TS9iQ8x+YzeUDL1SGiAo6GY3hP6Umz5Dx9Qp/v8T69gWVsb4a1YSclz5+YeCWaFgwvPjKA==",
+      "os": ["aix", "darwin", "freebsd", "linux", "macos", "openbsd", "sunos", "win32", "windows"]
     },
     "@stdlib/string-base-format-tokenize@0.2.2": {
-      "integrity": "sha512-kXq2015i+LJjqth5dN+hYnvJXBSzRm8w0ABWB5tYAsIuQTpQK+mSo2muM8JBEFEnqUHAwpUsu2qNTK/9o8lsJg=="
+      "integrity": "sha512-kXq2015i+LJjqth5dN+hYnvJXBSzRm8w0ABWB5tYAsIuQTpQK+mSo2muM8JBEFEnqUHAwpUsu2qNTK/9o8lsJg==",
+      "os": ["aix", "darwin", "freebsd", "linux", "macos", "openbsd", "sunos", "win32", "windows"]
     },
     "@stdlib/string-base-replace@0.2.2": {
-      "integrity": "sha512-Y4jZwRV4Uertw7AlA/lwaYl1HjTefSriN5+ztRcQQyDYmoVN3gzoVKLJ123HPiggZ89vROfC+sk/6AKvly+0CA=="
+      "integrity": "sha512-Y4jZwRV4Uertw7AlA/lwaYl1HjTefSriN5+ztRcQQyDYmoVN3gzoVKLJ123HPiggZ89vROfC+sk/6AKvly+0CA==",
+      "os": ["aix", "darwin", "freebsd", "linux", "macos", "openbsd", "sunos", "win32", "windows"]
     },
     "@stdlib/string-format@0.2.2": {
       "integrity": "sha512-GUa50uxgMAtoItsxTbMmwkyhIwrCxCrsjzk3nAbLnt/1Kt1EWOWMwsALqZdD6K4V/xSJ4ns6PZur3W6w+vKk9g==",
       "dependencies": [
         "@stdlib/string-base-format-interpolate",
         "@stdlib/string-base-format-tokenize"
-      ]
+      ],
+      "os": ["aix", "darwin", "freebsd", "linux", "macos", "openbsd", "sunos", "win32", "windows"]
     },
     "@stdlib/string-replace@0.2.2": {
       "integrity": "sha512-czNS5IU7sBuHjac45Y3VWUTsUoi82yc8JsMZrOMcjgSrEuDrVmA6sNJg7HC1DuSpdPjm/v9uUk102s1gIfk3Nw==",
@@ -476,10 +496,12 @@
         "@stdlib/string-base-replace",
         "@stdlib/string-format",
         "@stdlib/utils-escape-regexp-string"
-      ]
+      ],
+      "os": ["aix", "darwin", "freebsd", "linux", "macos", "openbsd", "sunos", "win32", "windows"]
     },
     "@stdlib/symbol-ctor@0.2.2": {
-      "integrity": "sha512-XsmiTfHnTb9jSPf2SoK3O0wrNOXMxqzukvDvtzVur1XBKfim9+seaAS4akmV1H3+AroAXQWVtde885e1B6jz1w=="
+      "integrity": "sha512-XsmiTfHnTb9jSPf2SoK3O0wrNOXMxqzukvDvtzVur1XBKfim9+seaAS4akmV1H3+AroAXQWVtde885e1B6jz1w==",
+      "os": ["aix", "darwin", "freebsd", "linux", "macos", "openbsd", "sunos", "win32", "windows"]
     },
     "@stdlib/utils-constructor-name@0.2.2": {
       "integrity": "sha512-TBtO3MKDAf05ij5ajmyBCbpKKt0Lfahn5tu18gqds4PkFltgcw5tVZfSHY5DZ2HySJQ2GMMYjPW2Kbg6yPCSVg==",
@@ -487,20 +509,23 @@
         "@stdlib/assert-is-buffer",
         "@stdlib/regexp-function-name",
         "@stdlib/utils-native-class"
-      ]
+      ],
+      "os": ["aix", "darwin", "freebsd", "linux", "macos", "openbsd", "sunos", "win32", "windows"]
     },
     "@stdlib/utils-define-nonenumerable-read-only-property@0.2.2": {
       "integrity": "sha512-V3mpAesJemLYDKG376CsmoczWPE/4LKsp8xBvUxCt5CLNAx3J/1W39iZQyA5q6nY1RStGinGn1/dYZwa8ig0Uw==",
       "dependencies": [
         "@stdlib/utils-define-property"
-      ]
+      ],
+      "os": ["aix", "darwin", "freebsd", "linux", "macos", "openbsd", "sunos", "win32", "windows"]
     },
     "@stdlib/utils-define-property@0.2.4": {
       "integrity": "sha512-XlMdz7xwuw/sqXc9LbsV8XunCzZXjbZPC+OAdf4t4PBw4ZRwGzlTI6WED+f4PYR5Tp9F1cHgLPyMYCIBfA2zRg==",
       "dependencies": [
         "@stdlib/error-tools-fmtprodmsg",
         "@stdlib/string-format"
-      ]
+      ],
+      "os": ["aix", "darwin", "freebsd", "linux", "macos", "openbsd", "sunos", "win32", "windows"]
     },
     "@stdlib/utils-escape-regexp-string@0.2.2": {
       "integrity": "sha512-areCibzgpmvm6pGKBg+mXkSDJW4NxtS5jcAT7RtunGMdAYhA/I5whISMPaeJkIT2XhjjFkjKBaIs5pF6aPr4fQ==",
@@ -508,7 +533,8 @@
         "@stdlib/assert-is-string",
         "@stdlib/error-tools-fmtprodmsg",
         "@stdlib/string-format"
-      ]
+      ],
+      "os": ["aix", "darwin", "freebsd", "linux", "macos", "openbsd", "sunos", "win32", "windows"]
     },
     "@stdlib/utils-global@0.2.2": {
       "integrity": "sha512-A4E8VFHn+1bpfJ4PA8H2b62CMQpjv2A+H3QDEBrouLFWne0wrx0TNq8vH6VYHxx9ZRxhgWQjfHiSAxtUJobrbQ==",
@@ -516,7 +542,8 @@
         "@stdlib/assert-is-boolean",
         "@stdlib/error-tools-fmtprodmsg",
         "@stdlib/string-format"
-      ]
+      ],
+      "os": ["aix", "darwin", "freebsd", "linux", "macos", "openbsd", "sunos", "win32", "windows"]
     },
     "@stdlib/utils-native-class@0.2.2": {
       "integrity": "sha512-cSn/FozbEpfR/FlJAoceQtZ8yUJFhZ8RFkbEsxW/7+H4o09yln3lBS0HSfUJISYNtpTNN/2/Fup88vmvwspvwA==",
@@ -524,14 +551,16 @@
         "@stdlib/assert-has-own-property",
         "@stdlib/assert-has-tostringtag-support",
         "@stdlib/symbol-ctor"
-      ]
+      ],
+      "os": ["aix", "darwin", "freebsd", "linux", "macos", "openbsd", "sunos", "win32", "windows"]
     },
     "@stdlib/utils-type-of@0.2.2": {
       "integrity": "sha512-RLGFxPNgY9AtVVrFGdKO6Y3pOd/Ov2WA4O2/czZN/AbgYzbPdoF0KkfvHRIney6k+TtvoyYB8YqZXJ4G88f9BQ==",
       "dependencies": [
         "@stdlib/utils-constructor-name",
         "@stdlib/utils-global"
-      ]
+      ],
+      "os": ["aix", "darwin", "freebsd", "linux", "macos", "openbsd", "sunos", "win32", "windows"]
     },
     "@types/docker-modem@3.0.6": {
       "integrity": "sha512-yKpAGEuKRSS8wwx0joknWxsmLha78wNMe9R2S3UNsVOkZded8UqOrV8KoeDXoXsjndxwyF3eIhyClGbO1SEhEg==",
@@ -552,6 +581,12 @@
       "integrity": "sha512-fifKayi175wLyKyc5qUfyENhQ1dCNI1UNjp653d8kuYcPQN5JhX3dGuP/XmvPTg/xRBn1VTLpbmi+H/Mr7tLfQ==",
       "dependencies": [
         "undici-types@5.26.5"
+      ]
+    },
+    "@types/node@22.15.15": {
+      "integrity": "sha512-R5muMcZob3/Jjchn5LcO8jdKwSCbzqmPB6ruBxMcf9kbxtniZHP327s6C37iOfuw8mbKK3cAQa7sEl7afLrQ8A==",
+      "dependencies": [
+        "undici-types@6.21.0"
       ]
     },
     "@types/node@22.5.4": {
@@ -667,6 +702,9 @@
       "dependencies": [
         "bare-events",
         "streamx"
+      ],
+      "optionalPeers": [
+        "bare-events"
       ]
     },
     "base64-js@1.5.1": {
@@ -756,10 +794,12 @@
       "dependencies": [
         "buildcheck",
         "nan"
-      ]
+      ],
+      "scripts": true
     },
     "crc-32@1.2.2": {
-      "integrity": "sha512-ROmzCKrTnOwybPcJApAA6WBWij23HVfGVNKqqrZpuyZOHqK2CwHSvpGuyt/UNNvaIjEd8X5IFGp4Mh+Ie1IHJQ=="
+      "integrity": "sha512-ROmzCKrTnOwybPcJApAA6WBWij23HVfGVNKqqrZpuyZOHqK2CwHSvpGuyt/UNNvaIjEd8X5IFGp4Mh+Ie1IHJQ==",
+      "bin": true
     },
     "crc32-stream@6.0.0": {
       "integrity": "sha512-piICUB6ei4IlTv1+653yq5+KoqfBYmj9bw6LqXoOneTMDXk5nM1qt12mFW1caG3LlJXEKW1Bp0WggEmIfQB34g==",
@@ -867,7 +907,8 @@
         "minipass",
         "package-json-from-dist",
         "path-scurry"
-      ]
+      ],
+      "bin": true
     },
     "graceful-fs@4.2.11": {
       "integrity": "sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ=="
@@ -893,7 +934,9 @@
     "jackspeak@3.4.3": {
       "integrity": "sha512-OGlZQpz2yfahA/Rd1Y8Cd9SIEsqvXkLVoSw/cgwhnhFMDbsQFeZYoJJ7bIZBS9BcamUW96asq/npPWugM+RQBw==",
       "dependencies": [
-        "@isaacs/cliui",
+        "@isaacs/cliui"
+      ],
+      "optionalDependencies": [
         "@pkgjs/parseargs"
       ]
     },
@@ -904,38 +947,58 @@
       ]
     },
     "lefthook-darwin-arm64@1.11.12": {
-      "integrity": "sha512-nB3rZVGoign6lhlbdfT1/knk4fV4Kx7kgbho8oSFcpw/o2qRQpLqmclCWUTtf+Pyj4vCzE7hiee/m+uQtvu19w=="
+      "integrity": "sha512-nB3rZVGoign6lhlbdfT1/knk4fV4Kx7kgbho8oSFcpw/o2qRQpLqmclCWUTtf+Pyj4vCzE7hiee/m+uQtvu19w==",
+      "os": ["darwin"],
+      "cpu": ["arm64"]
     },
     "lefthook-darwin-x64@1.11.12": {
-      "integrity": "sha512-ExNz8ctFRRaVz2wpvjmOtV4GeZcRdsAZwnZbmvlu1fMcJ6WtjAuR6fB0ybtcsc03/zBNrfShiq+VtZLkGv8Oeg=="
+      "integrity": "sha512-ExNz8ctFRRaVz2wpvjmOtV4GeZcRdsAZwnZbmvlu1fMcJ6WtjAuR6fB0ybtcsc03/zBNrfShiq+VtZLkGv8Oeg==",
+      "os": ["darwin"],
+      "cpu": ["x64"]
     },
     "lefthook-freebsd-arm64@1.11.12": {
-      "integrity": "sha512-3Si6YJ8YLEMJ6TGsaBI2ni64XSrJX69N4gX7OKQp85IXeizPUEy7oorYAJCUaw5nMffRbIkzxNTjaMkcn4iwag=="
+      "integrity": "sha512-3Si6YJ8YLEMJ6TGsaBI2ni64XSrJX69N4gX7OKQp85IXeizPUEy7oorYAJCUaw5nMffRbIkzxNTjaMkcn4iwag==",
+      "os": ["freebsd"],
+      "cpu": ["arm64"]
     },
     "lefthook-freebsd-x64@1.11.12": {
-      "integrity": "sha512-J18MNYZKkVdHJ5K54MT8kxJ/W4TBUxD8aCi4e+Oliw8UXAiwaJSTGPkdY5P8aUlVYDknN2w+6I99Dxre6CJRFw=="
+      "integrity": "sha512-J18MNYZKkVdHJ5K54MT8kxJ/W4TBUxD8aCi4e+Oliw8UXAiwaJSTGPkdY5P8aUlVYDknN2w+6I99Dxre6CJRFw==",
+      "os": ["freebsd"],
+      "cpu": ["x64"]
     },
     "lefthook-linux-arm64@1.11.12": {
-      "integrity": "sha512-oIWcj7mcHnFB4tcfz4dsZTnDTXIyF7cjCEqhDQTvqJQLbE1XRfjU0RzQdgSKrzdmXIcUFB+lmcgeRwJnKBEJ8Q=="
+      "integrity": "sha512-oIWcj7mcHnFB4tcfz4dsZTnDTXIyF7cjCEqhDQTvqJQLbE1XRfjU0RzQdgSKrzdmXIcUFB+lmcgeRwJnKBEJ8Q==",
+      "os": ["linux"],
+      "cpu": ["arm64"]
     },
     "lefthook-linux-x64@1.11.12": {
-      "integrity": "sha512-sr9X5dW5dl9Fa3Kdk3x66DPGgCz/rykm+JHIyQGfnuvZnaeqkEaXgNubBaVGBbOimagXgtA5DwXc6D6fzUYALA=="
+      "integrity": "sha512-sr9X5dW5dl9Fa3Kdk3x66DPGgCz/rykm+JHIyQGfnuvZnaeqkEaXgNubBaVGBbOimagXgtA5DwXc6D6fzUYALA==",
+      "os": ["linux"],
+      "cpu": ["x64"]
     },
     "lefthook-openbsd-arm64@1.11.12": {
-      "integrity": "sha512-4TuX8c/lwky1DSNIY6knIFlMIHQZrVBxh6O5vSTjOAjKv5YmIkNgeUlwcBD+SMru9tQBj7MvOpJSkVkaLK5hhQ=="
+      "integrity": "sha512-4TuX8c/lwky1DSNIY6knIFlMIHQZrVBxh6O5vSTjOAjKv5YmIkNgeUlwcBD+SMru9tQBj7MvOpJSkVkaLK5hhQ==",
+      "os": ["openbsd"],
+      "cpu": ["arm64"]
     },
     "lefthook-openbsd-x64@1.11.12": {
-      "integrity": "sha512-Y/rPvyXtsIH+pxACfLHwxqc2Ahk+aExj8Izce3zXp75Wki5DH+6TXm5tWj5CgIuefL7CMqNFsOZCjEe1+SyM+w=="
+      "integrity": "sha512-Y/rPvyXtsIH+pxACfLHwxqc2Ahk+aExj8Izce3zXp75Wki5DH+6TXm5tWj5CgIuefL7CMqNFsOZCjEe1+SyM+w==",
+      "os": ["openbsd"],
+      "cpu": ["x64"]
     },
     "lefthook-windows-arm64@1.11.12": {
-      "integrity": "sha512-OJaElGktzsMrkmIpXBqwlc+eZx5kwxx+tJFByTXiW/rb8ttBwj0ueVyfo3lw/PqqlbMy73qc9Uj3CHYkaKsDKw=="
+      "integrity": "sha512-OJaElGktzsMrkmIpXBqwlc+eZx5kwxx+tJFByTXiW/rb8ttBwj0ueVyfo3lw/PqqlbMy73qc9Uj3CHYkaKsDKw==",
+      "os": ["win32"],
+      "cpu": ["arm64"]
     },
     "lefthook-windows-x64@1.11.12": {
-      "integrity": "sha512-ZhKsisibIcaG+rv9i7UJUgnuejI6mfaS5T3FreqsWt5vAsEIvLLNmZUA15MHPr99n+L4La1YQ2jTqie1kH57dA=="
+      "integrity": "sha512-ZhKsisibIcaG+rv9i7UJUgnuejI6mfaS5T3FreqsWt5vAsEIvLLNmZUA15MHPr99n+L4La1YQ2jTqie1kH57dA==",
+      "os": ["win32"],
+      "cpu": ["x64"]
     },
     "lefthook@1.11.12": {
       "integrity": "sha512-refh8mlcNtwJfmHDH+2mN1KTIVjp1EHlrjzOjfH/hJ4vFQByH2+1KfFDlJLX9V16VESwUNyOGkEZ9cJEF6zNgg==",
-      "dependencies": [
+      "optionalDependencies": [
         "lefthook-darwin-arm64",
         "lefthook-darwin-x64",
         "lefthook-freebsd-arm64",
@@ -946,7 +1009,9 @@
         "lefthook-openbsd-x64",
         "lefthook-windows-arm64",
         "lefthook-windows-x64"
-      ]
+      ],
+      "scripts": true,
+      "bin": true
     },
     "lodash.camelcase@4.3.0": {
       "integrity": "sha512-TwuEnCnxbc3rAvhf/LbG7tJUDzhqXyFnv3dtzLOPgCG/hODL7WFnsbwktkD7yUV0RrreP/l1PALq/YSg6VvjlA=="
@@ -979,7 +1044,8 @@
       "integrity": "sha512-gKLcREMhtuZRwRAfqP3RFW+TK4JqApVBtOIftVgjuABpAtpxhPGaDcfvbhNvD0B8iD1oUr/txX35NjcaY6Ns/A=="
     },
     "mkdirp@1.0.4": {
-      "integrity": "sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw=="
+      "integrity": "sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==",
+      "bin": true
     },
     "ms@2.1.3": {
       "integrity": "sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA=="
@@ -1053,7 +1119,8 @@
         "@protobufjs/utf8",
         "@types/node@22.5.4",
         "long"
-      ]
+      ],
+      "scripts": true
     },
     "pump@3.0.2": {
       "integrity": "sha512-tUPXtzlGM8FE3P0ZL6DVs/3P58k9nk8/jZeQCurTJylQA8qFYzHFfhBJkuqyE0FifOsQ0uKWekiZ5g8wtr28cw==",
@@ -1148,17 +1215,22 @@
       "integrity": "sha512-r1X4KsBGedJqo7h8F5c4Ybpcr5RjyP+aWIG007uBPRjmdQWfEiVLzSK71Zji1B9sKxwaCvD8y8cwSkYrlLiRRg==",
       "dependencies": [
         "asn1",
-        "bcrypt-pbkdf",
+        "bcrypt-pbkdf"
+      ],
+      "optionalDependencies": [
         "cpu-features",
         "nan"
-      ]
+      ],
+      "scripts": true
     },
     "streamx@2.22.0": {
       "integrity": "sha512-sLh1evHOzBy/iWRiR6d1zRcLao4gGZr3C1kzNz4fopCOKJb6xD9ub8Mpi9Mr1R6id5o43S+d93fI48UC5uM9aw==",
       "dependencies": [
-        "bare-events",
         "fast-fifo",
         "text-decoder"
+      ],
+      "optionalDependencies": [
+        "bare-events"
       ]
     },
     "string-width@4.2.3": {
@@ -1213,10 +1285,12 @@
     "tar-fs@3.0.8": {
       "integrity": "sha512-ZoROL70jptorGAlgAYiLoBLItEKw/fUxg9BSYK/dF/GAGYFJOJJJMvjPAKDJraCXFwadD456FCuvLWgfhMsPwg==",
       "dependencies": [
-        "bare-fs",
-        "bare-path",
         "pump",
         "tar-stream@3.1.7"
+      ],
+      "optionalDependencies": [
+        "bare-fs",
+        "bare-path"
       ]
     },
     "tar-stream@2.2.0": {
@@ -1275,6 +1349,9 @@
     "undici-types@6.19.8": {
       "integrity": "sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw=="
     },
+    "undici-types@6.21.0": {
+      "integrity": "sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ=="
+    },
     "undici@5.29.0": {
       "integrity": "sha512-raqeBD6NQK4SkWhQzeYKd1KmIG6dllBOTt55Rmkt4HtI9mwdWtJljnrXjAFUBLTSN67HWrOIZ3EPF4kjUw80Bg==",
       "dependencies": [
@@ -1288,13 +1365,15 @@
       "integrity": "sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw=="
     },
     "uuid@10.0.0": {
-      "integrity": "sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ=="
+      "integrity": "sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ==",
+      "bin": true
     },
     "which@2.0.2": {
       "integrity": "sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==",
       "dependencies": [
         "isexe"
-      ]
+      ],
+      "bin": true
     },
     "wrap-ansi@7.0.0": {
       "integrity": "sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==",
@@ -1319,7 +1398,8 @@
       "integrity": "sha512-0pfFzegeDWJHJIAmTLRP2DwHjdF5s7jo9tuztdQxAhINCdvS+3nGINqPd00AphqJR/0LhANUS6/+7SCb98YOfA=="
     },
     "yaml@2.7.1": {
-      "integrity": "sha512-10ULxpnOCQXxJvBgxsn9ptjq6uviG/htZKk9veJGhlqn3w/DxQ631zFF+nlQXLwmImeS5amR2dl2U8sg6U9jsQ=="
+      "integrity": "sha512-10ULxpnOCQXxJvBgxsn9ptjq6uviG/htZKk9veJGhlqn3w/DxQ631zFF+nlQXLwmImeS5amR2dl2U8sg6U9jsQ==",
+      "bin": true
     },
     "yargs-parser@21.1.1": {
       "integrity": "sha512-tVpsJW7DdjecAiFpbIB1e3qxIQsE6NoPc5/eTdrbbIC4h0LVsWhnoa3g+m2HclBIujHzsxZ4VJVA+GUuc2/LBw=="

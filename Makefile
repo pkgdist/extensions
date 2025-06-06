@@ -1,3 +1,5 @@
+# Orchestras Makefile v1.3:  DO NOT EDIT
+# This Makefile is auto-generated and upgraded from a template
 $(shell touch .envcrypt)
 ifeq ($(origin CODESPACES),undefined)
   include .envcrypt
@@ -20,30 +22,68 @@ help: ## Print all commands and help info
 
 .DEFAULT_GOAL := help
 
+cleanup-logs: ## Cleanup old log files
+	rm -f ./debug.log*
+	rm -f ./report.log*
+	rm -f ./test.log*
+
+test:  ## Run Deno Unit and Integration Tests
+	deno test --allow-all --coverage=coverage --trace-leaks
+
+run:  ## Run the program with no log-level set
+	deno run --allow-all --no-check --env-file=.envcrypt ./src/mod.ts
+
+trace:  ## Run Program in Debug Mode
+	deno run --allow-all --no-check --env-file=.envcrypt --log-level trace ./src/mod.ts
+
+debug:  ## Run Program in Debug Mode
+	deno run --allow-all --no-check --env-file=.envcrypt --log-level debug ./src/mod.ts
+
+check: ## Run deno check
+	deno check ./src/mod.ts
+
+compile-darwin:  ## Compile for Darwin x86 and ARM64
+	mkdir -p ./bin/aarch64-apple-darwin ./bin/x86_64-apple-darwin
+	deno compile --include ./src/fixtures --allow-all --no-check --target aarch64-apple-darwin --output ./bin/aarch64-apple-darwin/$(PROGRAM) ./src/mod.ts
+	deno compile --include ./src/fixtures --allow-all --no-check --target x86_64-apple-darwin --output ./bin/x86_64-apple-darwin/$(PROGRAM) ./src/mod.ts
+
+compile-linux:  ## Compile Linux x86 and ARM64
+	mkdir -p ./bin/aarch64-unknown-linux-gnu ./bin/x86_64-unknown-linux-gnu
+	deno compile --include ./src/fixtures --allow-all --no-check --target aarch64-unknown-linux-gnu --output ./bin/aarch64-unknown-linux-gnu/$(PROGRAM) ./src/mod.ts
+	deno compile --include ./src/fixtures --allow-all --no-check --target x86_64-unknown-linux-gnu --output ./bin/x86_64-unknown-linux-gnu/$(PROGRAM) ./src/mod.ts
+
+compile-windows:  ## Compile Windows x86 and ARM64
+	mkdir -p ./bin/aarch64-pc-windows-msvc ./bin/x86_64-pc-windows-msvc
+	deno compile --include ./src/fixtures --allow-all --no-check --target aarch64-pc-windows-msvc --output ./bin/aarch64-pc-windows-msvc/$(PROGRAM).exe ./src/mod.ts
+	deno compile --include ./src/fixtures --allow-all --no-check --target x86_64-pc-windows-msvc --output ./bin/x86_64-pc-windows-msvc/$(PROGRAM).exe ./src/mod.ts
+
+install-binary:  ## Install the local binary to ~/.local/bin
+	cp ./bin/aarch64-apple-darwin/$(PROGRAM) ~/.local/bin/$(PROGRAM)
+	chmod +x ~/.local/bin/$(PROGRAM)
+
 install-tools: ## Install SAST Toolchain
 	chmod +x ./scripts/*
 	./scripts/scan.sh
 
 upgrade: ## Pull fresh files from the template repo
-	HOMEDIR=$(make echo-TEMPLATE)
-	chmod +x ./scripts/*
-	./scripts/copy_template.sh
+		@echo "Upgrading from template: $(TEMPLATE)"
+		chmod +x ./scripts/*
+		./scripts/copy_template.sh
 
 set-version:  ## Set version in deno.json and version.ts from latest git tag
 	./scripts/version.sh
 
 install: ## Install all required SAST tools, hooks, and repository tags, multi-copies, and tags then test & run the code
-	chmod +x ./scripts/*
-	make install-tools
-	make set-version
 	make actions
+	chmod +x ./scripts/*
+	make setup-fish
+	make setup-brew
+	make install-tools
 	make tag
 	make check
-	make build
-	make run
 	make bump-build
-	cat .semver*
-	@echo "-- Everything is up to date --"
+	make set-version
+	make set-paths
 
 set-paths:  ## Copy the default template paths for Orchestras into this project
 	chmod +x ./scripts/*
@@ -73,16 +113,6 @@ devcontainer:  ## Make devcontainers, matrix-docker buildx bake build
 
 client: ## Initialize and run thin client
 	./scripts/bin.sh
-
-run:  ## Run deno code
-	deno run --allow-all ./src/mod.ts
-
-check: ## Run deno check
-	deno check ./src/mod.ts
-
-build:  ## Make local build
-	deno compile --allow-all --no-check --target aarch64-apple-darwin --output ./bin/aarch64-apple-darwin/mod ./src/mod.ts
-	deno compile --allow-all --no-check --target x86_64-apple-darwin --output ./bin/x86_64-apple-darwin/mod ./src/mod.ts
 
 tag:  ## Get the latest git tag
 	git describe --tags `git rev-list --tags --max-count=1`
