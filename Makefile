@@ -31,13 +31,13 @@ test:  ## Run Deno Unit and Integration Tests
 	deno test --allow-all --coverage=coverage --trace-leaks
 
 run:  ## Run the program with no log-level set
-	deno run --allow-all --no-check --env-file=.envcrypt ./src/mod.ts
+	deno run --allow-all --no-check ./src/mod.ts
 
 trace:  ## Run Program in Debug Mode
-	deno run --allow-all --no-check --env-file=.envcrypt --log-level trace ./src/mod.ts
+	deno run --allow-all --no-check --log-level trace ./src/mod.ts
 
 debug:  ## Run Program in Debug Mode
-	deno run --allow-all --no-check --env-file=.envcrypt --log-level debug ./src/mod.ts
+	deno run --allow-all --no-check --log-level debug ./src/mod.ts
 
 check: ## Run deno check
 	deno check ./src/mod.ts

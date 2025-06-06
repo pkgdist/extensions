@@ -13,6 +13,7 @@
     "jsr:@deno/dnt@~0.42.1": "0.42.1",
     "jsr:@deno/graph@0.86": "0.86.9",
     "jsr:@olli/async-lock@^1.0.1": "1.0.2",
+    "jsr:@onjara/optic@*": "2.0.3",
     "jsr:@std/assert@1.0.13": "1.0.13",
     "jsr:@std/assert@^1.0.13": "1.0.13",
     "jsr:@std/assert@~1.0.6": "1.0.13",
@@ -22,10 +23,13 @@
     "jsr:@std/data-structures@^1.0.8": "1.0.8",
     "jsr:@std/encoding@^1.0.10": "1.0.10",
     "jsr:@std/encoding@~1.0.5": "1.0.10",
+    "jsr:@std/fmt@*": "1.0.8",
     "jsr:@std/fmt@1": "1.0.8",
+    "jsr:@std/fmt@^1.0.2": "1.0.8",
     "jsr:@std/fmt@^1.0.3": "1.0.8",
     "jsr:@std/fmt@^1.0.8": "1.0.8",
     "jsr:@std/fmt@~1.0.2": "1.0.8",
+    "jsr:@std/fs@*": "1.0.18",
     "jsr:@std/fs@1": "1.0.18",
     "jsr:@std/fs@^1.0.17": "1.0.18",
     "jsr:@std/fs@^1.0.18": "1.0.18",
@@ -35,6 +39,7 @@
     "jsr:@std/io@0.225": "0.225.2",
     "jsr:@std/io@~0.224.9": "0.224.9",
     "jsr:@std/path@1": "1.1.0",
+    "jsr:@std/path@^1.0.6": "1.1.0",
     "jsr:@std/path@^1.0.8": "1.1.0",
     "jsr:@std/path@^1.1.0": "1.1.0",
     "jsr:@std/path@~1.0.6": "1.0.9",
@@ -129,6 +134,12 @@
     },
     "@olli/async-lock@1.0.2": {
       "integrity": "433a9ccbafe6a7e5f6832d7ef174d1ee5fa333e884169c678c2a64d5f708a8e2"
+    },
+    "@onjara/optic@2.0.3": {
+      "integrity": "b4bf8cae0820a3c3f362ba4d78939237fcfa23e3087bbd3f9fd3c883839820f1",
+      "dependencies": [
+        "jsr:@std/fmt@^1.0.2"
+      ]
     },
     "@std/assert@1.0.13": {
       "integrity": "ae0d31e41919b12c656c742b22522c32fb26ed0cba32975cb0de2a273cb68b29",
@@ -1326,6 +1337,28 @@
         "readable-stream@4.7.0"
       ]
     }
+  },
+  "remote": {
+    "https://deno.land/x/optic@2.0.1/deps.ts": "c22cffb96bb68df436c85b13dec9cbb289dc9f26dba617f60cd7885bf484a460",
+    "https://deno.land/x/optic@2.0.1/formatters/color.ts": "82341d51851a86c188e9a808b274ded9b4e60ae9f2291eba4975a22e4b8b5cb6",
+    "https://deno.land/x/optic@2.0.1/formatters/simpleDateTimeFormatter.ts": "1f144db2509035f3e7816e515faae73b383021390cbc64cec1af2d0390e55043",
+    "https://deno.land/x/optic@2.0.1/formatters/tokenReplacer.ts": "f9122fc54720a759bbc3a4977f42f71a898b556c3cb1a27b42884433cab10a67",
+    "https://deno.land/x/optic@2.0.1/logger/levels.ts": "b12e73583c37103d0775037cda26181b28675ac1bb9bfa022ca1d7a536d84594",
+    "https://deno.land/x/optic@2.0.1/logger/meta.ts": "afe150ecd14eb13097ad313a005fedf0b279060fb71f5815efe1b835186ed11d",
+    "https://deno.land/x/optic@2.0.1/streams/baseStream.ts": "26073937d86a945e1f2643f70286ee33f92fc655f39007891320974088d4ca59",
+    "https://deno.land/x/optic@2.0.1/streams/fileStream/_rotationStrategyCommon.ts": "b42ad816d8a9c96d4e94e78f7e7bd9461cdeafb4e649da3601becb008a5d7cbc",
+    "https://deno.land/x/optic@2.0.1/streams/fileStream/dateTimeRotationStrategy.ts": "722b3c5a6bb2ec0f02f05510f428b20b20be61a772ee222c4da2598241066e8e",
+    "https://deno.land/x/optic@2.0.1/streams/fileStream/deps.ts": "403f3ff8edfc77280b9496acd5bd882d0979bd3a2d0b4db55be3fb229df933aa",
+    "https://deno.land/x/optic@2.0.1/streams/fileStream/fileSizeRotationStrategy.ts": "8676d0806697d1f2201eb9e9d373121e4c8bff31a84bf3c1717f3c723c2dc7e5",
+    "https://deno.land/x/optic@2.0.1/streams/fileStream/fileStream.ts": "d05a74a002c4cb4df8c6e97b2f8bf992c99a74d6aeff540d9c91329f228d039e",
+    "https://deno.land/x/optic@2.0.1/streams/fileStream/retentionPolicy.ts": "9f681fe2e4d20f4c4f0d78f553024bb50a4c8ef8f46b1e9710092e051a392877",
+    "https://deno.land/x/optic@2.0.1/streams/fileStream/rotationStrategy.ts": "8aea8dcd8d13188160edb91e3db661e4382f70de068499c582ff94426ea26661",
+    "https://deno.land/x/optic@2.0.1/streams/fileStream/syncBufferedFileWriter.ts": "3d9abda052abb59f9ae030bf310966eb76650e81bfd864fdd89589277e6b24d2",
+    "https://deno.land/x/optic@2.0.1/streams/fileStream/types.ts": "147cb0bed8f3521363fcb609df021ed3b9b10c994c66e673812a835de5706d84",
+    "https://deno.land/x/optic@2.0.1/types.ts": "cce53ccfee779d6c2d4d7f350724f9c03ad15baddaa171ca8d2370044e5fa617",
+    "https://deno.land/x/optic@2.0.1/utils/asString.ts": "a9505cfc74361dfa0c375afb0ff49881c1231f1e224809e2ec99034768df34d1",
+    "https://deno.land/x/optic@2.0.1/utils/stringify.ts": "c55decb12217125343d7dd2796e0a0f64297401839957367c96d74b9faca3f27",
+    "https://deno.land/x/optic@2.0.1/utils/timeInterval.ts": "3a1f9917b17066f718b888a6fa47657f5df8ea47ee880cd1b6c6e4612e73f91e"
   },
   "workspace": {
     "dependencies": [

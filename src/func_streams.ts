@@ -1,4 +1,3 @@
-import { ExtensionSystemTypes as Type } from "./types.d.ts";
 import {
   Level,
   levelToName,
@@ -13,7 +12,17 @@ import {
   of,
 } from "https://deno.land/x/optic@2.0.1/streams/fileStream/fileStream.ts";
 
-const logLevelDefault: Type.LogLev = Type.LevDev.Info;
+  // log level generics
+  export enum LevDev {
+    Trace = "Trace",
+    Debug = "Debug",
+    Info = "Info",
+    Warn = "Warn",
+    Error = "Error",
+    Critical = "Critical",
+  }
+import type { ExtensionSystemTypes as Types } from "./types.d.ts"; // Only works if it's exported as a type, not a namespace
+const logLevelDefault: Types.LogLev = LevDev.Info;
 const logToDebug = await streamInit("debug.log", logLevelDefault);
 const logToReport = await streamInit("report.log", logLevelDefault);
 
