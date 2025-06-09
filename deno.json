@@ -12,7 +12,10 @@
   },
   "publish": {
     "include": [
-      "src/**/**/*.ts"
+      "src/**/**/*.ts",
+      "src/**/**/*.md",
+      "README.md"
+
     ]
   },
   "lint": {
