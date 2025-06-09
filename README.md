@@ -35,35 +35,25 @@ outside the rules engine itself.
 
 | Feature Name       | Purpose                                                                                             |
 | ------------------ | --------------------------------------------------------------------------------------------------- |
-| LeftHook           | Github pre-commit and push hooks, this is used in place of Husky because it is 12-factor compliant. |
-| Make               | Type 'make' for a list of commands                                                                  |
-| Makefile Tasks     | In place of a complete build system, we use a series of scripts listed in 'scripts' dir             |
-| Deno Version 2.0.2 | See .dvmrc file                                                                                     |
-| Source code        | `src/` directory contains built in auto-versioning                                                  |
-| Release Notes      | release-notes.md file                                                                               |
-| Trufflehog         | See .hogignore file for configuration                                                               |
-| Prettier           | See .prettierignore for config                                                                      |
-| Checkov            | Run `make setup-brew` and `make install-tools`                                                      |
-| Installation       | Run `make install` to create baseline tags and versions and setup the repo for the first time       |
-| Upgrade Templates  | Run `make upgrade` to refresh repository templates automatically                                    |
-
-# Logical Diagram
-
-<!-- github feature -->
-<!-- markdownlint-disable MD046 -->
-
-```mermaid
----
-title: Deno Repo Template
----
-  graph TD;
-      deno_code-->release_auto_tag;
-      release_auto_tag-->release_build_deno;
-      release_build_deno-->release_publish_artifact;
-```
+| $report            | Reporting function for scoring tabulation in streams, and notification functions in teams           |
+| $const             | Declared generic constants for local system paths and GITHUB API                                    |
+| $deep              | DeepEq Comparison functions for objects.  These are used for YML object comparisons                 |
+| $error             | Generic error functions for including messages with specific colors                                 |
+| $streams           | Optic FileStream object for logging colored error messages to evaluated streams                     |
+| $token             | Token acquisition for GitHub CLI default, or .envcrypt files, or environment vars                   |
+| $webhook           | Webhook secret acquisition IFFE functions                                                           |
+| generatedVersion   | Software Version Information                                                                        |
+| Type               | Types used throughout this software                                                                 |
 
 &nbsp;
 
 # LICENSE
 
-MIT License. © Lynsei Asynynivynya 2025.
+MIT License. © Lynsei Asynynivynya 2025. 
+
+> [!IMPORTANT]
+> Credits Below:
+
+Portions of this software are used from:
+
+> @onjara/optic portions are used due to a bug with mod.ts file not being available in FileStreams 2.0.3
