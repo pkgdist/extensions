@@ -81,9 +81,9 @@ export async function report(
     if (typeof result === "string") {
       $error.logErrorWithType(
         `Notification Sent`,
-        { result: result },
+        '',
         "green",
-        "        ╰─── WARN	┈ TEAMS	┈ ",
+        "                                ╰─── SUCCESS [TEAMS]	┈ ",
       )
       const response: Type.NotificationSuccessResponseInterface = {
         teams1: {
@@ -99,9 +99,9 @@ export async function report(
     } else {
       $error.logErrorWithType(
         `Notification failed for ${data.id}`,
-        { result: result },
+        '',
         "red",
-        "        ╰─── WARN	┈ TEAMS	┈ ",
+        "                                ╰─── WARN [TEAMS] ┈ ",
       );
       const failureResponse: Type.NotificationFailureResponseInterface = {
         none: {
