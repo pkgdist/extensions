@@ -3,28 +3,48 @@ import { logColor } from "./declare_const.ts";
 import { logToReport } from "./func_streams.ts";
 import { TEAMS_WEB_HOOK } from "./func_webhook.ts";
 import * as $error from "./func_error.ts";
+
 /**
  * @function notifyTeams
  * @description Sends a notification to Microsoft Teams using a TEAMS_WEB_HOOK URL.
  * @param message - The message to be sent to Teams Hook URL via POST.
  * @returns responseText - The response object text from the TEAMS_WEB_HOOK promise response
  */
-export async function notifyTeams(message: string): Promise<string | boolean> {
+export async function notifyTeams(message: string) {
   $error.logErrorWithType(
-    `Attempted Teams Webhook Message: ${message}`,
-    "",
-    "brightBlue",
-    "                ╰─── ",
-  );
-  if (typeof TEAMS_WEB_HOOK === "string" && TEAMS_WEB_HOOK.length > 0) {
+      `Attempted Teams Webhook Message: ${message}`,
+      '', 'brightBlue', '                ╰─── '
+  )
+  if (typeof TEAMS_WEB_HOOK === 'string' && TEAMS_WEB_HOOK.length > 0) {
     const response = await fetch(TEAMS_WEB_HOOK, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text: message }),
-    });
-    const responseText = await response.text();
-    return responseText;
-  } else return false;
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(
+        {
+          type: 'message',
+          attachments: [
+            {
+              contentType: 'application/vnd.microsoft.card.adaptive',
+              contentUrl: null,
+              content: {
+                "$schema":"http://adaptivecards.io/schemas/adaptive-card.json",
+                "type":"AdaptiveCard",
+                "version":"1.2",
+                "body":[
+                    {
+                    "type": "TextBlock",
+                    "text": message
+                    }
+                ]
+              }
+            }
+          ]
+        }
+      ),
+    })
+    const responseText = await response.text()
+    return responseText
+  } else return false
 }
 
 /**
