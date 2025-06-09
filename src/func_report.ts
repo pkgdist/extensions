@@ -29,12 +29,16 @@ export async function notifyTeams(message: string): Promise<string | boolean> {
               content: {
                 "$schema":"http://adaptivecards.io/schemas/adaptive-card.json",
                 "type":"AdaptiveCard",
-                "version":"1.2",
-                "body":[
-                    {
+                "version": "1.2",
+                "msteams": {
+                  "width": "Full"
+                },
+                "body": [
+                  {
                     "type": "TextBlock",
-                    "text": message
-                    }
+                    "text": message,
+                    "size": "Large"
+                  }
                 ]
               }
             }
