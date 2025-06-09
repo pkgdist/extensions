@@ -51,6 +51,7 @@ async function isMakeAvailable(): Promise<boolean> {
 async function getTokenFromEnvcrypt(): Promise<string | null> {
   const envcrypt = await exists(".envcrypt", { isFile: true });
   if (!envcrypt) {
+    // envcrypt not fouund
     $error.logErrorWithType(
       `'.envcrypt' file not found.`,
       "",
@@ -59,13 +60,8 @@ async function getTokenFromEnvcrypt(): Promise<string | null> {
     );
     return null;
   }
-
-  $error.logErrorWithType(
-    `Production Token not found.  Using environment encrypted variable from .envcrypt`,
-    "",
-    "gray",
-    `        ╰───[INFO]  `,
-  );
+  // envcrypt found
+  const envcrypt_exists = true;
 
   const process = new Deno.Command(`make`, {
     args: ["echo-PROD_TOKEN"],
@@ -101,42 +97,21 @@ async function getToken(): Promise<string | undefined | null> {
   const is_ci: unknown = Deno.env.get("CI");
   const prod_token = Deno.env.get("PROD_TOKEN");
 
+  // there was more complex error reporting here but since these are executed with each test it got annoying
   if (is_ci) {
-    $error.logErrorWithType(
-      `CI Mode is active.  PROD_TOKEN environment variable required!`,
-      "",
-      "blue",
-      `  ───[NOTICE] `,
-    );
-
+    const ci_mode = true;
     return prod_token == undefined || prod_token == "" ? null : prod_token;
   } else {
-    $error.logErrorWithType(
-      `CI Mode is disabled.  PROD_TOKEN is required if not found in .envcrypt file.`,
-      "",
-      "blue",
-      `  ───[NOTICE] `,
-    );
+    const ci_mode = false;
   }
 
   if (!prod_token || prod_token.length == 0) {
     try {
       if (!await isMakeAvailable()) {
-        $error.logErrorWithType(
-          `'make' is not available on this system.`,
-          "",
-          "red",
-          `      ╰───[WARN] `,
-        );
+        const make_unavailable = true;
         return null;
       }
-
-      $error.logErrorWithType(
-        `'make' is available on this system.`,
-        "",
-        "cyan",
-        `      ╰───[WARN] `,
-      );
+      const make_unavailable = false;
 
       const token = await getTokenFromEnvcrypt();
       return token;
@@ -151,12 +126,7 @@ async function getToken(): Promise<string | undefined | null> {
       return null;
     }
   } else {
-    $error.logErrorWithType(
-      `prod_token was defined in an environment variable.`,
-      "",
-      "green",
-      `      ╰───[WARN] `,
-    );
+    const env_var_set = true;
     return prod_token;
   }
 }
