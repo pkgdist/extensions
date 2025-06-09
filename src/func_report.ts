@@ -9,7 +9,7 @@ import * as $error from "./func_error.ts";
  * @param message - The message to be sent to Teams Hook URL via POST.
  * @returns responseText - The response object text from the TEAMS_WEB_HOOK promise response
  */
-export async function notifyTeams(message: string) {
+export async function notifyTeams(message: string): Promise<string | boolean> {
   $error.logErrorWithType(
     `Attempted Teams Webhook Message: ${message}`,
     "",

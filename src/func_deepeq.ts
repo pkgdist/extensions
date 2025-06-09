@@ -17,8 +17,8 @@ export function deepCompareExclude(
   obj1: Record<string, any>,
   obj2: Record<string, any>,
   pathsToCompare: string[],
-) {
-  function getValueByPath(obj: Record<string, any>, path: string): any {
+): string {
+  function getValueByPath(obj: Record<string, any>, path: string): Record<string, any> | undefined {
     return path.split(".").reduce(
       (acc, key) => (acc ? acc[key] : undefined),
       obj,

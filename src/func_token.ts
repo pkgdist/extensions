@@ -1,4 +1,4 @@
-import { exists } from "jsr:@std/fs/exists";
+import { exists } from "jsr:@std/fs@1.0.18/exists";
 import * as $error from "./func_error.ts";
 
 /**

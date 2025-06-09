@@ -1,0 +1,27 @@
+{
+  "name": "@onjara/optic",
+  "version": "2.0.3",
+  "exports": {
+    ".": "./mod.ts",
+    "./logger": "./logger/logger.ts",
+    "./baseStream": "./streams/baseStream.ts",
+    "./consoleStream": "./streams/consoleStream.ts",
+    "./fileStream": "./streams/fileStream/fileStream.ts",
+    "./profileMeasure": "./logger/profileMeasure.ts",
+    "./transformers": "./transformers/mod.ts",
+    "./filters": "./filters/mod.ts",
+    "./formatters": "./formatters/mod.ts"
+  },
+  "publish": {
+    "exclude": [
+      ".github",
+      "project_utils"
+    ]
+  },
+  "tasks": {
+    "pre-commit": "./project_utils/pre-commit.sh"
+  },
+  "imports": {
+    "@onjara/optic": "jsr:@onjara/optic@^2.0.3"
+  }
+}

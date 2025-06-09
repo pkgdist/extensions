@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-set -u
-set -e
 do_build () { 
     cp $DENO_CERT .devcontainer/trusted_certs.pem
     pushd . 

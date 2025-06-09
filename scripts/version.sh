@@ -1,6 +1,4 @@
    #!/usr/bin/env bash
-   set -u
-   set -e
 
     tmp=$(mktemp)
     version=$(git tag -l | tail -n 1)

@@ -45,6 +45,15 @@ export namespace ExtensionSystemTypes {
    * @type GENERIC
    * @description This module contains generic types used throughout the application.
    */
+  // log level generics
+  export enum LevDev {
+    Trace = "Trace",
+    Debug = "Debug",
+    Info = "Info",
+    Warn = "Warn",
+    Error = "Error",
+    Critical = "Critical",
+  }
 
   /**
    * Level extension Generic Type Record for LogLevel enumeration

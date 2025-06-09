@@ -3,28 +3,32 @@ import {
   levelToName,
   Logger,
   nameToLevel,
-} from "jsr:@onjara/optic/logger";
-import { JsonFormatter } from "jsr:@onjara/optic/formatters";
-import { PropertyRedaction } from "jsr:@onjara/optic/transformers";
+} from "jsr:@onjara/optic@2.0.3/logger";
+import { JsonFormatter } from "jsr:@onjara/optic@2.0.3/formatters";
+import { PropertyRedaction } from "jsr:@onjara/optic@2.0.3/transformers";
 import {
   every,
   FileStream,
-  of,
-} from "https://deno.land/x/optic@2.0.1/streams/fileStream/fileStream.ts";
+  of
+} from "./optic/streams/fileStream/fileStream.ts";
 
-  // log level generics
-  export enum LevDev {
-    Trace = "Trace",
-    Debug = "Debug",
-    Info = "Info",
-    Warn = "Warn",
-    Error = "Error",
-    Critical = "Critical",
-  }
+//  note, this file is missing in 2.0.3 so jsr imports do not work
+//  from "https://deno.land/x/optic@2.0.1/streams/fileStream/fileStream.ts";
+
+// log level generics
+export enum LevDev {
+  Trace = "Trace",
+  Debug = "Debug",
+  Info = "Info",
+  Warn = "Warn",
+  Error = "Error",
+  Critical = "Critical",
+}
+
 import type { ExtensionSystemTypes as Types } from "./types.d.ts"; // Only works if it's exported as a type, not a namespace
 const logLevelDefault: Types.LogLev = LevDev.Info;
-const logToDebug = await streamInit("debug.log", logLevelDefault);
-const logToReport = await streamInit("report.log", logLevelDefault);
+const logToDebug: Logger = await streamInit("debug.log", logLevelDefault);
+const logToReport: Logger = await streamInit("report.log", logLevelDefault);
 
 /**
  * @function streamInit
@@ -36,7 +40,7 @@ const logToReport = await streamInit("report.log", logLevelDefault);
 async function streamInit(
   name: string,
   specifiedLevel: string = "Trace",
-) {
+): Promise<Logger> {
   const stream = new FileStream(name)
     .withMinLogLevel(nameToLevel(specifiedLevel))
     .withFormat(

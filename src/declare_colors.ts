@@ -10,9 +10,9 @@ import {
   PropertyRedaction,
   streamInit,
 } from "./func_streams.ts";
-import * as colors from "jsr:@std/fmt/colors";
+import * as colors from "jsr:@std/fmt@1.0.8/colors";
 
-const ALL_COLORS = new Set(Object.keys(colors));
+const ALL_COLORS: Set<keyof typeof colors> = new Set(Object.keys(colors) as Array<keyof typeof colors>);
 
 /**
  * @function logColor [anonymous]
@@ -21,7 +21,7 @@ const ALL_COLORS = new Set(Object.keys(colors));
  * @param item [string] The message to log.
  * @returns void
  */
-const logColor = (color: keyof typeof colors, item: string) => {
+const logColor = (color: keyof typeof colors, item: string): void => {
   const safeColor = ALL_COLORS.has(color) ? color : "gray";
   const colorFn = colors[safeColor as keyof typeof colors];
   if (typeof colorFn === "function") {
