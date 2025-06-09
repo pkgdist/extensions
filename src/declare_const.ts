@@ -14,30 +14,14 @@ const GITHUB_TOKEN: Type.AnonSecret = await (async () => {
   if (!envProdToken || envProdToken.length === 0) {
     const ghAuthToken = await $token.checkForCliToken();
     if (ghAuthToken) {
-      const logMsg = "PROD_TOKEN is set from GH CLI.";
-      logErrorWithType(
-        logMsg,
-        { debug: true, msg: "token missing." },
-        "gray",
-        "            ╰───[INFO]",
-      );
+      // PROD_TOKEN is set from GH CLI
+
       return ghAuthToken;
     } else {
-      const logMsg = "PROD_TOKEN is not set.";
-      const infoMsg =
-        `Please set PROD_TOKEN [env variable] or login to the GH CLI.`;
-      logErrorWithType(
-        logMsg,
-        { debug: true, msg: "token missing." },
-        "bgRed",
-        "  ╰───[ERROR]",
-      );
-      logErrorWithType(
-        infoMsg,
-        { debug: true, msg: "token missing." },
-        "gray",
-        "    ╰───[INFO]",
-      );
+
+      const infoMsg = `Please set PROD_TOKEN [env variable] or login to the GH CLI.`;
+      logToDebug.info(infoMsg);
+
       exit(1);
     }
   } else {

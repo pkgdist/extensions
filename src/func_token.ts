@@ -75,12 +75,7 @@ async function getTokenFromEnvcrypt(): Promise<string | null> {
   const outputText: string = new TextDecoder().decode(stdout).trim();
   const errorText = new TextDecoder().decode(stderr).trim();
 
-  $error.logErrorWithType(
-    `.envcrypt was found, attempting to retrieve token: 'make echo-PROD_TOKEN' `,
-    "",
-    "gray",
-    `          ╰───[CHECK] `,
-  );
+  // .envcrypt was found and attempting to use it
 
   await child.stdin.close();
 
