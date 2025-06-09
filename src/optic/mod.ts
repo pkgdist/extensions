@@ -6,16 +6,16 @@ export {
   levelToName,
   longestLevelName,
   nameToLevel,
-} from "./logger/levels.ts";
-export { Logger } from "./logger/logger.ts";
+} from './logger/levels.ts'
+export { Logger } from './logger/logger.ts'
 
 // Streams
 // (see also https://github.com/onjara/optic/blob/master/streams/fileStream/mod.ts)
-export { BaseStream } from "./streams/baseStream.ts";
-export { ConsoleStream } from "./streams/consoleStream.ts";
+export { BaseStream } from './streams/baseStream.ts'
+export { ConsoleStream } from './streams/consoleStream.ts'
 
 // Types
-export { TimeUnit, ValidationError } from "./types.ts";
+export { TimeUnit, ValidationError } from './types.ts'
 
 export type {
   DateTimeFormatter,
@@ -32,7 +32,7 @@ export type {
   Stream,
   Transformer,
   TransformerFn,
-} from "./types.ts";
+} from './types.ts'
 
 // Profiling
 export {
@@ -42,7 +42,7 @@ export {
   PROCESS_START,
   to,
   UnknownProfileMark,
-} from "./logger/profileMeasure.ts";
+} from './logger/profileMeasure.ts'
 
 // For transformer implementations, see:
 // https://github.com/onjara/optic/blob/master/transformers/propertyRedaction.ts

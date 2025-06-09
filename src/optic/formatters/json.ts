@@ -5,12 +5,12 @@ import {
   type Formatter,
   type LogRecord,
   ValidationError,
-} from "../types.ts";
-import { levelToName } from "../logger/levels.ts";
-import { SimpleDateTimeFormatter } from "./simpleDateTimeFormatter.ts";
-import { stringify } from "../utils/stringify.ts";
+} from '../types.ts'
+import { levelToName } from '../logger/levels.ts'
+import { SimpleDateTimeFormatter } from './simpleDateTimeFormatter.ts'
+import { stringify } from '../utils/stringify.ts'
 
-type Fields = "msg" | "metadata" | "level" | "dateTime" | "logger";
+type Fields = 'msg' | 'metadata' | 'level' | 'dateTime' | 'logger'
 
 /**
  * A formatter to output the log record in json format.  You may optionally
@@ -18,36 +18,36 @@ type Fields = "msg" | "metadata" | "level" | "dateTime" | "logger";
  * as well.
  */
 export class JsonFormatter implements Formatter<string> {
-  #fields: Fields[] = ["dateTime", "level", "msg", "metadata"];
-  #indent: number | string = 0;
-  #dateTimeFormatter: DateTimeFormatter | undefined = undefined;
+  #fields: Fields[] = ['dateTime', 'level', 'msg', 'metadata']
+  #indent: number | string = 0
+  #dateTimeFormatter: DateTimeFormatter | undefined = undefined
 
   format(logRecord: LogRecord): string {
-    let output = "{";
+    let output = '{'
     for (const field of this.#fields) {
-      if (field === "dateTime") {
+      if (field === 'dateTime') {
         output += '"dateTime":' +
           stringify(
             logRecord.dateTime,
             { dateTimeFormatter: this.#dateTimeFormatter },
-          ) + ",";
-      } else if (field === "level") {
+          ) + ','
+      } else if (field === 'level') {
         output += '"level":' + stringify(levelToName(logRecord.level)) +
-          ",";
-      } else if (field === "msg") {
-        output += '"msg":' + stringify(logRecord.msg) + ",";
-      } else if (field === "metadata") {
-        output += '"metadata":' + stringify(logRecord.metadata) + ",";
-      } else if (field === "logger") {
-        output += `"logger":"${logRecord.logger}",`;
+          ','
+      } else if (field === 'msg') {
+        output += '"msg":' + stringify(logRecord.msg) + ','
+      } else if (field === 'metadata') {
+        output += '"metadata":' + stringify(logRecord.metadata) + ','
+      } else if (field === 'logger') {
+        output += `"logger":"${logRecord.logger}",`
       }
     }
-    output = output.slice(0, -1) + "}";
+    output = output.slice(0, -1) + '}'
     if (this.#indent !== 0) {
       output = stringify(JSON.parse(output), { indent: this.#indent })
-        .replaceAll("\\n", "\n");
+        .replaceAll('\\n', '\n')
     }
-    return output;
+    return output
   }
 
   /**
@@ -56,10 +56,10 @@ export class JsonFormatter implements Formatter<string> {
    */
   withFields(fields: Fields[]): this {
     if (fields.length === 0) {
-      throw new ValidationError("JsonFormatter fields cannot be empty");
+      throw new ValidationError('JsonFormatter fields cannot be empty')
     }
-    this.#fields = fields;
-    return this;
+    this.#fields = fields
+    return this
   }
 
   /**
@@ -68,19 +68,19 @@ export class JsonFormatter implements Formatter<string> {
    * is a string, this string is used instead of space(s) to indent.
    */
   withPrettyPrintIndentation(indent: number | string): this {
-    this.#indent = indent;
-    return this;
+    this.#indent = indent
+    return this
   }
 
   withDateTimeFormat(
     dtf: DateTimeFormatterFn | DateTimeFormatter | string,
   ): this {
-    if (typeof dtf === "string") {
-      dtf = new SimpleDateTimeFormatter(dtf);
-    } else if (typeof dtf === "function") {
-      dtf = { formatDateTime: dtf };
+    if (typeof dtf === 'string') {
+      dtf = new SimpleDateTimeFormatter(dtf)
+    } else if (typeof dtf === 'function') {
+      dtf = { formatDateTime: dtf }
     }
-    this.#dateTimeFormatter = dtf;
-    return this;
+    this.#dateTimeFormatter = dtf
+    return this
   }
 }

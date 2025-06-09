@@ -1,5 +1,5 @@
 // Copyright 2020-2024 the optic authors. All rights reserved. MIT license.
-import type { Level } from "./logger/levels.ts";
+import type { Level } from './logger/levels.ts'
 
 /**
  * Defines the flow of log records to a logging endpoint
@@ -12,7 +12,7 @@ export interface Stream {
    *
    * @param meta Contains metadata from the Logger instance
    */
-  logHeader?(meta: LogMeta): void;
+  logHeader?(meta: LogMeta): void
 
   /**
    * Optional.  If implemented, this method is called after the stream is
@@ -21,20 +21,20 @@ export interface Stream {
    *
    * @param meta Contains metadata from the Logger instance
    */
-  logFooter?(meta: LogMeta): void;
+  logFooter?(meta: LogMeta): void
 
   /**
    * Optional.  Provides the opportunity for the stream to perform any required
    * setup.  This function is called when the stream is added to the logger.
    */
-  setup?(): void;
+  setup?(): void
 
   /**
    * Optional.  Provides the opportunity for the stream to perform any required
    * teardown.  This function is called when the stream is removed from the
    * logger or the module exits
    */
-  destroy?(): void;
+  destroy?(): void
 
   /**
    * Handle the populated log record.  This will, for example, format the log
@@ -42,7 +42,7 @@ export interface Stream {
    *
    * @param logRecord
    */
-  handle(logRecord: LogRecord): boolean;
+  handle(logRecord: LogRecord): boolean
 }
 
 /**
@@ -53,19 +53,19 @@ export interface Formatter<T> {
    * Given a logRecord instance, format it for output to the stream endpoint
    * @param logRecord
    */
-  format(logRecord: LogRecord): T;
+  format(logRecord: LogRecord): T
 }
 
 /**
  * Define a function type for formatting Date to string
  */
-export type DateTimeFormatterFn = (dateTime: Date) => string;
+export type DateTimeFormatterFn = (dateTime: Date) => string
 
 /**
  * Interface for defining a class to format a Date to string
  */
 export interface DateTimeFormatter {
-  formatDateTime: DateTimeFormatterFn;
+  formatDateTime: DateTimeFormatterFn
 }
 
 /**
@@ -73,54 +73,54 @@ export interface DateTimeFormatter {
  * way with the log process. Monitors may take additional actions based on
  * conditions met by the log record, collect stats, etc..
  */
-export type MonitorFn = (logRecord: LogRecord) => void;
+export type MonitorFn = (logRecord: LogRecord) => void
 
 /**
  * Interface for defining a class to monitor log records and optionally take
  * action
  */
 export interface Monitor {
-  check: MonitorFn;
+  check: MonitorFn
 
   /**
    * Optional.  Provides the opportunity for the monitor to perform any required
    * setup.  This function is called when the monitor is added to the logger.
    */
-  setup?(): void;
+  setup?(): void
 
   /**
    * Optional.  Provides the opportunity for the monitor to perform any required
    * teardown.  This function is called when the monitor is removed from the
    * logger or the module exits
    */
-  destroy?(): void;
+  destroy?(): void
 }
 
 /**
  * Define a filter which takes in a stream and logRecord and returns true
  * if the log record should be filtered out for this stream.
  */
-export type FilterFn = (stream: Stream, logRecord: LogRecord) => boolean;
+export type FilterFn = (stream: Stream, logRecord: LogRecord) => boolean
 
 /**
  * Interface for defining a class to model logic for filtering out log
  * records from streams
  */
 export interface Filter {
-  shouldFilterOut: FilterFn;
+  shouldFilterOut: FilterFn
 
   /**
    * Optional.  Provides the opportunity for the filter to perform any required
    * setup.  This function is called when the filter is added to the logger.
    */
-  setup?(): void;
+  setup?(): void
 
   /**
    * Optional.  Provides the opportunity for the filter to perform any required
    * teardown.  This function is called when the filter is removed from the
    * logger or the module exits
    */
-  destroy?(): void;
+  destroy?(): void
 }
 
 /**
@@ -128,26 +128,26 @@ export interface Filter {
  * be either the same log record, untouched, or a new log record based on the
  * original, but with one or more change present.
  */
-export type TransformerFn = (stream: Stream, logRecord: LogRecord) => LogRecord;
+export type TransformerFn = (stream: Stream, logRecord: LogRecord) => LogRecord
 
 /**
  * Interface for defining a class to model logic for transforming log records
  */
 export interface Transformer {
-  transform: TransformerFn;
+  transform: TransformerFn
 
   /**
    * Optional.  Provides the opportunity for the transformer to perform any required
    * setup.  This function is called when the transformer is added to the logger.
    */
-  setup?(): void;
+  setup?(): void
 
   /**
    * Optional.  Provides the opportunity for the transformer to perform any required
    * teardown.  This function is called when the transformer is removed from the
    * logger or the module exits
    */
-  destroy?(): void;
+  destroy?(): void
 }
 
 /**
@@ -155,15 +155,15 @@ export interface Transformer {
  */
 export interface LogRecord {
   /** The primary log message */
-  readonly msg: unknown;
+  readonly msg: unknown
   /** Supporting metadata for the log event */
-  readonly metadata: unknown[];
+  readonly metadata: unknown[]
   /** The date and time the log event was initiated */
-  readonly dateTime: Date;
+  readonly dateTime: Date
   /** The log level for this event */
-  readonly level: Level;
+  readonly level: Level
   /** The name of the logger which created the log record */
-  readonly logger: string;
+  readonly logger: string
 }
 
 /**
@@ -172,60 +172,60 @@ export interface LogRecord {
  */
 export interface LogMeta {
   /** The hostname the process is running on */
-  readonly hostname: string;
+  readonly hostname: string
   /** The date and time the logging session started */
-  readonly sessionStarted: Date;
+  readonly sessionStarted: Date
   /** The date and time the logging session ended (or undefined if still active)*/
-  sessionEnded?: Date;
+  sessionEnded?: Date
   /** The min log level of the logger */
-  minLogLevel: Level;
+  minLogLevel: Level
   /** Where the min log level was sourced from */
-  minLogLevelFrom: string;
+  minLogLevelFrom: string
   /** The name of the logger for this metadata */
-  readonly logger: string;
+  readonly logger: string
   /** Count of handled (Map of Level -> count), filtered, transformed and duplicated records by stream */
   readonly streamStats: Map<
     Stream,
     {
-      handled: Map<number, number>;
-      filtered: number;
-      transformed: number;
-      duplicated: number;
+      handled: Map<number, number>
+      filtered: number
+      transformed: number
+      duplicated: number
     }
-  >;
+  >
   /** Number of filters added.  (Removed filters do not subtract from this total) */
-  readonly filters: number;
+  readonly filters: number
   /** Number of transformers added.  (Removed transformers do not subtract from this total) */
-  readonly transformers: number;
+  readonly transformers: number
   /** Number of monitors added.  (Removed monitors do not subtract from this total) */
-  readonly monitors: number;
+  readonly monitors: number
 }
 
 export class ValidationError extends Error {
   constructor(message: string) {
-    super(message);
-    this.name = "ValidationError";
+    super(message)
+    this.name = 'ValidationError'
   }
 }
 
 export class IllegalStateError extends Error {
   constructor(message: string) {
-    super(message);
-    this.name = "IllegalStateError";
+    super(message)
+    this.name = 'IllegalStateError'
   }
 }
 
 export class TimeUnit {
-  public static MILLISECONDS: TimeUnit = new TimeUnit(1);
-  public static SECONDS: TimeUnit = new TimeUnit(1000);
-  public static MINUTES: TimeUnit = new TimeUnit(60000);
-  public static HOURS: TimeUnit = new TimeUnit(3600000);
-  public static DAYS: TimeUnit = new TimeUnit(86400000);
+  public static MILLISECONDS: TimeUnit = new TimeUnit(1)
+  public static SECONDS: TimeUnit = new TimeUnit(1000)
+  public static MINUTES: TimeUnit = new TimeUnit(60000)
+  public static HOURS: TimeUnit = new TimeUnit(3600000)
+  public static DAYS: TimeUnit = new TimeUnit(86400000)
 
   private constructor(private milliseconds: number) {}
 
   getMilliseconds(): number {
-    return this.milliseconds;
+    return this.milliseconds
   }
 }
 
@@ -234,16 +234,16 @@ export class TimeUnit {
  */
 export interface ProfileMark {
   /** Number of ms since process start */
-  timestamp: number;
+  timestamp: number
   /** Details on current memory usage */
-  memory?: Deno.MemoryUsage;
+  memory?: Deno.MemoryUsage
   /** Label for the profile mark */
-  label?: string;
+  label?: string
 }
 
 /**
  * Formatter of output of profiling information to logs
  */
 export interface MeasureFormatter<T> {
-  format(startMark: ProfileMark, endMark: ProfileMark, label?: string): T;
+  format(startMark: ProfileMark, endMark: ProfileMark, label?: string): T
 }

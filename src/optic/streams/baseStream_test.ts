@@ -5,43 +5,43 @@ import {
   assertMatch,
   assertStringIncludes,
   test,
-} from "../test_deps.ts";
-import { BaseStream } from "./baseStream.ts";
-import type { Formatter, LogMeta, LogRecord, Stream } from "../types.ts";
-import { Level } from "../logger/levels.ts";
-import { Logger } from "../mod.ts";
-import { LogMetaImpl } from "../logger/meta.ts";
-import { stringify } from "../utils/stringify.ts";
-import { asString } from "../utils/asString.ts";
-import { PropertyRedaction } from "../transformers/propertyRedaction.ts";
+} from '../test_deps.ts'
+import { BaseStream } from './baseStream.ts'
+import type { Formatter, LogMeta, LogRecord, Stream } from '../types.ts'
+import { Level } from '../logger/levels.ts'
+import { Logger } from '../mod.ts'
+import { LogMetaImpl } from '../logger/meta.ts'
+import { stringify } from '../utils/stringify.ts'
+import { asString } from '../utils/asString.ts'
+import { PropertyRedaction } from '../transformers/propertyRedaction.ts'
 
 class MsgPassThrough implements Formatter<string> {
   format(lr: LogRecord): string {
-    const msg = lr.msg === "format" ? "formatted!" : stringify(lr.msg);
-    return msg + " " + stringify(lr.metadata);
+    const msg = lr.msg === 'format' ? 'formatted!' : stringify(lr.msg)
+    return msg + ' ' + stringify(lr.metadata)
   }
 }
 
 class AlternativeMsgPassThrough implements Formatter<string> {
   format(_lr: LogRecord): string {
-    return "world";
+    return 'world'
   }
 }
 
 class TestStream extends BaseStream {
-  logs: unknown[] = [];
+  logs: unknown[] = []
 
   constructor() {
-    super(new MsgPassThrough());
+    super(new MsgPassThrough())
   }
 
   log(msg: unknown): void {
-    this.logs.push(msg);
+    this.logs.push(msg)
   }
 }
 
 function newBaseStream(): TestStream {
-  return new TestStream();
+  return new TestStream()
 }
 
 function logRec(msg: string, level: Level): LogRecord {
@@ -50,108 +50,108 @@ function logRec(msg: string, level: Level): LogRecord {
     dateTime: new Date(),
     metadata: [],
     level: level,
-    logger: "default",
-  };
+    logger: 'default',
+  }
 }
 
 function logMeta(): LogMeta {
-  const meta = new LogMetaImpl();
-  meta.minLogLevel = Level.Info;
-  return meta;
+  const meta = new LogMetaImpl()
+  meta.minLogLevel = Level.Info
+  return meta
 }
 
 test({
-  name: "Default base stream will log debug messages",
+  name: 'Default base stream will log debug messages',
   fn() {
-    const baseStream = newBaseStream();
-    baseStream.handle(logRec("hello", Level.Debug));
-    assertEquals(baseStream.logs[0], `"hello" []`);
+    const baseStream = newBaseStream()
+    baseStream.handle(logRec('hello', Level.Debug))
+    assertEquals(baseStream.logs[0], `"hello" []`)
   },
-});
+})
 
 test({
   name: "Stream with higher min log level than log record won't log message",
   fn() {
-    const baseStream = newBaseStream().withMinLogLevel(Level.Info);
-    baseStream.handle(logRec("hello", Level.Debug));
-    assertEquals(baseStream.logs.length, 0);
+    const baseStream = newBaseStream().withMinLogLevel(Level.Info)
+    baseStream.handle(logRec('hello', Level.Debug))
+    assertEquals(baseStream.logs.length, 0)
   },
-});
+})
 
 test({
-  name: "Log messages are formatted by the default format function",
+  name: 'Log messages are formatted by the default format function',
   fn() {
-    const baseStream = newBaseStream();
-    baseStream.handle(logRec("format", Level.Debug));
-    assertEquals(baseStream.logs[0], `formatted! []`);
+    const baseStream = newBaseStream()
+    baseStream.handle(logRec('format', Level.Debug))
+    assertEquals(baseStream.logs[0], `formatted! []`)
   },
-});
+})
 
 test({
-  name: "Alternative formatter function is used if set",
+  name: 'Alternative formatter function is used if set',
   fn() {
     const baseStream = newBaseStream().withFormat(
       new AlternativeMsgPassThrough(),
-    );
-    baseStream.handle(logRec("hello", Level.Debug));
-    assertEquals(baseStream.logs[0], "world");
+    )
+    baseStream.handle(logRec('hello', Level.Debug))
+    assertEquals(baseStream.logs[0], 'world')
   },
-});
+})
 
 test({
-  name: "Output header defaults to true, but can be turned off",
+  name: 'Output header defaults to true, but can be turned off',
   fn() {
-    const baseStream = newBaseStream(); // default = true
-    assert(baseStream.outputHeader);
-    baseStream.withLogHeader(false); // explicitly set to false
-    assert(!baseStream.outputHeader);
-    baseStream.withLogHeader(); // implicitly set to true
-    assert(baseStream.outputHeader);
-    baseStream.withLogHeader(false); // explicitly set to false
-    assert(!baseStream.outputHeader);
-    baseStream.withLogHeader(true); // explicitly set to true
-    assert(baseStream.outputHeader);
+    const baseStream = newBaseStream() // default = true
+    assert(baseStream.outputHeader)
+    baseStream.withLogHeader(false) // explicitly set to false
+    assert(!baseStream.outputHeader)
+    baseStream.withLogHeader() // implicitly set to true
+    assert(baseStream.outputHeader)
+    baseStream.withLogHeader(false) // explicitly set to false
+    assert(!baseStream.outputHeader)
+    baseStream.withLogHeader(true) // explicitly set to true
+    assert(baseStream.outputHeader)
   },
-});
+})
 
 test({
-  name: "Output footer defaults to true, but can be turned off",
+  name: 'Output footer defaults to true, but can be turned off',
   fn() {
-    const baseStream = newBaseStream(); // default = true
-    assert(baseStream.outputFooter);
-    baseStream.withLogFooter(false); // explicitly set to false
-    assert(!baseStream.outputFooter);
-    baseStream.withLogFooter(); // implicitly set to true
-    assert(baseStream.outputFooter);
-    baseStream.withLogFooter(false); // explicitly set to false
-    assert(!baseStream.outputFooter);
-    baseStream.withLogFooter(true); // explicitly set to true
-    assert(baseStream.outputFooter);
+    const baseStream = newBaseStream() // default = true
+    assert(baseStream.outputFooter)
+    baseStream.withLogFooter(false) // explicitly set to false
+    assert(!baseStream.outputFooter)
+    baseStream.withLogFooter() // implicitly set to true
+    assert(baseStream.outputFooter)
+    baseStream.withLogFooter(false) // explicitly set to false
+    assert(!baseStream.outputFooter)
+    baseStream.withLogFooter(true) // explicitly set to true
+    assert(baseStream.outputFooter)
   },
-});
+})
 
 test({
-  name: "Log header outputs header info",
+  name: 'Log header outputs header info',
   fn() {
-    const baseStream = newBaseStream().withLogHeader(false);
-    baseStream.logHeader(logMeta());
-    assertEquals(baseStream.logs.length, 0);
+    const baseStream = newBaseStream().withLogHeader(false)
+    baseStream.logHeader(logMeta())
+    assertEquals(baseStream.logs.length, 0)
 
-    baseStream.withLogHeader();
-    baseStream.logHeader(logMeta());
-    assertEquals(baseStream.logs.length, 1);
+    baseStream.withLogHeader()
+    baseStream.logHeader(logMeta())
+    assertEquals(baseStream.logs.length, 1)
     assertStringIncludes(
       baseStream.logs[0] as string,
-      "Logging session initialized",
-    );
+      'Logging session initialized',
+    )
   },
-});
+})
 
 test({
-  name: "Log footer outputs header info",
+  name: 'Log footer outputs header info',
   fn() {
-    const testStream = newBaseStream().withLogFooter(false);
-    const meta = logMeta();
+    const testStream = newBaseStream().withLogFooter(false)
+    const meta = logMeta()
     meta.streamStats.set(
       testStream,
       {
@@ -160,49 +160,49 @@ test({
         transformed: 0,
         duplicated: 0,
       },
-    );
-    testStream.logFooter(meta);
-    assertEquals(testStream.logs.length, 0);
+    )
+    testStream.logFooter(meta)
+    assertEquals(testStream.logs.length, 0)
 
-    testStream.withLogFooter();
-    testStream.logFooter(meta);
-    assertEquals(testStream.logs.length, 1);
+    testStream.withLogFooter()
+    testStream.logFooter(meta)
+    assertEquals(testStream.logs.length, 1)
     assertStringIncludes(
       testStream.logs[0] as string,
-      "Logging session complete.  Duration",
-    );
+      'Logging session complete.  Duration',
+    )
   },
-});
+})
 
 test({
-  name: "Log footer complex variants",
+  name: 'Log footer complex variants',
   fn() {
-    const testStream = new TestStream();
-    const logger = new Logger("config").addStream(testStream)
+    const testStream = new TestStream()
+    const logger = new Logger('config').addStream(testStream)
       .withMinLogLevel(Level.Info)
-      .addTransformer(new PropertyRedaction("z"))
+      .addTransformer(new PropertyRedaction('z'))
       .addFilter((_stream: Stream, lr: LogRecord): boolean => {
-        return asString(lr.msg).indexOf("def") > -1;
+        return asString(lr.msg).indexOf('def') > -1
       })
-      .addMonitor((_logRecord: LogRecord) => {});
-    logger.error("abc");
-    logger.error("abc");
-    logger.error("abc");
-    logger.warn("abc");
-    logger.warn("abc");
-    logger.warn("abcdef");
-    logger.warn("abcdef");
-    logger.warn("abcdef");
-    logger.warn("abcdef");
-    logger.warn("abcdef");
-    logger.info("abc");
-    logger.info({ z: "abc" });
-    logger.info({ z: "abc" });
-    logger.removeStream(testStream);
+      .addMonitor((_logRecord: LogRecord) => {})
+    logger.error('abc')
+    logger.error('abc')
+    logger.error('abc')
+    logger.warn('abc')
+    logger.warn('abc')
+    logger.warn('abcdef')
+    logger.warn('abcdef')
+    logger.warn('abcdef')
+    logger.warn('abcdef')
+    logger.warn('abcdef')
+    logger.info('abc')
+    logger.info({ z: 'abc' })
+    logger.info({ z: 'abc' })
+    logger.removeStream(testStream)
 
     assertMatch(
       testStream.logs[testStream.logs.length - 1] as string,
       /\"Logging session complete\.\s\sDuration: \d+ms\" \[{\"sessionStarted\":\"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z\",\"sessionEnded\":\"undefined\",\"minLogLevel\":\"Info\",\"minLogLevelFrom\":\"programmatically set\",\"loggerName\":\"config\",\"filtersRegistered\":1,\"transformersRegistered\":1,\"monitorsRegistered\":1,\"streamName\":\"TestStream\",\"logRecordsHandled\":\"Error: 3, Warn: 2, Info: 3\",\"recordsFiltered\":5,\"recordsTransformed\":2}\]/,
-    );
+    )
   },
-});
+})

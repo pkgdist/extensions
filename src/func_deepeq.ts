@@ -10,48 +10,51 @@
  */
 
 export type ObjectMatcher<T> = {
-  [K in keyof T]: T[K] extends object ? ObjectMatcher<T[K]> : T[K];
-};
+  [K in keyof T]: T[K] extends object ? ObjectMatcher<T[K]> : T[K]
+}
 
 export function deepCompareExclude(
   obj1: Record<string, any>,
   obj2: Record<string, any>,
   pathsToCompare: string[],
 ): string {
-  function getValueByPath(obj: Record<string, any>, path: string): Record<string, any> | undefined {
-    return path.split(".").reduce(
+  function getValueByPath(
+    obj: Record<string, any>,
+    path: string,
+  ): Record<string, any> | undefined {
+    return path.split('.').reduce(
       (acc, key) => (acc ? acc[key] : undefined),
       obj,
-    );
+    )
   }
 
   for (const path of pathsToCompare) {
-    const val1 = getValueByPath(obj1, path);
-    const val2 = getValueByPath(obj2, path);
+    const val1 = getValueByPath(obj1, path)
+    const val2 = getValueByPath(obj2, path)
 
     if (deepEqual(val1, val2)) {
-      return "false"; // Specified parts match, return false
+      return 'false' // Specified parts match, return false
     }
   }
-  return "true"; // Specified parts don't match, return true
+  return 'true' // Specified parts don't match, return true
 }
 
 export function deepEqual(a: any, b: any): boolean {
-  if (a === b) return true;
+  if (a === b) return true
 
   if (
-    typeof a !== "object" || a === null ||
-    typeof b !== "object" || b === null
-  ) return false;
+    typeof a !== 'object' || a === null ||
+    typeof b !== 'object' || b === null
+  ) return false
 
-  const keysA = Object.keys(a);
-  const keysB = Object.keys(b);
+  const keysA = Object.keys(a)
+  const keysB = Object.keys(b)
 
-  if (keysA.length !== keysB.length) return false;
+  if (keysA.length !== keysB.length) return false
 
   for (const key of keysA) {
-    if (!keysB.includes(key) || !deepEqual(a[key], b[key])) return false;
+    if (!keysB.includes(key) || !deepEqual(a[key], b[key])) return false
   }
 
-  return true;
+  return true
 }

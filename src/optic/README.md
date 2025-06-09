@@ -33,16 +33,16 @@ A powerful, highly extensible and easy to use logging framework for Deno.
 ### Simple example
 
 ```ts
-import { Logger } from "jsr:@onjara/optic/logger";
+import { Logger } from 'jsr:@onjara/optic/logger'
 
-const logger = new Logger();
-logger.info("Hello world!"); // outputs log record to the console
+const logger = new Logger()
+logger.info('Hello world!') // outputs log record to the console
 ```
 
 ### Complete example
 
 ```ts
-import { every, FileStream, of } from "jsr:@onjara/optic/streams";
+import { every, FileStream, of } from 'jsr:@onjara/optic/streams'
 import {
   between,
   Level,
@@ -50,72 +50,72 @@ import {
   LogRecord,
   Stream,
   TimeUnit,
-} from "jsr:@onjara/optic/logger";
-import { JsonFormatter } from "jsr:@onjara/optic/formatters";
-import { PropertyRedaction } from "jsr:@onjara/optic/transformers";
+} from 'jsr:@onjara/optic/logger'
+import { JsonFormatter } from 'jsr:@onjara/optic/formatters'
+import { PropertyRedaction } from 'jsr:@onjara/optic/transformers'
 
 // Configure the output file stream
-const fileStream = new FileStream("logFile.txt")
+const fileStream = new FileStream('logFile.txt')
   .withMinLogLevel(Level.Warn)
   .withFormat(
     new JsonFormatter()
       .withPrettyPrintIndentation(2)
-      .withDateTimeFormat("YYYY.MM.DD hh:mm:ss:SSS"),
+      .withDateTimeFormat('YYYY.MM.DD hh:mm:ss:SSS'),
   )
   .withBufferSize(10000)
-  .withLogFileInitMode("append")
+  .withLogFileInitMode('append')
   .withLogFileRotation(
     every(200000).bytes().withLogFileRetentionPolicy(of(7).days()),
   )
   .withLogHeader(true)
-  .withLogFooter(true);
+  .withLogFooter(true)
 
 // Configure the logger
 const log = new Logger()
   .withMinLogLevel(Level.Warn)
-  .addFilter((stream: Stream, logRecord: LogRecord) => logRecord.msg === "spam")
-  .addTransformer(new PropertyRedaction("password"))
-  .addStream(fileStream);
+  .addFilter((stream: Stream, logRecord: LogRecord) => logRecord.msg === 'spam')
+  .addTransformer(new PropertyRedaction('password'))
+  .addStream(fileStream)
 
 // "info" is lower than configured min log level of "warn"
-log.info("Level too low. This won't be logged");
+log.info("Level too low. This won't be logged")
 
 // logs "Hello World" and supporting metadata, returns "Hello world"
-const logVal: string = log.critical("Hello world", 12, true, { name: "Poe" });
+const logVal: string = log.critical('Hello world', 12, true, { name: 'Poe' })
 
 // Log records with `msg` of "spam" are filtered out
-log.warn("spam");
+log.warn('spam')
 
 // logs `msg` as { "user": "jsmith", "password": "[Redacted]" }
-log.warn({ user: "jsmith", password: "secret_password" });
+log.warn({ user: 'jsmith', password: 'secret_password' })
 
 // debug < min log level, so function isn't evaluated and error not thrown
 log.debug(() => {
-  throw new Error("I'm not thrown");
-});
+  throw new Error("I'm not thrown")
+})
 
 // error > min log level, so function is evaluated and `msg` is set to "1234"
 log.error(() => {
-  return "1234";
-}); // logs "1234"
+  return '1234'
+}) // logs "1234"
 
-const x = 5;
-log.if(x > 10).error("Since x < 10 this doesn't get logged");
+const x = 5
+log.if(x > 10).error("Since x < 10 this doesn't get logged")
 
-log.mark("before loop");
+log.mark('before loop')
 for (let i = 0; i < 1000000; i++) {
-  log.every(100).warn("Logs every 100th iteration");
+  log.every(100).warn('Logs every 100th iteration')
   log.atMostEvery(10, TimeUnit.SECONDS).warn(
-    "Logs at most once every 10 seconds",
-  );
+    'Logs at most once every 10 seconds',
+  )
 }
-log.mark("after loop");
-log.profilingConfig().withLogLevel(Level.Warn);
+log.mark('after loop')
+log.profilingConfig().withLogLevel(Level.Warn)
 // logs (at warn level) time, memory usage and ops called for loop duration
-log.measure(between("before loop", "after loop"));
+log.measure(between('before loop', 'after loop'))
 
-log.enabled(false);
-log.error("Logger is disabled, so this does nothing");
+log.enabled(false)
+log.error('Logger is disabled, so this does nothing')
 ```
 
 ## Logging
@@ -146,10 +146,10 @@ Before you can log anything you must first get an instance of a logger.
 
 ```ts
 // Using an unnamed logger
-const defaultLogger = new Logger();
+const defaultLogger = new Logger()
 
 // Using a named logger
-const configLogger = new Logger("config");
+const configLogger = new Logger('config')
 ```
 
 ### Sharing loggers across modules
@@ -160,18 +160,18 @@ modules. E.g.
 
 ```ts
 /** logger.ts */
-import { ConsoleStream, Logger } from "https://deno.land/x/optic/mod.ts";
-import { JsonFormatter } from "https://deno.land/x/optic/formatters/json.ts";
+import { ConsoleStream, Logger } from 'https://deno.land/x/optic/mod.ts'
+import { JsonFormatter } from 'https://deno.land/x/optic/formatters/json.ts'
 
-export const logger = new Logger();
-logger.addStream(new ConsoleStream().withFormat(new JsonFormatter()));
+export const logger = new Logger()
+logger.addStream(new ConsoleStream().withFormat(new JsonFormatter()))
 ```
 
 ```ts
 /** module_a.ts */
-import { logger } from "./logger.ts";
+import { logger } from './logger.ts'
 
-logger.info("hello world");
+logger.info('hello world')
 ```
 
 ### Logging an event
@@ -180,7 +180,7 @@ You can log an event through any of the level functions on the logger, supplying
 a `msg` (of any type) and one or more optional `metadata` items. E.g.
 
 ```ts
-logger.info("File loaded", "exa_113.txt", 1223, true);
+logger.info('File loaded', 'exa_113.txt', 1223, true)
 ```
 
 In this example, `"File loaded"` is the log record message (primary data), with
@@ -201,14 +201,14 @@ Optic supports the following logging levels out of the box:
 These may be used directly via the logger, e.g.
 
 ```ts
-logger.trace("Some trace info");
-logger.error("Oops, something went wrong");
+logger.trace('Some trace info')
+logger.error('Oops, something went wrong')
 ```
 
 Or through the use of the Level enum, e.g.
 
 ```ts
-logger.log(Level.Info, "Here some info");
+logger.log(Level.Info, 'Here some info')
 ```
 
 ### Log Records
@@ -237,7 +237,7 @@ Within the code, this can be set at any time and takes highest precedence of any
 method:
 
 ```ts
-logger.withLevel(Level.Warn);
+logger.withLevel(Level.Warn)
 ```
 
 #### Environment variable
@@ -287,11 +287,11 @@ All log statements return the value of the `msg` field, allowing more concise
 coding. E.g.
 
 ```ts
-const user: User = logger.info(getUser());
+const user: User = logger.info(getUser())
 
 // is equivalent to:
-const user: User = getUser();
-logger.info(user);
+const user: User = getUser()
+logger.info(user)
 ```
 
 ### Deferred logging
@@ -307,8 +307,8 @@ Example:
 
 ```ts
 const value = logger.info(() => {
-  return expensiveObjectCreation();
-});
+  return expensiveObjectCreation()
+})
 ```
 
 Here, `expensiveObjectCreation()` won't be called unless the logger is allowed
@@ -322,7 +322,7 @@ You can specify a condition which must be met to log the log message. To do
 this, supply a boolean condition to the `if` function on the logger. E.g.
 
 ```ts
-logger.if(attempts > 3).warn("Excessive attempts by user");
+logger.if(attempts > 3).warn('Excessive attempts by user')
 ```
 
 Note that even if the condition is true, the log record may not be logged if the
@@ -346,21 +346,21 @@ deduplication capabilities. This feature is disabled by default.
 To turn on deduping of logs:
 
 ```ts
-logger.withDedupe();
+logger.withDedupe()
 ```
 
 To turn off deduping of logs:
 
 ```ts
-logger.withDedupe(false);
+logger.withDedupe(false)
 ```
 
 Example:
 
 ```ts
-const logger = new Logger().withDedupe();
+const logger = new Logger().withDedupe()
 for (let i = 0; i < 1000; i++) {
-  logger.info("hello world");
+  logger.info('hello world')
 }
 ```
 
@@ -379,8 +379,8 @@ two ways;
 ```ts
 logger.atMostEvery(5, TimeUnit.SECONDS).info(
   "I'm only logged at most every 5 seconds",
-);
-logger.every(100).info("I'm logged every 100 attempts");
+)
+logger.every(100).info("I'm logged every 100 attempts")
 ```
 
 **An important note**: Rate limiters work in a context. The context for the rate
@@ -392,12 +392,12 @@ matching or exceeding the constraint. To avoid this, you can enforce unique
 contexts by passing in an optional context string:
 
 ```ts
-logger.atMostEvery(5, TimeUnit.SECONDS, "Context 1").info(
-  "Logged at most every 5 seconds",
-);
-logger.atMostEvery(5, TimeUnit.SECONDS, "Context 2").info(
-  "Also logged at most every 5 seconds",
-);
+logger.atMostEvery(5, TimeUnit.SECONDS, 'Context 1').info(
+  'Logged at most every 5 seconds',
+)
+logger.atMostEvery(5, TimeUnit.SECONDS, 'Context 2').info(
+  'Also logged at most every 5 seconds',
+)
 ```
 
 ### Disabling the logger
@@ -422,7 +422,7 @@ disabled:
 To disable the logger:
 
 ```ts
-logger.enabled(false);
+logger.enabled(false)
 ```
 
 ### Shutting down the logger
@@ -457,8 +457,8 @@ There are two out of the box streams available.
 A basic stream which outputs log messages to the console.
 
 ```ts
-import { ConsoleStream, Level, Logger } from "https://deno.land/x/optic/mod.ts";
-import { TokenReplacer } from "https://deno.land/x/optic/formatters/mod.ts";
+import { ConsoleStream, Level, Logger } from 'https://deno.land/x/optic/mod.ts'
+import { TokenReplacer } from 'https://deno.land/x/optic/formatters/mod.ts'
 
 const consoleStream = new ConsoleStream()
   .withMinLogLevel(Level.Debug)
@@ -467,10 +467,10 @@ const consoleStream = new ConsoleStream()
   .withFormat(
     new TokenReplacer()
       .withColor()
-      .withDateTimeFormat("YYYY.MM.DD hh:mm:ss:SSS"),
-  );
+      .withDateTimeFormat('YYYY.MM.DD hh:mm:ss:SSS'),
+  )
 
-const logger = new Logger().addStream(consoleStream);
+const logger = new Logger().addStream(consoleStream)
 ```
 
 See [Formatting](#log-formatting) for further detail on formatting your logs.
@@ -480,26 +480,26 @@ See [Formatting](#log-formatting) for further detail on formatting your logs.
 A stream which outputs log messages to the file system.
 
 ```ts
-import { Level, Logger } from "https://deno.land/x/optic/mod.ts";
-import { JsonFormatter } from "https://deno.land/x/optic/formatters/mod.ts";
+import { Level, Logger } from 'https://deno.land/x/optic/mod.ts'
+import { JsonFormatter } from 'https://deno.land/x/optic/formatters/mod.ts'
 import {
   every,
   FileStream,
   of,
-} from "https://deno.land/x/optic/streams/fileStream/mod.ts";
+} from 'https://deno.land/x/optic/streams/fileStream/mod.ts'
 
-const fileStream = new FileStream("./logFile.txt")
+const fileStream = new FileStream('./logFile.txt')
   .withMinLogLevel(Level.Warn)
   .withFormat(new JsonFormatter())
   .withBufferSize(30000)
-  .withLogFileInitMode("append")
+  .withLogFileInitMode('append')
   .withLogFileRotation(
     every(2000000).bytes().withLogFileRetentionPolicy(of(7).days()),
   )
   .withLogHeader(true)
-  .withLogFooter(true);
+  .withLogFooter(true)
 
-const logger = new Logger().addStream(fileStream);
+const logger = new Logger().addStream(fileStream)
 ```
 
 See [FileStream documentation](./streams/fileStream/README.md) for full details.
@@ -516,16 +516,16 @@ the record was handled).
 Basic example:
 
 ```ts
-import { Logger, LogRecord, Stream } from "https://deno.land/x/optic/mod.ts";
+import { Logger, LogRecord, Stream } from 'https://deno.land/x/optic/mod.ts'
 
 class SimpleStream implements Stream {
   handle(logRecord: LogRecord): boolean {
-    console.log(logRecord.msg);
-    return true;
+    console.log(logRecord.msg)
+    return true
   }
 }
 
-const logger = new Logger().addStream(new SimpleStream());
+const logger = new Logger().addStream(new SimpleStream())
 ```
 
 Streams can also take logging metadata in `logHeader()` and `logFooter()`
@@ -550,19 +550,19 @@ placeholders for the various log record fields.
 Example:
 
 ```ts
-import { ConsoleStream, Logger } from "https://deno.land/x/optic/mod.ts";
-import { TokenReplacer } from "https://deno.land/x/optic/formatters/mod.ts";
+import { ConsoleStream, Logger } from 'https://deno.land/x/optic/mod.ts'
+import { TokenReplacer } from 'https://deno.land/x/optic/formatters/mod.ts'
 
 const logger = new Logger().addStream(
   new ConsoleStream()
     .withFormat(
       new TokenReplacer()
-        .withFormat("{dateTime} {level} {msg} {metadata}")
-        .withDateTimeFormat("hh:mm:ss YYYY-MM-DD")
+        .withFormat('{dateTime} {level} {msg} {metadata}')
+        .withDateTimeFormat('hh:mm:ss YYYY-MM-DD')
         .withLevelPadding(10)
         .withColor(),
     ),
-);
+)
 ```
 
 See
@@ -577,18 +577,18 @@ formatted string.
 Example:
 
 ```ts
-import { ConsoleStream, Logger } from "https://deno.land/x/optic/mod.ts";
-import { JsonFormatter } from "https://deno.land/x/optic/formatters/mod.ts";
+import { ConsoleStream, Logger } from 'https://deno.land/x/optic/mod.ts'
+import { JsonFormatter } from 'https://deno.land/x/optic/formatters/mod.ts'
 
 const logger = new Logger().addStream(
   new ConsoleStream()
     .withFormat(
       new JsonFormatter()
-        .withFields(["dateTime", "level", "logger", "msg"])
-        .withDateTimeFormat("hh:mm:ss YYYY-MM-DD")
+        .withFields(['dateTime', 'level', 'logger', 'msg'])
+        .withDateTimeFormat('hh:mm:ss YYYY-MM-DD')
         .withPrettyPrintIndentation(2),
     ),
-);
+)
 ```
 
 See [JSON formatter documentation](./formatters/README.md#json-formatter) for
@@ -603,9 +603,9 @@ custom format for your date/time fields. Example:
 logger.addStream(
   new ConsoleStream()
     .withFormat(
-      new JsonFormatter().withDateTimeFormat("hh:mm:ss YYYY-MM-DD"),
+      new JsonFormatter().withDateTimeFormat('hh:mm:ss YYYY-MM-DD'),
     ),
-);
+)
 ```
 
 See [DateTimeFormatter](./formatters/README.md#datetimeformatter) for full
@@ -640,19 +640,19 @@ This is a good choice for short and simple monitors. Monitor functions must
 match the following type:
 
 ```ts
-export type MonitorFn = (logRecord: LogRecord) => void;
+export type MonitorFn = (logRecord: LogRecord) => void
 ```
 
 Example:
 
 ```ts
-import { LogRecord, MonitorFn } from "https://deno.land/x/optic/mod.ts";
+import { LogRecord, MonitorFn } from 'https://deno.land/x/optic/mod.ts'
 
 const mon: MonitorFn = (logRecord: LogRecord): void => {
-  if ((logRecord.msg as User).username === "jsmith") {
-    console.log("User jsmith spotted again");
+  if ((logRecord.msg as User).username === 'jsmith') {
+    console.log('User jsmith spotted again')
   }
-};
+}
 ```
 
 #### Implement the Monitor interface
@@ -662,12 +662,12 @@ of type `MonitorFn` as above. This gives you the power of a class for more
 complex monitors.
 
 ```ts
-import { LogRecord, Monitor } from "https://deno.land/x/optic/mod.ts";
+import { LogRecord, Monitor } from 'https://deno.land/x/optic/mod.ts'
 
 class UserMonitor implements Monitor {
   check(logRecord: LogRecord): void {
-    if ((logRecord.msg as User).username === "jsmith") {
-      console.log("User jsmith spotted again");
+    if ((logRecord.msg as User).username === 'jsmith') {
+      console.log('User jsmith spotted again')
     }
   }
 }
@@ -678,7 +678,7 @@ class UserMonitor implements Monitor {
 Monitors are registered directly with the logger as follows:
 
 ```ts
-const logger = new Logger().addMonitor(new UserMonitor());
+const logger = new Logger().addMonitor(new UserMonitor())
 ```
 
 ## Transformers
@@ -707,7 +707,7 @@ This is a good choice for short and simple transformers. Transformer functions
 must match the following type:
 
 ```ts
-export type TransformerFn = (stream: Stream, logRecord: LogRecord) => LogRecord;
+export type TransformerFn = (stream: Stream, logRecord: LogRecord) => LogRecord
 ```
 
 The function takes a stream and logRecord and returns either the original log
@@ -719,20 +719,20 @@ import {
   LogRecord,
   Stream,
   TransformerFn,
-} from "https://deno.land/x/optic/mod.ts";
+} from 'https://deno.land/x/optic/mod.ts'
 
 const tr: TransformerFn = (
   stream: Stream,
   logRecord: LogRecord,
 ): LogRecord => ({
-  msg: (logRecord.msg as string).startsWith("password:")
-    ? "password: [Redacted]"
+  msg: (logRecord.msg as string).startsWith('password:')
+    ? 'password: [Redacted]'
     : logRecord.msg,
   metadata: [...logRecord.metadata],
   level: logRecord.level,
   logger: logRecord.logger,
   dateTime: new Date(logRecord.dateTime.getTime()),
-});
+})
 ```
 
 #### Implement the Transformer interface
@@ -746,20 +746,20 @@ import {
   LogRecord,
   Stream,
   Transformer,
-} from "https://deno.land/x/optic/mod.ts";
+} from 'https://deno.land/x/optic/mod.ts'
 
 class PasswordObfuscator implements Transformer {
   transform(stream: Stream, logRecord: LogRecord): LogRecord {
-    if ((logRecord.msg as string).startsWith("password:")) {
+    if ((logRecord.msg as string).startsWith('password:')) {
       return {
-        msg: "password: [Redacted]",
+        msg: 'password: [Redacted]',
         metadata: [...logRecord.metadata],
         level: logRecord.level,
         logger: logRecord.logger,
         dateTime: new Date(logRecord.dateTime.getTime()),
-      };
+      }
     } else {
-      return logRecord;
+      return logRecord
     }
   }
 }
@@ -770,8 +770,8 @@ class PasswordObfuscator implements Transformer {
 Transformers are registered directly with the logger as follows:
 
 ```ts
-const passwordObfuscator = new PasswordObfuscator();
-const logger = new Logger().addTransformer(passwordObfuscator);
+const passwordObfuscator = new PasswordObfuscator()
+const logger = new Logger().addTransformer(passwordObfuscator)
 ```
 
 ### Optic transformers
@@ -787,15 +787,15 @@ searching), will replace the value of that property with the string
 object before obfuscation.
 
 ```ts
-import { PropertyRedaction } from "https://deno.land/x/optic/mod.ts";
+import { PropertyRedaction } from 'https://deno.land/x/optic/mod.ts'
 
-logger.addTransformer(new PropertyRedaction("password"));
+logger.addTransformer(new PropertyRedaction('password'))
 
 // This next record is untouched by the transformer (no `password` property)
-logger.info({ user: "abc29002", dateOfBirth: "1966/02/33" });
+logger.info({ user: 'abc29002', dateOfBirth: '1966/02/33' })
 
 // This record gets transformed to: {user: "abc29002", password: "[Redacted]"}
-logger.info({ user: "abc29002", password: "s3cr3tpwd" });
+logger.info({ user: 'abc29002', password: 's3cr3tpwd' })
 ```
 
 #### Regular expression redaction
@@ -817,15 +817,15 @@ however if groups are used, only the groups are replaced.
 import {
   nonWhitespaceReplacer,
   RegExpReplacer,
-} from "https://deno.land/x/optic/transformers/regExpReplacer.ts";
-import { Logger } from "https://deno.land/x/optic/mod.ts";
+} from 'https://deno.land/x/optic/transformers/regExpReplacer.ts'
+import { Logger } from 'https://deno.land/x/optic/mod.ts'
 
 const logger = new Logger()
   .addTransformer(new RegExpReplacer(/£([\d]+\.[\d]{2})/))
-  .addTransformer(new RegExpReplacer(/password: (.*)/, nonWhitespaceReplacer));
+  .addTransformer(new RegExpReplacer(/password: (.*)/, nonWhitespaceReplacer))
 
-logger.info("Amount: £122.51"); // becomes "Amount: £***.**" ('£' is not in a group)
-logger.info("password: MyS3cret! Pwd!"); // becomes "password: ********* ****"
+logger.info('Amount: £122.51') // becomes "Amount: £***.**" ('£' is not in a group)
+logger.info('password: MyS3cret! Pwd!') // becomes "password: ********* ****"
 ```
 
 RegExp and Replacer examples:
@@ -859,16 +859,16 @@ This is a good choice for short and simple filters. Filter functions must match
 the following type:
 
 ```ts
-export type FilterFn = (stream: Stream, logRecord: LogRecord) => boolean;
+export type FilterFn = (stream: Stream, logRecord: LogRecord) => boolean
 ```
 
 The function takes in a stream and logRecord and returns true if the logRecord
 should be filtered out. Example:
 
 ```ts
-import { FilterFn, LogRecord, Stream } from "https://deno.land/x/optic/mod.ts";
+import { FilterFn, LogRecord, Stream } from 'https://deno.land/x/optic/mod.ts'
 const filter: FilterFn = (stream: Stream, logRecord: LogRecord) =>
-  (logRecord.msg as string).includes("bad stuff");
+  (logRecord.msg as string).includes('bad stuff')
 ```
 
 #### Implement the Filter interface
@@ -879,11 +879,11 @@ more complex filtering, or perhaps you want to redirect filtered out logs to
 another logger and stream.
 
 ```ts
-import { Filter, LogRecord, Stream } from "https://deno.land/x/optic/mod.ts";
+import { Filter, LogRecord, Stream } from 'https://deno.land/x/optic/mod.ts'
 
 class MyFilter implements Filter {
   shouldFilterOut(stream: Stream, logRecord: LogRecord): boolean {
-    return (logRecord.msg as string).includes("bad stuff");
+    return (logRecord.msg as string).includes('bad stuff')
   }
 }
 ```
@@ -893,8 +893,8 @@ class MyFilter implements Filter {
 Filters are registered directly with the logger as follows:
 
 ```ts
-const myFilter = new MyFilter();
-const logger = new Logger().addFilter(myFilter);
+const myFilter = new MyFilter()
+const logger = new Logger().addFilter(myFilter)
 ```
 
 ### Optic filters
@@ -908,14 +908,14 @@ filtered out. The log record `msg` and `metadata` fields are first converted to
 a string if necessary before testing the regular expression.
 
 ```ts
-import { Logger } from "https://deno.land/x/optic/mod.ts";
-import { RegExpFilter } from "https://deno.land/x/optic/filters/regExpFilter.ts";
+import { Logger } from 'https://deno.land/x/optic/mod.ts'
+import { RegExpFilter } from 'https://deno.land/x/optic/filters/regExpFilter.ts'
 
 // Filters out log records containing `%` or `&` in the message or metadata
-const regExpFilter = new RegExpFilter(/[%&]+/);
-const logger = new Logger().addFilter(regExpFilter);
-logger.error("Oh no!"); // not filtered
-logger.error("Oh no!", "& another thing"); // filtered out
+const regExpFilter = new RegExpFilter(/[%&]+/)
+const logger = new Logger().addFilter(regExpFilter)
+logger.error('Oh no!') // not filtered
+logger.error('Oh no!', '& another thing') // filtered out
 ```
 
 #### Substring filter
@@ -925,13 +925,13 @@ either the log record `msg` or `metadata` fields (converting them to string
 first if required), then this log record is filtered out. Example:
 
 ```ts
-import { Logger } from "https://deno.land/x/optic/mod.ts";
-import { SubStringFilter } from "https://deno.land/x/optic/filters/subStringFilter.ts";
+import { Logger } from 'https://deno.land/x/optic/mod.ts'
+import { SubStringFilter } from 'https://deno.land/x/optic/filters/subStringFilter.ts'
 
-const subStringFilter = new SubStringFilter("user1234");
-const logger = new Logger().addFilter(subStringFilter);
-logger.info({ user: "joe1944", action: "login" }); // not filtered
-logger.info({ user: "user1234", action: "login" }); // filtered out
+const subStringFilter = new SubStringFilter('user1234')
+const logger = new Logger().addFilter(subStringFilter)
+logger.info({ user: 'joe1944', action: 'login' }) // not filtered
+logger.info({ user: 'user1234', action: 'login' }) // filtered out
 ```
 
 ## Profiling
@@ -950,9 +950,9 @@ snapshot of the time, memory usage and ops calls and saves these against an
 identifier (e.g. `below`).
 
 ```ts
-logger.mark("before");
-someFunction();
-logger.mark("after");
+logger.mark('before')
+someFunction()
+logger.mark('after')
 ```
 
 ### Measuring
@@ -961,13 +961,13 @@ Measuring outputs the difference between two marks to your logs. For example,
 this will measure the performance of `someFunction()`:
 
 ```ts
-import { between } from "https://deno.land/x/optic/mod.ts";
+import { between } from 'https://deno.land/x/optic/mod.ts'
 
-logger.mark("before");
-someFunction();
-logger.mark("after");
+logger.mark('before')
+someFunction()
+logger.mark('after')
 
-logger.measure(between("before", "after"), "with description");
+logger.measure(between('before', 'after'), 'with description')
 ```
 
 #### Sample output
@@ -996,28 +996,28 @@ import {
   NOW,
   PROCESS_START,
   to,
-} from "https://deno.land/x/optic/mod.ts";
+} from 'https://deno.land/x/optic/mod.ts'
 
-logger.mark("before");
-someFunction();
-logger.mark("after");
+logger.mark('before')
+someFunction()
+logger.mark('after')
 
 //Measure between two marks (with optional description)
-logger.measure(between("before", "after"));
-logger.measure(between(PROCESS_START, "after"));
-logger.measure(between("before", NOW), "with description");
+logger.measure(between('before', 'after'))
+logger.measure(between(PROCESS_START, 'after'))
+logger.measure(between('before', NOW), 'with description')
 
 //Measure from a mark to NOW (with optional description)
-logger.measure(from("before"));
-logger.measure(from("before"), "with description");
+logger.measure(from('before'))
+logger.measure(from('before'), 'with description')
 
 //Measure from PROCESS_START to mark (with optional description)
-logger.measure(to("after"));
-logger.measure(to("after"), "with description");
+logger.measure(to('after'))
+logger.measure(to('after'), 'with description')
 
 //Mesure from PROCESS_START to NOW (with optional description)
-logger.measure();
-logger.measure("with description");
+logger.measure()
+logger.measure('with description')
 ```
 
 ### Configuring the profiler
@@ -1032,7 +1032,7 @@ logger.profilingConfig()
   .captureMemory(true) //Enable or disable capturing of memory information
   .captureOps(true) //Enable or disable capturing of ops calls
   .withLogLevel(Level.Info) //Set the log level at which the profile measure is output
-  .withFormatter(new SummaryMeasureFormatter()); //Formats the profiling log message
+  .withFormatter(new SummaryMeasureFormatter()) //Formats the profiling log message
 ```
 
 ### Custom measure output
@@ -1043,20 +1043,20 @@ interface `MeasureFormatter`:
 
 ```ts
 interface MeasureFormatter<T> {
-  format(startMark: ProfileMark, endMark: ProfileMark, label?: string): T;
+  format(startMark: ProfileMark, endMark: ProfileMark, label?: string): T
 }
 ```
 
 Example:
 
 ```ts
-import { MeasureFormatter } from "https://deno.land/x/optic/mod.ts";
+import { MeasureFormatter } from 'https://deno.land/x/optic/mod.ts'
 
 const myFormatter: MeasureFormatter<string> = {
   format(startMark: ProfileMark, endMark: ProfileMark, label?: string): string {
-    return (endMark.timestamp - startMark.timestamp) + "ms" +
-      (label ? (" " + label) : "");
+    return (endMark.timestamp - startMark.timestamp) + 'ms' +
+      (label ? (' ' + label) : '')
   },
-};
-log.profilingConfig().withFormatter(myFormatter);
+}
+log.profilingConfig().withFormatter(myFormatter)
 ```

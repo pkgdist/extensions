@@ -1,8 +1,8 @@
-import { ExtensionSystemTypes as Type } from "./types.d.ts";
-import { logColor } from "./declare_const.ts";
-import { logToReport } from "./func_streams.ts";
-import { TEAMS_WEB_HOOK } from "./func_webhook.ts";
-import * as $error from "./func_error.ts";
+import { ExtensionSystemTypes as Type } from './types.d.ts'
+import { logColor } from './declare_const.ts'
+import { logToReport } from './func_streams.ts'
+import { TEAMS_WEB_HOOK } from './func_webhook.ts'
+import * as $error from './func_error.ts'
 
 /**
  * @function notifyTeams
@@ -12,8 +12,10 @@ import * as $error from "./func_error.ts";
  */
 export async function notifyTeams(message: string): Promise<string | boolean> {
   $error.logErrorWithType(
-      `Attempted Teams Webhook Message: ${message}`,
-      '', 'brightBlue', '                ╰─── '
+    `Attempted Teams Webhook Message: ${message}`,
+    '',
+    'brightBlue',
+    '                ╰─── ',
   )
   if (typeof TEAMS_WEB_HOOK === 'string' && TEAMS_WEB_HOOK.length > 0) {
     const response = await fetch(TEAMS_WEB_HOOK, {
@@ -27,23 +29,23 @@ export async function notifyTeams(message: string): Promise<string | boolean> {
               contentType: 'application/vnd.microsoft.card.adaptive',
               contentUrl: null,
               content: {
-                "$schema":"http://adaptivecards.io/schemas/adaptive-card.json",
-                "type":"AdaptiveCard",
-                "version": "1.2",
-                "msteams": {
-                  "width": "Full"
+                '$schema': 'http://adaptivecards.io/schemas/adaptive-card.json',
+                'type': 'AdaptiveCard',
+                'version': '1.2',
+                'msteams': {
+                  'width': 'Full',
                 },
-                "body": [
+                'body': [
                   {
-                    "type": "TextBlock",
-                    "text": message,
-                    "wrap": true
-                  }
-                ]
-              }
-            }
-          ]
-        }
+                    'type': 'TextBlock',
+                    'text': message,
+                    'wrap': true,
+                  },
+                ],
+              },
+            },
+          ],
+        },
       ),
     })
     const responseText = await response.text()
@@ -64,56 +66,57 @@ export async function report(
   | Type.NotificationFailureResponseInterface
   | undefined
 > {
-  const message = `Score: ${data.score} | ${data.id}: ${data.msg} for ${data.path} for type: ${data.type} with notification: ${data.notify} `;
-    logToReport.warn("cyan", message);
-    $error.logErrorWithType(
-      `${message}`,
-      "",
-      "gray",
-      `\n            ╰─── `,
-    );
+  const message =
+    `Score: ${data.score} | ${data.id}: ${data.msg} for ${data.path} for type: ${data.type} with notification: ${data.notify} `
+  logToReport.warn('cyan', message)
+  $error.logErrorWithType(
+    `${message}`,
+    '',
+    'gray',
+    `\n            ╰─── `,
+  )
 
   // logic for optional notifications
-  if (data.notify == "teams1") {
+  if (data.notify == 'teams1') {
     const result = await notifyTeams(
       `${data.id}: ${data.msg} for ${data.path}`,
-    );
-    if (typeof result === "string") {
+    )
+    if (typeof result === 'string') {
       $error.logErrorWithType(
         `Notification Sent`,
         '',
-        "green",
-        "                                ╰─── SUCCESS [TEAMS]	┈ ",
+        'green',
+        '                                ╰─── SUCCESS [TEAMS]	┈ ',
       )
       const response: Type.NotificationSuccessResponseInterface = {
         teams1: {
           notified: () => {
             logColor(
-              "green",
+              'green',
               `[INFO] [TEAMS1] for ${data.id}: ${data.msg}`,
-            );
+            )
           },
         },
-      };
-      return response;
+      }
+      return response
     } else {
       $error.logErrorWithType(
         `Notification failed for ${data.id}`,
         '',
-        "red",
-        "                                ╰─── WARN [TEAMS] ┈ ",
-      );
+        'red',
+        '                                ╰─── WARN [TEAMS] ┈ ',
+      )
       const failureResponse: Type.NotificationFailureResponseInterface = {
         none: {
           notified: () => {
             logColor(
-              "red",
+              'red',
               `[WARN] [NOTIFICATION] Notification failed for ${data.id}`,
-            );
+            )
           },
         },
-      };
-      return failureResponse;
+      }
+      return failureResponse
     }
   }
   // Default return if no notification is sent
@@ -121,10 +124,10 @@ export async function report(
     none: {
       notified: () => {
         logColor(
-          "red",
+          'red',
           `[WARN] [NOTIFICATION] No notification sent for ${data.id}`,
-        );
+        )
       },
     },
-  };
+  }
 }

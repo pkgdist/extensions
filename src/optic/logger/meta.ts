@@ -1,25 +1,25 @@
 // Copyright 2020-2024 the optic authors. All rights reserved. MIT license.
-import type { LogMeta, Stream } from "../types.ts";
-import { Level, levelToName } from "./levels.ts";
+import type { LogMeta, Stream } from '../types.ts'
+import { Level, levelToName } from './levels.ts'
 
 export class LogMetaImpl implements LogMeta {
-  minLogLevel: Level = Level.Debug;
-  minLogLevelFrom = "default";
-  readonly sessionStarted = new Date();
-  readonly hostname = "unavailable";
-  logger = "default";
-  filters = 0;
-  transformers = 0;
-  monitors = 0;
+  minLogLevel: Level = Level.Debug
+  minLogLevelFrom = 'default'
+  readonly sessionStarted = new Date()
+  readonly hostname = 'unavailable'
+  logger = 'default'
+  filters = 0
+  transformers = 0
+  monitors = 0
   streamStats: Map<
     Stream,
     {
-      handled: Map<number, number>;
-      filtered: number;
-      transformed: number;
-      duplicated: number;
+      handled: Map<number, number>
+      filtered: number
+      transformed: number
+      duplicated: number
     }
-  > = new Map();
+  > = new Map()
 
   toRecord(stream: Stream): Record<string, unknown> {
     const record: Record<string, unknown> = {
@@ -33,18 +33,18 @@ export class LogMetaImpl implements LogMeta {
       transformersRegistered: this.transformers,
       monitorsRegistered: this.monitors,
       streamName: stream.constructor.name,
-    };
-    const streamStats = this.streamStats.get(stream);
+    }
+    const streamStats = this.streamStats.get(stream)
     if (streamStats) {
       record.logRecordsHandled = Array.from(streamStats.handled.keys()).map((
         k,
-      ) => levelToName(k) + ": " + streamStats.handled.get(k)).join(", ");
-      record.recordsFiltered = streamStats.filtered;
-      record.recordsTransformed = streamStats.transformed;
+      ) => levelToName(k) + ': ' + streamStats.handled.get(k)).join(', ')
+      record.recordsFiltered = streamStats.filtered
+      record.recordsTransformed = streamStats.transformed
       if (streamStats.duplicated > 0) {
-        record.duplicatedRecords = streamStats.duplicated;
+        record.duplicatedRecords = streamStats.duplicated
       }
     }
-    return record;
+    return record
   }
 }

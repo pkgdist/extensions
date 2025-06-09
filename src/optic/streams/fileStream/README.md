@@ -1,6 +1,8 @@
 # File Stream
 
-> NOTE:  This is a temporary workaround including optic code in this package.  The streams functionality is currently broken for import via JSR so we had to do it this way.  If they fix in 2.0.4 we will remove this import.
+> NOTE: This is a temporary workaround including optic code in this package. The
+> streams functionality is currently broken for import via JSR so we had to do
+> it this way. If they fix in 2.0.4 we will remove this import.
 
 This stream will output log records to a log file. It has many options.
 
@@ -9,8 +11,8 @@ This stream will output log records to a log file. It has many options.
 The log file is specified in the constructor of the file stream:
 
 ```ts
-import { FileStream } from "https://deno.land/x/optic/streams/fileStream/mod.ts";
-const fs = new FileStream("/data/logs/logFile.txt");
+import { FileStream } from 'https://deno.land/x/optic/streams/fileStream/mod.ts'
+const fs = new FileStream('/data/logs/logFile.txt')
 ```
 
 ## Specifying the minimum log level
@@ -19,8 +21,8 @@ By default, the file stream will log messages at or above `Debug`. You may
 change this by programmatically setting the minimum log level:
 
 ```ts
-const fs = new FileStream("./logFile.txt")
-  .withMinLogLevel(Level.Error);
+const fs = new FileStream('./logFile.txt')
+  .withMinLogLevel(Level.Error)
 ```
 
 ## Formatting the log records
@@ -40,8 +42,8 @@ The default buffer size is 8,192 bytes. This value can be set programmatically
 if you want a different buffer size:
 
 ```ts
-const fileStream = new FileStream("./logFile.txt")
-  .withBufferSize(30000); // in bytes
+const fileStream = new FileStream('./logFile.txt')
+  .withBufferSize(30000) // in bytes
 ```
 
 Buffering can also be disabled if desired, thereby forcing immediate writes of
@@ -62,11 +64,11 @@ You can also setup an auto-flush interval which will flush the buffer on a
 regular basis. Example:
 
 ```ts
-import { FileStream } from "https://deno.land/x/optic/streams/fileStream/mod.ts";
-import { intervalOf } from "https://deno.land/x/optic/utils/timeInterval.ts";
+import { FileStream } from 'https://deno.land/x/optic/streams/fileStream/mod.ts'
+import { intervalOf } from 'https://deno.land/x/optic/utils/timeInterval.ts'
 
-const fileStream = new FileStream("./logFile.txt")
-  .withAutoFlushEvery(intervalOf(5).seconds());
+const fileStream = new FileStream('./logFile.txt')
+  .withAutoFlushEvery(intervalOf(5).seconds())
 ```
 
 which will flush the logs to the filesystem every 5 seconds.
@@ -86,8 +88,8 @@ log file initialization mode. There are 3 options:
 The log file initialization option is specified via:
 
 ```ts
-const fileStream = new FileStream("./logFile.txt")
-  .withLogFileInitMode("append");
+const fileStream = new FileStream('./logFile.txt')
+  .withLogFileInitMode('append')
 ```
 
 ## Log file rotation
@@ -117,10 +119,10 @@ Example:
 import {
   every,
   FileStream,
-} from "https://deno.land/x/optic/streams/fileStream/mod.ts";
+} from 'https://deno.land/x/optic/streams/fileStream/mod.ts'
 
-const fileStream = new FileStream("./logFile.txt")
-  .withLogFileRotation(every(2000000).bytes());
+const fileStream = new FileStream('./logFile.txt')
+  .withLogFileRotation(every(2000000).bytes())
 // Or you can specify by kb, mb or gb
 // .withLogFileRotation(every(5000).kb());
 // .withLogFileRotation(every(200).mb());
@@ -140,10 +142,10 @@ Example:
 import {
   every,
   FileStream,
-} from "https://deno.land/x/optic/streams/fileStream/mod.ts";
+} from 'https://deno.land/x/optic/streams/fileStream/mod.ts'
 
-const fileStream = new FileStream("./logFile.txt")
-  .withLogFileRotation(every(2).days());
+const fileStream = new FileStream('./logFile.txt')
+  .withLogFileRotation(every(2).days())
 ```
 
 ## Log file retention
@@ -165,19 +167,19 @@ import {
   every,
   FileStream,
   of,
-} from "https://deno.land/x/optic/streams/fileStream/mod.ts";
+} from 'https://deno.land/x/optic/streams/fileStream/mod.ts'
 
 // Retain up to 7 log files maximum
-const fixedNumberLogFileRetention = new FileStream("./logFile.txt")
+const fixedNumberLogFileRetention = new FileStream('./logFile.txt')
   .withLogFileRotation(
     every(200).mb()
       .withLogFileRetentionPolicy(of(7).files()),
-  );
+  )
 
 // Retain logs files for maximum of 36 hours
-const fixedTimeframeLogFileRetention = new FileStream("./logFile.txt")
+const fixedTimeframeLogFileRetention = new FileStream('./logFile.txt')
   .withLogFileRotation(
     every(500).kb()
       .withLogFileRetentionPolicy(of(36).hours()),
-  );
+  )
 ```

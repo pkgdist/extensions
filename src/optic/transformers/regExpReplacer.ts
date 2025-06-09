@@ -1,7 +1,7 @@
 // Copyright 2020-2024 the optic authors. All rights reserved. MIT license.
-import type { LogRecord, Stream, Transformer } from "../types.ts";
-import type { Level } from "../logger/levels.ts";
-import { clone } from "./deepClone.ts";
+import type { LogRecord, Stream, Transformer } from '../types.ts'
+import type { Level } from '../logger/levels.ts'
+import { clone } from './deepClone.ts'
 
 /**
  * See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace#Specifying_a_function_as_a_parameter
@@ -12,7 +12,7 @@ import { clone } from "./deepClone.ts";
  * * offset - offset in the whole string where the match starts
  * * string - the entire string being examined
  */
-export type Replacer = (fullMatch: string, ...args: unknown[]) => string;
+export type Replacer = (fullMatch: string, ...args: unknown[]) => string
 
 /**
  * A replace function which replaces all alpha-numeric characters with stars.
@@ -28,17 +28,17 @@ export function alphaNumericReplacer(
   ...args: unknown[]
 ): string {
   if (args.length === 2) { // e.g. no groups, obfuscate all of match
-    return fullMatch.replace(/[a-zA-Z0-9]/g, "*");
+    return fullMatch.replace(/[a-zA-Z0-9]/g, '*')
   } else { // e.g. groups, obfuscate only the groups
-    let returnVal = fullMatch;
+    let returnVal = fullMatch
     for (let i = 0; i < args.length - 2; i++) {
-      const argValAsString = args[i] as string;
+      const argValAsString = args[i] as string
       returnVal = returnVal.replace(
         argValAsString,
-        (args[i] as string).replace(/[a-zA-Z0-9]/g, "*"),
-      );
+        (args[i] as string).replace(/[a-zA-Z0-9]/g, '*'),
+      )
     }
-    return returnVal;
+    return returnVal
   }
 }
 
@@ -56,17 +56,17 @@ export function nonWhitespaceReplacer(
   ...args: unknown[]
 ): string {
   if (args.length === 2) { // e.g. no groups, obfuscate all of match
-    return fullMatch.replace(/[^\s]/g, "*");
+    return fullMatch.replace(/[^\s]/g, '*')
   } else { // e.g. groups, obfuscate only the groups
-    let returnVal = fullMatch;
+    let returnVal = fullMatch
     for (let i = 0; i < args.length - 2; i++) {
-      const argValAsString = args[i] as string;
+      const argValAsString = args[i] as string
       returnVal = returnVal.replace(
         argValAsString,
-        argValAsString.replace(/[^\s]/g, "*"),
-      );
+        argValAsString.replace(/[^\s]/g, '*'),
+      )
     }
-    return returnVal;
+    return returnVal
   }
 }
 
@@ -79,24 +79,24 @@ export function nonWhitespaceReplacer(
  * default replacer function is alphaNumericReplacer.
  */
 export class RegExpReplacer implements Transformer {
-  #regExp: RegExp;
-  #replacer: Replacer = alphaNumericReplacer;
+  #regExp: RegExp
+  #replacer: Replacer = alphaNumericReplacer
 
   constructor(regExp: RegExp, replacer?: Replacer) {
-    this.#regExp = regExp;
-    if (replacer) this.#replacer = replacer;
+    this.#regExp = regExp
+    if (replacer) this.#replacer = replacer
   }
 
   transform(_stream: Stream, logRecord: LogRecord): LogRecord {
-    let shouldRedactMsg = false;
-    let shouldRedactMeta = false;
+    let shouldRedactMsg = false
+    let shouldRedactMeta = false
 
     if (!shouldRedactMsg) {
       shouldRedactMsg = this.shouldRedact(
         logRecord.msg,
         this.#regExp,
         this.#replacer,
-      );
+      )
     }
 
     if (!shouldRedactMsg) {
@@ -104,7 +104,7 @@ export class RegExpReplacer implements Transformer {
         logRecord.metadata,
         this.#regExp,
         this.#replacer,
-      );
+      )
     }
 
     if (shouldRedactMsg || shouldRedactMeta) {
@@ -112,110 +112,110 @@ export class RegExpReplacer implements Transformer {
         logRecord,
         this.#regExp,
         this.#replacer,
-      );
+      )
     }
-    return logRecord;
+    return logRecord
   }
 
   shouldRedact(obj: unknown, regExp: RegExp, replacer: Replacer): boolean {
     if (isObjectButNotArray(obj)) {
       for (const key in (obj as Record<string, unknown>)) {
         if (Object.prototype.hasOwnProperty.call(obj, key)) {
-          const castObj = obj as { [key: string]: unknown };
-          if (typeof castObj[key] === "string") {
+          const castObj = obj as { [key: string]: unknown }
+          if (typeof castObj[key] === 'string') {
             if ((castObj[key] as string).match(regExp)) {
-              return true;
+              return true
             }
-          } else if (typeof castObj[key] === "object") {
-            return this.shouldRedact(castObj[key], regExp, replacer);
+          } else if (typeof castObj[key] === 'object') {
+            return this.shouldRedact(castObj[key], regExp, replacer)
           }
         }
       }
     } else if (Array.isArray(obj)) {
       for (let i = 0; i < obj.length; i++) {
         if (this.shouldRedact(obj[i], regExp, replacer)) {
-          return true;
+          return true
         }
       }
-    } else if (typeof obj === "string") {
+    } else if (typeof obj === 'string') {
       if (obj.match(regExp)) {
-        return true;
+        return true
       }
     }
-    return false;
+    return false
   }
 }
 
 class ObfuscatedViaRegExpLogRecord implements LogRecord {
-  readonly msg: unknown;
-  #metadata: unknown[];
-  #dateTime: Date;
-  readonly level: Level;
-  #logRecord: LogRecord;
-  readonly logger: string;
+  readonly msg: unknown
+  #metadata: unknown[]
+  #dateTime: Date
+  readonly level: Level
+  #logRecord: LogRecord
+  readonly logger: string
 
   constructor(logRecord: LogRecord, regExp: RegExp, replacer: Replacer) {
-    if (typeof logRecord.msg == "string") {
-      this.msg = logRecord.msg.replace(regExp, replacer);
+    if (typeof logRecord.msg == 'string') {
+      this.msg = logRecord.msg.replace(regExp, replacer)
     } else {
-      this.msg = clone(logRecord.msg);
-      this.redact(this.msg, regExp, replacer);
+      this.msg = clone(logRecord.msg)
+      this.redact(this.msg, regExp, replacer)
     }
 
-    this.#metadata = clone(logRecord.metadata);
+    this.#metadata = clone(logRecord.metadata)
 
     for (let i = 0; i < this.#metadata.length; i++) {
-      if (typeof this.#metadata[i] === "string") {
+      if (typeof this.#metadata[i] === 'string') {
         this.#metadata[i] = (this.#metadata[i] as string).replace(
           regExp,
           replacer,
-        );
+        )
       } else {
-        this.redact(this.#metadata[i], regExp, replacer);
+        this.redact(this.#metadata[i], regExp, replacer)
       }
     }
 
-    this.level = logRecord.level;
-    this.#dateTime = logRecord.dateTime;
-    this.#logRecord = logRecord;
-    this.logger = logRecord.logger;
+    this.level = logRecord.level
+    this.#dateTime = logRecord.dateTime
+    this.#logRecord = logRecord
+    this.logger = logRecord.logger
   }
 
   redact(obj: unknown, regExp: RegExp, replacer: Replacer): void {
     if (isObjectButNotArray(obj)) {
       for (const key in (obj as Record<string, unknown>)) {
         if (Object.prototype.hasOwnProperty.call(obj, key)) {
-          const castObj = obj as { [key: string]: unknown };
-          if (typeof castObj[key] === "string") {
-            castObj[key] = (castObj[key] as string).replace(regExp, replacer);
-          } else if (typeof castObj[key] === "object") {
-            this.redact(castObj[key], regExp, replacer);
+          const castObj = obj as { [key: string]: unknown }
+          if (typeof castObj[key] === 'string') {
+            castObj[key] = (castObj[key] as string).replace(regExp, replacer)
+          } else if (typeof castObj[key] === 'object') {
+            this.redact(castObj[key], regExp, replacer)
           }
         }
       }
     } else if (Array.isArray(obj)) {
       for (let i = 0; i < obj.length; i++) {
-        if (typeof obj[i] === "string") {
-          obj[i] = obj[i].replace(regExp, replacer);
+        if (typeof obj[i] === 'string') {
+          obj[i] = obj[i].replace(regExp, replacer)
         } else {
-          this.redact(obj[i], regExp, replacer);
+          this.redact(obj[i], regExp, replacer)
         }
       }
     }
   }
 
   get dateTime(): Date {
-    return new Date(this.#dateTime.getTime());
+    return new Date(this.#dateTime.getTime())
   }
 
   get metadata(): unknown[] {
-    return [...this.#metadata];
+    return [...this.#metadata]
   }
   get logRecord(): LogRecord {
-    return this.#logRecord;
+    return this.#logRecord
   }
 }
 
 function isObjectButNotArray(obj: unknown): boolean {
-  return typeof obj === "object" && !Array.isArray(obj);
+  return typeof obj === 'object' && !Array.isArray(obj)
 }

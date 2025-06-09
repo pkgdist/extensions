@@ -28,21 +28,21 @@ The constructed token template is then passed to the `withFormat` function.
 Complete example using `TokenReplacer`:
 
 ```ts
-import { ConsoleStream, Logger } from "https://deno.land/x/optic/mod.ts";
-import { TokenReplacer } from "https://deno.land/x/optic/formatters/mod.ts";
+import { ConsoleStream, Logger } from 'https://deno.land/x/optic/mod.ts'
+import { TokenReplacer } from 'https://deno.land/x/optic/formatters/mod.ts'
 
 const logger = new Logger().addStream(
   new ConsoleStream()
     .withFormat(
       new TokenReplacer()
-        .withFormat("{dateTime} Level: [{level}] Msg: {msg}")
-        .withDateTimeFormat("hh:mm:ss YYYY-MM-DD")
+        .withFormat('{dateTime} Level: [{level}] Msg: {msg}')
+        .withDateTimeFormat('hh:mm:ss YYYY-MM-DD')
         .withLevelPadding(10)
         .withColor(),
     ),
-);
+)
 
-logger.info("hello world");
+logger.info('hello world')
 // Outputs in color to console: 22:09:54 2020-07-10 Level: [Info      ] Msg: hello world
 ```
 
@@ -118,10 +118,10 @@ from the local date/time.
 E.g. to use as a standalone class
 
 ```ts
-import { SimpleDateTimeFormatter } from "https://deno.land/x/optic/formatters/mod.ts";
+import { SimpleDateTimeFormatter } from 'https://deno.land/x/optic/formatters/mod.ts'
 
-const dtf = new SimpleDateTimeFormatter("hh:mm:ss:SSS YYYY-MM-DD");
-const dateTime = dtf.formatDateTime(new Date());
+const dtf = new SimpleDateTimeFormatter('hh:mm:ss:SSS YYYY-MM-DD')
+const dateTime = dtf.formatDateTime(new Date())
 ```
 
 The formatting tokens are as per below. Any characters not formatted are left as
@@ -155,18 +155,18 @@ Optic's formatters allow you to add this formatter as follows, typically using
 the shorthand of just the formatting string:
 
 ```ts
-import { ConsoleStream, Logger } from "https://deno.land/x/optic/mod.ts";
-import { TokenReplacer } from "https://deno.land/x/optic/formatters/mod.ts";
+import { ConsoleStream, Logger } from 'https://deno.land/x/optic/mod.ts'
+import { TokenReplacer } from 'https://deno.land/x/optic/formatters/mod.ts'
 
 const logger = new Logger().addStream(
   new ConsoleStream()
     .withFormat(
       new TokenReplacer()
-        .withDateTimeFormat("hh:mm:ss:SSS YYYY-MM-DD"),
+        .withDateTimeFormat('hh:mm:ss:SSS YYYY-MM-DD'),
       // equivalent to:
       // .withDateTimeFormat(new SimpleDateTimeFormatter("hh:mm:ss:SSS YYYY-MM-DD"))
     ),
-);
+)
 ```
 
 ## Using your own custom formatter
@@ -176,7 +176,7 @@ the `Formatter` interface:
 
 ```ts
 export interface Formatter<T> {
-  format(logRecord: LogRecord): T;
+  format(logRecord: LogRecord): T
 }
 ```
 
@@ -188,19 +188,19 @@ import {
   Formatter,
   Logger,
   LogRecord,
-} from "https://deno.land/x/optic/mod.ts";
+} from 'https://deno.land/x/optic/mod.ts'
 
 class MyFormatter implements Formatter<string> {
   format(logRecord: LogRecord): string {
-    return "Hello! " + logRecord.msg;
+    return 'Hello! ' + logRecord.msg
   }
 }
 
 const logger = new Logger().addStream(
   new ConsoleStream().withFormat(new MyFormatter()),
-);
+)
 
-logger.info("Some info message");
+logger.info('Some info message')
 
 // Outputs to console: "Hello! Some info message"
 ```

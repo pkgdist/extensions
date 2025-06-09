@@ -1,6 +1,6 @@
-import { ExtensionSystemTypes as Type } from "./types.d.ts";
-import { logToDebug } from "./func_streams.ts";
-import { ALL_COLORS, logColor } from "./declare_colors.ts";
+import { ExtensionSystemTypes as Type } from './types.d.ts'
+import { logToDebug } from './func_streams.ts'
+import { ALL_COLORS, logColor } from './declare_colors.ts'
 /**
  * @function logErrorWithType
  * @description Synchronus error function: Logs a message using the logToDebug stream and displays a logColor message to the console associated by a prefix.
@@ -13,23 +13,23 @@ function logErrorWithType(
   message: Type.WriteString,
   error: unknown,
   color: Type.Color,
-  prefix: Type.ExportString = "[WARN]",
+  prefix: Type.ExportString = '[WARN]',
 ): void {
-  let errorMessage: string;
+  let errorMessage: string
   if (error instanceof Error) {
-    errorMessage = error.message;
-  } else if (typeof error === "string") {
-    errorMessage = error;
+    errorMessage = error.message
+  } else if (typeof error === 'string') {
+    errorMessage = error
   } else {
-    errorMessage = JSON.stringify(error);
+    errorMessage = JSON.stringify(error)
   }
-  const msg = `${prefix} ${message} ${errorMessage}`;
+  const msg = `${prefix} ${message} ${errorMessage}`
 
   // log error to debug stream
-  logToDebug.warn(msg);
+  logToDebug.warn(msg)
 
-  const safeColor = ALL_COLORS.has(color as any) ? color : "gray";
-  logColor(safeColor as Parameters<typeof logColor>[0], msg);
+  const safeColor = ALL_COLORS.has(color as any) ? color : 'gray'
+  logColor(safeColor as Parameters<typeof logColor>[0], msg)
 }
 
-export { logErrorWithType };
+export { logErrorWithType }

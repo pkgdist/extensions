@@ -21,7 +21,7 @@ This is a good choice for short and simple filters. Filter functions must match
 the following type:
 
 ```ts
-export type FilterFn = (stream: Stream, logRecord: LogRecord) => boolean;
+export type FilterFn = (stream: Stream, logRecord: LogRecord) => boolean
 ```
 
 The function takes in a stream and logRecord and returns true if the logRecord
@@ -29,7 +29,7 @@ should be filtered out. Example:
 
 ```ts
 const filter: FilterFn = (stream: Stream, logRecord: LogRecord) =>
-  (logRecord.msg as string).includes("bad stuff");
+  (logRecord.msg as string).includes('bad stuff')
 ```
 
 ### Implement the Filter interface
@@ -42,7 +42,7 @@ another logger and stream.
 ```ts
 class MyFilter implements Filter {
   shouldFilerOut(stream: Stream, logRecord: LogRecord): boolean {
-    return (logRecord.msg as string).includes("bad stuff");
+    return (logRecord.msg as string).includes('bad stuff')
   }
 }
 ```
@@ -52,8 +52,8 @@ class MyFilter implements Filter {
 Filters are registered directly with the logger as follows:
 
 ```ts
-const myFilter = new MyFilter();
-const logger = new Logger().addFilter(myFilter);
+const myFilter = new MyFilter()
+const logger = new Logger().addFilter(myFilter)
 ```
 
 ## Ready made filters
@@ -68,12 +68,12 @@ a string if necessary before testing the regular expression.
 
 ```ts
 // Filters out log records containing `%` or `&` in the message or metadata
-import { RegExpFilter } from "https://deno.land/x/optic/filters/regExpFilter.ts";
+import { RegExpFilter } from 'https://deno.land/x/optic/filters/regExpFilter.ts'
 
-const regExpFilter = new RegExpFilter(/[%&]+/);
-const logger = new Logger().addFilter(regExpFilter);
-logger.error("Oh no!"); // not filtered
-logger.error("Oh no!", "& another thing"); // filtered out
+const regExpFilter = new RegExpFilter(/[%&]+/)
+const logger = new Logger().addFilter(regExpFilter)
+logger.error('Oh no!') // not filtered
+logger.error('Oh no!', '& another thing') // filtered out
 ```
 
 ### Substring filter
@@ -83,11 +83,11 @@ either the log record `msg` or `metadata` fields (converting them to string
 first if required), then this log record is filtered out. Example:
 
 ```ts
-import { SubStringFilter } from "https://deno.land/x/optic/filters/subStringFilter.ts";
-import { Logger } from "https://deno.land/x/optic/mod.ts";
+import { SubStringFilter } from 'https://deno.land/x/optic/filters/subStringFilter.ts'
+import { Logger } from 'https://deno.land/x/optic/mod.ts'
 
-const subStringFilter = new SubStringFilter("user1234");
-const logger = new Logger().addFilter(subStringFilter);
-logger.info({ user: "joe1944", action: "login" }); // not filtered
-logger.info({ user: "user1234", action: "login" }); // filtered out
+const subStringFilter = new SubStringFilter('user1234')
+const logger = new Logger().addFilter(subStringFilter)
+logger.info({ user: 'joe1944', action: 'login' }) // not filtered
+logger.info({ user: 'user1234', action: 'login' }) // filtered out
 ```

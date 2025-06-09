@@ -9,10 +9,12 @@ import {
   of,
   PropertyRedaction,
   streamInit,
-} from "./func_streams.ts";
-import * as colors from "jsr:@std/fmt@1.0.8/colors";
+} from './func_streams.ts'
+import * as colors from 'jsr:@std/fmt@1.0.8/colors'
 
-const ALL_COLORS: Set<keyof typeof colors> = new Set(Object.keys(colors) as Array<keyof typeof colors>);
+const ALL_COLORS: Set<keyof typeof colors> = new Set(
+  Object.keys(colors) as Array<keyof typeof colors>,
+)
 
 /**
  * @function logColor [anonymous]
@@ -22,16 +24,16 @@ const ALL_COLORS: Set<keyof typeof colors> = new Set(Object.keys(colors) as Arra
  * @returns void
  */
 const logColor = (color: keyof typeof colors, item: string): void => {
-  const safeColor = ALL_COLORS.has(color) ? color : "gray";
-  const colorFn = colors[safeColor as keyof typeof colors];
-  if (typeof colorFn === "function") {
+  const safeColor = ALL_COLORS.has(color) ? color : 'gray'
+  const colorFn = colors[safeColor as keyof typeof colors]
+  if (typeof colorFn === 'function') {
     console.log(
-      (colorFn as (text: string) => string)(item ? `\n${item}` : "\n"),
-    );
+      (colorFn as (text: string) => string)(item ? `\n${item}` : '\n'),
+    )
   } else {
-    console.error(`Invalid color function: ${color}`);
+    console.error(`Invalid color function: ${color}`)
   }
-};
+}
 
 export {
   ALL_COLORS,
@@ -46,4 +48,4 @@ export {
   of,
   PropertyRedaction,
   streamInit,
-};
+}

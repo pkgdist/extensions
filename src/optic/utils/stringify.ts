@@ -1,7 +1,7 @@
 // Copyright 2020-2024 the optic authors. All rights reserved. MIT license.
 // Adapted from https://github.com/planttheidea/fast-stringify (MIT, Copyright (c) 2018 Tony Quetano)
 
-import type { DateTimeFormatter } from "../types.ts";
+import type { DateTimeFormatter } from '../types.ts'
 
 /**
  * @function getReferenceKey
@@ -14,7 +14,7 @@ import type { DateTimeFormatter } from "../types.ts";
  * @returns the reference key
  */
 function getReferenceKey(keys: string[], cutoff: number) {
-  return keys.slice(0, cutoff).join(".") || ".";
+  return keys.slice(0, cutoff).join('.') || '.'
 }
 
 /**
@@ -28,23 +28,23 @@ function getReferenceKey(keys: string[], cutoff: number) {
  * @returns the matching index, or -1
  */
 function getCutoff(array: unknown[], value: unknown) {
-  const { length } = array;
+  const { length } = array
 
   for (let index = 0; index < length; ++index) {
     if (array[index] === value) {
-      return index + 1;
+      return index + 1
     }
   }
 
-  return 0;
+  return 0
 }
 
-type StandardReplacer = (key: string, value: unknown) => unknown;
+type StandardReplacer = (key: string, value: unknown) => unknown
 type CircularReplacer = (
   key: string,
   value: unknown,
   referenceKey: string,
-) => unknown;
+) => unknown
 
 /**
  * @function createReplacer
@@ -60,11 +60,11 @@ type CircularReplacer = (
 function createReplacer(
   options: StringifyOptions | undefined,
 ): StandardReplacer {
-  const hasReplacer = typeof options?.replacer === "function";
-  const hasCircularReplacer = typeof options?.circularReplacer === "function";
+  const hasReplacer = typeof options?.replacer === 'function'
+  const hasCircularReplacer = typeof options?.circularReplacer === 'function'
 
-  const cache: unknown[] = [];
-  const keys: string[] = [];
+  const cache: unknown[] = []
+  const keys: string[] = []
 
   return function replace(
     this: Record<string, unknown>,
@@ -74,21 +74,21 @@ function createReplacer(
     // Before the value reaches here, if it is an object and contains a toJSON
     // function, then this is called prior to reaching here.  Use the original
     // value instead.
-    const originalValue = this[key];
-    if (typeof value === "object") {
+    const originalValue = this[key]
+    if (typeof value === 'object') {
       if (cache.length) {
-        const thisCutoff = getCutoff(cache, this);
+        const thisCutoff = getCutoff(cache, this)
 
         if (thisCutoff === 0) {
-          cache[cache.length] = this;
+          cache[cache.length] = this
         } else {
-          cache.splice(thisCutoff);
-          keys.splice(thisCutoff);
+          cache.splice(thisCutoff)
+          keys.splice(thisCutoff)
         }
 
-        keys[keys.length] = key;
+        keys[keys.length] = key
 
-        const valueCutoff = getCutoff(cache, value);
+        const valueCutoff = getCutoff(cache, value)
 
         if (valueCutoff !== 0) {
           return hasCircularReplacer
@@ -98,53 +98,53 @@ function createReplacer(
               value,
               getReferenceKey(keys, valueCutoff),
             )
-            : `[ref=${getReferenceKey(keys, valueCutoff)}]`;
+            : `[ref=${getReferenceKey(keys, valueCutoff)}]`
         }
       } else {
-        cache[0] = value;
-        keys[0] = key;
+        cache[0] = value
+        keys[0] = key
       }
       if (value instanceof Set) {
-        return Array.from(value.values());
+        return Array.from(value.values())
       } else if (value instanceof Map) {
-        return Array.from(value.entries());
+        return Array.from(value.entries())
       } else if (value instanceof RegExp) {
-        return { regExpSource: value.source, flags: value.flags };
+        return { regExpSource: value.source, flags: value.flags }
       } else if (value instanceof Error) {
         return options?.suppressErrorStack
-          ? value.name + ": " + value.message
-          : value.stack;
+          ? value.name + ': ' + value.message
+          : value.stack
       }
-    } else if (typeof value === "undefined") {
-      return "undefined";
+    } else if (typeof value === 'undefined') {
+      return 'undefined'
     } else if (value === Infinity) {
-      return "Infinity";
+      return 'Infinity'
     } else if (value === -Infinity) {
-      return "-Infinity";
+      return '-Infinity'
     } else if (value !== value) {
       //NaN is the only JavaScript value that is treated as unequal to itself,
       //therefore you can always test if a value is NaN by checking it for equality to itself
-      return "NaN";
-    } else if (typeof value === "bigint") {
-      return value.toString();
-    } else if (typeof value === "symbol") {
-      return String(value);
-    } else if (typeof value === "function") {
-      return "[function]";
+      return 'NaN'
+    } else if (typeof value === 'bigint') {
+      return value.toString()
+    } else if (typeof value === 'symbol') {
+      return String(value)
+    } else if (typeof value === 'function') {
+      return '[function]'
     } else if (originalValue instanceof Date && options?.dateTimeFormatter) {
-      return options.dateTimeFormatter.formatDateTime(originalValue);
+      return options.dateTimeFormatter.formatDateTime(originalValue)
     }
 
-    return hasReplacer ? options!.replacer!.call(this, key, value) : value;
-  };
+    return hasReplacer ? options!.replacer!.call(this, key, value) : value
+  }
 }
 
 export interface StringifyOptions {
-  replacer?: StandardReplacer;
-  indent?: string | number;
-  circularReplacer?: CircularReplacer;
-  dateTimeFormatter?: DateTimeFormatter;
-  suppressErrorStack?: boolean;
+  replacer?: StandardReplacer
+  indent?: string | number
+  circularReplacer?: CircularReplacer
+  dateTimeFormatter?: DateTimeFormatter
+  suppressErrorStack?: boolean
 }
 
 /**
@@ -162,5 +162,5 @@ export function stringify(
   value: unknown,
   options?: StringifyOptions,
 ) {
-  return JSON.stringify(value, createReplacer(options), options?.indent);
+  return JSON.stringify(value, createReplacer(options), options?.indent)
 }

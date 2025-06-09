@@ -1,104 +1,104 @@
 // Copyright 2020-2024 the optic authors. All rights reserved. MIT license.
-import { assert, test } from "../test_deps.ts";
-import { Level } from "../logger/levels.ts";
-import type { LogRecord } from "../types.ts";
-import { SubStringFilter } from "./subStringFilter.ts";
+import { assert, test } from '../test_deps.ts'
+import { Level } from '../logger/levels.ts'
+import type { LogRecord } from '../types.ts'
+import { SubStringFilter } from './subStringFilter.ts'
 
 function lrMsg(msg: unknown) {
   return {
     msg: msg,
     metadata: [],
-    dateTime: new Date("2020-06-17T03:24:00"),
+    dateTime: new Date('2020-06-17T03:24:00'),
     level: Level.Debug,
-    logger: "default",
-  };
+    logger: 'default',
+  }
 }
 function lrMeta(data: unknown[]) {
   return {
-    msg: "",
+    msg: '',
     metadata: data,
-    dateTime: new Date("2020-06-17T03:24:00"),
+    dateTime: new Date('2020-06-17T03:24:00'),
     level: Level.Debug,
-    logger: "default",
-  };
+    logger: 'default',
+  }
 }
 
 const stream = {
   handle(_logRecord: LogRecord): boolean {
-    return true;
+    return true
   },
-};
+}
 
 test({
-  name: "Test msg string filtering",
+  name: 'Test msg string filtering',
   fn() {
     assert(
-      new SubStringFilter("a").shouldFilterOut(
+      new SubStringFilter('a').shouldFilterOut(
         stream,
-        lrMsg("a new world"),
+        lrMsg('a new world'),
       ),
-    );
+    )
     assert(
-      new SubStringFilter("hello world")
-        .shouldFilterOut(stream, lrMsg("hello world")),
-    );
+      new SubStringFilter('hello world')
+        .shouldFilterOut(stream, lrMsg('hello world')),
+    )
     assert(
-      new SubStringFilter("password").shouldFilterOut(
+      new SubStringFilter('password').shouldFilterOut(
         stream,
-        lrMsg({ password: "abcd1234" }),
+        lrMsg({ password: 'abcd1234' }),
       ),
-    );
+    )
     assert(
-      !new SubStringFilter("a").shouldFilterOut(
+      !new SubStringFilter('a').shouldFilterOut(
         stream,
-        lrMsg("hello world"),
+        lrMsg('hello world'),
       ),
-    );
+    )
     assert(
-      !new SubStringFilter("x").shouldFilterOut(
+      !new SubStringFilter('x').shouldFilterOut(
         stream,
         lrMsg({ a: 6 }),
       ),
-    );
+    )
   },
-});
+})
 
 test({
-  name: "Metadata string filtering",
+  name: 'Metadata string filtering',
   fn() {
     assert(
-      new SubStringFilter("a").shouldFilterOut(
+      new SubStringFilter('a').shouldFilterOut(
         stream,
-        lrMeta([[1, 2, "a new world"]]),
+        lrMeta([[1, 2, 'a new world']]),
       ),
-    );
+    )
     assert(
-      new SubStringFilter("hello world")
-        .shouldFilterOut(stream, lrMeta([true, { a: 6, b: "hello world" }])),
-    );
+      new SubStringFilter('hello world')
+        .shouldFilterOut(stream, lrMeta([true, { a: 6, b: 'hello world' }])),
+    )
     assert(
-      new SubStringFilter("password").shouldFilterOut(
+      new SubStringFilter('password').shouldFilterOut(
         stream,
-        lrMeta([true, { a: 6, b: "hello world", password: "abcd1234" }]),
+        lrMeta([true, { a: 6, b: 'hello world', password: 'abcd1234' }]),
       ),
-    );
+    )
     assert(
-      !new SubStringFilter("a").shouldFilterOut(
+      !new SubStringFilter('a').shouldFilterOut(
         stream,
-        lrMeta(["hello world"]),
+        lrMeta(['hello world']),
       ),
-    );
+    )
     assert(
-      !new SubStringFilter("x").shouldFilterOut(
+      !new SubStringFilter('x').shouldFilterOut(
         stream,
         lrMeta([{ a: 6 }]),
       ),
-    );
+    )
     assert(
-      !new SubStringFilter("a").shouldFilterOut(
+      !new SubStringFilter('a').shouldFilterOut(
         stream,
         lrMeta([]),
       ),
-    );
+    )
   },
-});
+})

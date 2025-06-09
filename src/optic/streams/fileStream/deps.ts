@@ -2,8 +2,8 @@
 export {
   basename as posixBasename,
   dirname as posixDirname,
-} from "jsr:@std/path@^1.0.6/posix";
+} from 'jsr:@std/path@^1.0.6/posix'
 export {
   basename as win32Basename,
   dirname as win32Dirname,
-} from "jsr:@std/path@^1.0.6/windows";
+} from 'jsr:@std/path@^1.0.6/windows'

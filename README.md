@@ -33,27 +33,28 @@ outside the rules engine itself.
 
 ## Repo Features
 
-| Feature Name       | Purpose                                                                                             |
-| ------------------ | --------------------------------------------------------------------------------------------------- |
-| $report            | Reporting function for scoring tabulation in streams, and notification functions in teams           |
-| $const             | Declared generic constants for local system paths and GITHUB API                                    |
-| $deep              | DeepEq Comparison functions for objects.  These are used for YML object comparisons                 |
-| $error             | Generic error functions for including messages with specific colors                                 |
-| $streams           | Optic FileStream object for logging colored error messages to evaluated streams                     |
-| $token             | Token acquisition for GitHub CLI default, or .envcrypt files, or environment vars                   |
-| $webhook           | Webhook secret acquisition IFFE functions                                                           |
-| generatedVersion   | Software Version Information                                                                        |
-| Type               | Types used throughout this software                                                                 |
+| Feature Name     | Purpose                                                                                   |
+| ---------------- | ----------------------------------------------------------------------------------------- |
+| $report          | Reporting function for scoring tabulation in streams, and notification functions in teams |
+| $const           | Declared generic constants for local system paths and GITHUB API                          |
+| $deep            | DeepEq Comparison functions for objects. These are used for YML object comparisons        |
+| $error           | Generic error functions for including messages with specific colors                       |
+| $streams         | Optic FileStream object for logging colored error messages to evaluated streams           |
+| $token           | Token acquisition for GitHub CLI default, or .envcrypt files, or environment vars         |
+| $webhook         | Webhook secret acquisition IFFE functions                                                 |
+| generatedVersion | Software Version Information                                                              |
+| Type             | Types used throughout this software                                                       |
 
 &nbsp;
 
 # LICENSE
 
-MIT License. © Lynsei Asynynivynya 2025. 
+MIT License. © Lynsei Asynynivynya 2025.
 
 > [!IMPORTANT]
 > Credits Below:
 
 Portions of this software are used from:
 
-> @onjara/optic portions are used due to a bug with mod.ts file not being available in FileStreams 2.0.3
+> @onjara/optic portions are used due to a bug with mod.ts file not being
+> available in FileStreams 2.0.3

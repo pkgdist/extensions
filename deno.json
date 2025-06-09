@@ -15,7 +15,6 @@
       "src/**/**/*.ts",
       "src/**/**/*.md",
       "README.md"
-
     ]
   },
   "lint": {
