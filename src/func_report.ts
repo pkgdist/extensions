@@ -37,7 +37,7 @@ export async function notifyTeams(message: string): Promise<string | boolean> {
                   {
                     "type": "TextBlock",
                     "text": message,
-                    "size": "Large"
+                    "wrap": true
                   }
                 ]
               }
@@ -64,28 +64,27 @@ export async function report(
   | Type.NotificationFailureResponseInterface
   | undefined
 > {
-  const message =
-    `Score: ${data.score} | ${data.id}: ${data.msg} for ${data.path} for type: ${data.type} with notification: ${data.notify} `;
-  logToReport.warn("cyan", message);
-  $error.logErrorWithType(
-    `${message}`,
-    "",
-    "gray",
-    `\n            ╰─── `,
-  );
+  const message = `Score: ${data.score} | ${data.id}: ${data.msg} for ${data.path} for type: ${data.type} with notification: ${data.notify} `;
+    logToReport.warn("cyan", message);
+    $error.logErrorWithType(
+      `${message}`,
+      "",
+      "gray",
+      `\n            ╰─── `,
+    );
 
   // logic for optional notifications
   if (data.notify == "teams1") {
     const result = await notifyTeams(
       `${data.id}: ${data.msg} for ${data.path}`,
     );
-    if (result) {
+    if (typeof result === "string") {
       $error.logErrorWithType(
-        `${result}`,
-        "",
-        "gray",
-        "                    ╰─── ",
-      );
+        `Notification Sent`,
+        { result: result },
+        "green",
+        "        ╰─── WARN	┈ TEAMS	┈ ",
+      )
       const response: Type.NotificationSuccessResponseInterface = {
         teams1: {
           notified: () => {
@@ -100,7 +99,7 @@ export async function report(
     } else {
       $error.logErrorWithType(
         `Notification failed for ${data.id}`,
-        { type: "debug" },
+        { result: result },
         "red",
         "        ╰─── WARN	┈ TEAMS	┈ ",
       );
