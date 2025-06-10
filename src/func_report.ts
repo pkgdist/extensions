@@ -86,7 +86,7 @@ export async function report(
         `Notification Sent`,
         '',
         'green',
-        '                                ╰─── SUCCESS [TEAMS]	┈ ',
+        '                        ╰─── SUCCESS [TEAMS]	┈ ',
       )
       const response: Type.NotificationSuccessResponseInterface = {
         teams1: {
@@ -104,7 +104,7 @@ export async function report(
         `Notification failed for ${data.id}`,
         '',
         'red',
-        '                                ╰─── WARN [TEAMS] ┈ ',
+        '                       ╰─── WARN [TEAMS] ┈ ',
       )
       const failureResponse: Type.NotificationFailureResponseInterface = {
         none: {

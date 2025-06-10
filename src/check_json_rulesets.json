@@ -1,0 +1,94 @@
+{
+  "branchProtection": {
+    "branch": "main",
+    "enabled": false
+  },
+  "rulesets": [
+    {
+      "rulesetId": 5982553,
+      "name": "main",
+      "enforcement": "active",
+      "targets": [],
+      "requiredApprovals": 0,
+      "requireCodeOwnerReviews": true,
+      "copilotChecks": [],
+      "copilotScanDetected": false,
+      "rules": [
+        {
+          "type": "deletion"
+        },
+        {
+          "type": "non_fast_forward"
+        },
+        {
+          "type": "pull_request",
+          "parameters": {
+            "required_approving_review_count": 0,
+            "dismiss_stale_reviews_on_push": true,
+            "require_code_owner_review": true,
+            "require_last_push_approval": true,
+            "required_review_thread_resolution": true,
+            "automatic_copilot_code_review_enabled": true,
+            "allowed_merge_methods": [
+              "merge",
+              "squash",
+              "rebase"
+            ]
+          }
+        },
+        {
+          "type": "required_status_checks",
+          "parameters": {
+            "strict_required_status_checks_policy": true,
+            "do_not_enforce_on_create": false,
+            "required_status_checks": [
+              {
+                "context": "code",
+                "integration_id": 15368
+              }
+            ]
+          }
+        },
+        {
+          "type": "code_scanning",
+          "parameters": {
+            "code_scanning_tools": [
+              {
+                "tool": "CodeQL",
+                "security_alerts_threshold": "high_or_higher",
+                "alerts_threshold": "errors"
+              }
+            ]
+          }
+        },
+        {
+          "type": "required_signatures"
+        },
+        {
+          "type": "update"
+        },
+        {
+          "type": "creation"
+        },
+        {
+          "type": "merge_queue",
+          "parameters": {
+            "merge_method": "MERGE",
+            "max_entries_to_build": 5,
+            "min_entries_to_merge": 1,
+            "max_entries_to_merge": 5,
+            "min_entries_to_merge_wait_minutes": 5,
+            "grouping_strategy": "ALLGREEN",
+            "check_response_timeout_minutes": 60
+          }
+        },
+        {
+          "type": "required_linear_history"
+        }
+      ],
+      "copilotCodeReviewEnabled": true,
+      "requireStatusChecksToPass": true,
+      "requireBranchesUpToDate": true
+    }
+  ]
+}
