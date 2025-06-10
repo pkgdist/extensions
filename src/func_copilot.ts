@@ -46,16 +46,16 @@ async function getBranchProtection(
   octokit: octo.Octokit,
   owner: string,
   repo: string,
-  branch: string
-): Promise<ReviewEnforcementSummary["branchProtection"]> {
-  const branchProtection: ReviewEnforcementSummary["branchProtection"] = {
+  branch: string,
+): Promise<ReviewEnforcementSummary['branchProtection']> {
+  const branchProtection: ReviewEnforcementSummary['branchProtection'] = {
     branch,
     enabled: false,
   }
 
   try {
     const { data } = await octokit.request(
-      "GET /repos/{owner}/{repo}/branches/{branch}/protection",
+      'GET /repos/{owner}/{repo}/branches/{branch}/protection',
       { owner, repo, branch },
     )
 
@@ -70,17 +70,21 @@ async function getBranchProtection(
 
     const statusChecks = data.required_status_checks?.contexts ?? []
     branchProtection.copilotChecks = statusChecks.filter((c) =>
-      c.toLowerCase().includes("copilot")
+      c.toLowerCase().includes('copilot')
     )
   } catch (err) {
     if (
-      typeof err === "object" &&
+      typeof err === 'object' &&
       err !== null &&
-      "status" in err &&
-      typeof (err as { status?: unknown })["status"] === "number" &&
+      'status' in err &&
+      typeof (err as { status?: unknown })['status'] === 'number' &&
       (err as { status: number }).status !== 404
     ) {
-      throw new Error(`Failed to fetch branch protection: ${(err as { message?: string }).message ?? String(err)}`)
+      throw new Error(
+        `Failed to fetch branch protection: ${
+          (err as { message?: string }).message ?? String(err)
+        }`,
+      )
     }
     // If 404, branch protection is not enabled — already handled above.
   }
@@ -105,38 +109,42 @@ function processRule(
     copilotCodeReviewEnabled: boolean
     requireStatusChecksToPass: boolean
     requireBranchesUpToDate: boolean
-  }
+  },
 ) {
-  if (rule.type === "pull_request") {
+  if (rule.type === 'pull_request') {
     state.requiredApprovals =
-      rule.parameters?.required_approving_review_count ?? state.requiredApprovals
+      rule.parameters?.required_approving_review_count ??
+        state.requiredApprovals
     state.requireCodeOwnerReviews =
-      rule.parameters?.require_code_owner_review ?? state.requireCodeOwnerReviews
+      rule.parameters?.require_code_owner_review ??
+        state.requireCodeOwnerReviews
 
     if (rule.parameters?.automatic_copilot_code_review_enabled === true) {
       state.copilotCodeReviewEnabled = true
     }
   }
 
-  if (rule.type === "required_status_checks") {
-    state.requireStatusChecksToPass = Array.isArray(rule.parameters?.required_status_checks) &&
+  if (rule.type === 'required_status_checks') {
+    state.requireStatusChecksToPass =
+      Array.isArray(rule.parameters?.required_status_checks) &&
       rule.parameters.required_status_checks.length > 0
 
-    state.requireBranchesUpToDate = !!rule.parameters?.strict_required_status_checks_policy
+    state.requireBranchesUpToDate = !!rule.parameters
+      ?.strict_required_status_checks_policy
 
     const checkNames = rule.parameters?.required_status_checks
       ?.map((c: any) => c.context) ?? []
     const copilotLikeChecks = checkNames.filter((name: string) =>
-      typeof name === "string" && name.toLowerCase().includes("copilot")
+      typeof name === 'string' && name.toLowerCase().includes('copilot')
     )
 
     state.copilotChecks.push(...copilotLikeChecks)
 
     if (
       copilotLikeChecks.some((name: string) =>
-        typeof name === "string" &&
-        (name.toLowerCase().includes("security") ||
-          name.toLowerCase().includes("scan"))
+        typeof name === 'string' &&
+        (name.toLowerCase().includes('security') ||
+          name.toLowerCase().includes('scan'))
       )
     ) {
       state.copilotScanDetected = true
@@ -150,11 +158,18 @@ function processRule(
  * @param ruleset [any] The ruleset object to process.
  * @returns {ReviewEnforcementSummary["rulesets"][number] & { rules: any[]; copilotCodeReviewEnabled?: boolean; requireStatusChecksToPass?: boolean; requireBranchesUpToDate?: boolean }}
  */
-function processRuleset(ruleset: any): ReviewEnforcementSummary["rulesets"][number] & { rules: any[]; copilotCodeReviewEnabled?: boolean; requireStatusChecksToPass?: boolean; requireBranchesUpToDate?: boolean } {
+function processRuleset(
+  ruleset: any,
+): ReviewEnforcementSummary['rulesets'][number] & {
+  rules: any[]
+  copilotCodeReviewEnabled?: boolean
+  requireStatusChecksToPass?: boolean
+  requireBranchesUpToDate?: boolean
+} {
   const {
     id = 0,
-    name = "",
-    enforcement = "",
+    name = '',
+    enforcement = '',
     targets = [],
     rules = [],
   } = ruleset ?? {}
@@ -166,7 +181,7 @@ function processRuleset(ruleset: any): ReviewEnforcementSummary["rulesets"][numb
   let safeTargets: string[]
   if (Array.isArray(targets)) {
     safeTargets = targets
-  } else if (typeof targets === "string") {
+  } else if (typeof targets === 'string') {
     safeTargets = [targets]
   } else {
     safeTargets = []
@@ -203,7 +218,6 @@ function processRuleset(ruleset: any): ReviewEnforcementSummary["rulesets"][numb
 }
 
 /**
- *
  * @function inspectReviewAndCopilotEnforcement
  * @description Inspects the review and Copilot enforcement settings for a given repository and branch.
  * @param token [string] The GitHub personal access token.
@@ -214,7 +228,7 @@ async function inspectReviewAndCopilotEnforcement(
   token: string,
   owner: string,
   repo: string,
-  branch: string = "main",
+  branch: string = 'main',
 ): Promise<ReviewEnforcementSummary> {
   const octokit = new Octokit({ auth: token })
 
@@ -225,19 +239,18 @@ async function inspectReviewAndCopilotEnforcement(
 
   // rulesets
   const { data: rulesets } = await octokit.request(
-    "GET /repos/{owner}/{repo}/rulesets",
+    'GET /repos/{owner}/{repo}/rulesets',
     { owner, repo },
   )
 
   for (const rulesetMeta of (Array.isArray(rulesets) ? rulesets : [])) {
-
     // ruleset details
     const { data: ruleset } = await octokit.request(
-      "GET /repos/{owner}/{repo}/rulesets/{ruleset_id}",
+      'GET /repos/{owner}/{repo}/rulesets/{ruleset_id}',
       { owner, repo, ruleset_id: rulesetMeta.id },
-    );
+    )
     //console.log("DEBUG full ruleset:", JSON.stringify(ruleset, null, 2));
-    summary.rulesets.push(processRuleset(ruleset));
+    summary.rulesets.push(processRuleset(ruleset))
   }
 
   return summary
@@ -257,7 +270,6 @@ interface RepoParams {
   branch?: string
 }
 
-
 /**
  * @function getByPath
  * @description Retrieves a value from an object by a dot-separated path.
@@ -268,7 +280,7 @@ interface RepoParams {
 function getByPath(obj: any, path: string): any {
   return path.split('.').reduce((acc, key) => {
     // Handle array indices like rules.2.parameters
-    if (acc && typeof key === "string" && /^\d+$/.test(key)) {
+    if (acc && typeof key === 'string' && /^\d+$/.test(key)) {
       return acc[Number(key)]
     }
     return acc ? acc[key] : undefined
@@ -288,15 +300,20 @@ async function assertRulesetParameter(
   rulesetNumber: number,
   parameterPath: string,
   value: unknown,
-  repo: RepoParams = { token: "", owner: "", repository: "", branch: "" },
+  repo: RepoParams = { token: '', owner: '', repository: '', branch: '' },
 ): Promise<string> {
   const { token, owner, repository, branch } = repo
-  const result = await inspectReviewAndCopilotEnforcement(token, owner, repository, branch)
-  const ruleset = result.rulesets.find(r => r.rulesetId === rulesetNumber)
-  if (!ruleset) return "false"
+  const result = await inspectReviewAndCopilotEnforcement(
+    token,
+    owner,
+    repository,
+    branch,
+  )
+  const ruleset = result.rulesets.find((r) => r.rulesetId === rulesetNumber)
+  if (!ruleset) return 'false'
 
   const actual = getByPath(ruleset, parameterPath)
-  return (actual === value) ? "true" : "false"
+  return (actual === value) ? 'true' : 'false'
 }
 
 /**
@@ -311,23 +328,27 @@ async function assertRulesetByIndexParameter(
   rulesetIndex: number,
   parameterPath: string,
   value: unknown,
-  repo: RepoParams = { token: "", owner: "", repository: "", branch: "" },
+  repo: RepoParams = { token: '', owner: '', repository: '', branch: '' },
 ): Promise<string> {
   const { token, owner, repository, branch } = repo
-  const result = await inspectReviewAndCopilotEnforcement(token, owner, repository, branch)
+  const result = await inspectReviewAndCopilotEnforcement(
+    token,
+    owner,
+    repository,
+    branch,
+  )
   const ruleset = result.rulesets[rulesetIndex]
-  if (!ruleset) return "false"
+  if (!ruleset) return 'false'
 
   const actual = getByPath(ruleset, parameterPath)
-  return (actual === value) ? "true" : "false"
+  return (actual === value) ? 'true' : 'false'
 }
-
 
 export {
-  assertRulesetParameter,
   assertRulesetByIndexParameter,
-  inspectReviewAndCopilotEnforcement,
+  assertRulesetParameter,
   getBranchProtection,
-  processRuleset
+  inspectReviewAndCopilotEnforcement,
+  processRuleset,
 }
-export type {  ReviewEnforcementSummary }
+export type { ReviewEnforcementSummary }

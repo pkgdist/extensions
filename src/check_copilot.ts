@@ -1,19 +1,18 @@
 import {
+  assertRulesetByIndexParameter,
   //inspectReviewAndCopilotEnforcement,
   assertRulesetParameter,
-  assertRulesetByIndexParameter
 } from './func_copilot.ts'
 
 // const result = await inspectReviewAndCopilotEnforcement(token, owner, repo, branch)
 // console.log(JSON.stringify(result, null, 2))
 
-
 const repoData = {
-  token: Deno.env.get("PROD_TOKEN")!,
-  owner: Deno.env.get("PROD_OWNER")!,
-  repository: Deno.env.get("PROD_REPO")!,
-  branch: "main"
-};
+  token: Deno.env.get('PROD_TOKEN')!,
+  owner: Deno.env.get('PROD_OWNER')!,
+  repository: Deno.env.get('PROD_REPO')!,
+  branch: 'main',
+}
 
 // -------- by number
 // const rulesetNumber = 5982553;
@@ -41,12 +40,14 @@ requireBranchesUpToDate
 rulesetMeta
 */
 
+const rulesetNumber = 0
+const parameterPath = 'rules.2.parameters.automatic_copilot_code_review_enabled'
+const value = true
 
-const rulesetNumber = 0;
-const parameterPath = "rules.2.parameters.automatic_copilot_code_review_enabled";
-const value = true;
-
-const result = await assertRulesetByIndexParameter(rulesetNumber, parameterPath, value, repoData);
-console.log(result); // "true" or "false"
-
-
+const result = await assertRulesetByIndexParameter(
+  rulesetNumber,
+  parameterPath,
+  value,
+  repoData,
+)
+console.log(result) // "true" or "false"
