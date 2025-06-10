@@ -1,8 +1,8 @@
 import {
   assertRulesetByIndexParameter,
-  //inspectReviewAndCopilotEnforcement,
   assertRulesetParameter,
-} from './func_copilot.ts'
+  inspectReviewAndCopilotEnforcement,
+} from './func_rules.ts'
 
 // const result = await inspectReviewAndCopilotEnforcement(token, owner, repo, branch)
 // console.log(JSON.stringify(result, null, 2))
