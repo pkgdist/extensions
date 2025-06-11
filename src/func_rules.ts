@@ -249,7 +249,6 @@ async function inspectReviewAndCopilotEnforcement(
       'GET /repos/{owner}/{repo}/rulesets/{ruleset_id}',
       { owner, repo, ruleset_id: rulesetMeta.id },
     )
-    //console.log("DEBUG full ruleset:", JSON.stringify(ruleset, null, 2));
     summary.rulesets.push(processRuleset(ruleset))
   }
 
@@ -350,5 +349,6 @@ export {
   getBranchProtection,
   inspectReviewAndCopilotEnforcement,
   processRuleset,
+  Octokit
 }
 export type { ReviewEnforcementSummary }
