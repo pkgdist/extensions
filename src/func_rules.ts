@@ -348,7 +348,7 @@ export {
   assertRulesetParameter,
   getBranchProtection,
   inspectReviewAndCopilotEnforcement,
+  Octokit,
   processRuleset,
-  Octokit
 }
 export type { ReviewEnforcementSummary }

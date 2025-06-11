@@ -6,18 +6,19 @@
 [![JSR release (latest)](https://img.shields.io/badge/JSR-module-hotpink)](https://jsr.io/@softdist/extensions)
 [![GitHub release (latest)](https://img.shields.io/badge/github-repo-8A2BE2)](https://github.com/pkgdist/extensions)
 
-`@softdist/extensions` is a generic reporting toolkit that is packaged as a [JSR](https://jsr.io/@softdist/extensions) 
-module for use on any software that requires reporting and inspection methods for Github scopes. 
-
+`@softdist/extensions` is a generic reporting toolkit that is packaged as a
+[JSR](https://jsr.io/@softdist/extensions) module for use on any software that
+requires reporting and inspection methods for Github scopes.
 
 ## Latest Updates
 
-Please review the [release notes](release-notes.md) for information on the latest release.
+Please review the [release notes](release-notes.md) for information on the
+latest release.
 
 ## What are Github Scopes?
 
-We refer to Github Scopes frequently, and by scopes we mean the resources that RBAC permissions apply to on Github.
-Examples include: 
+We refer to Github Scopes frequently, and by scopes we mean the resources that
+RBAC permissions apply to on Github. Examples include:
 
 - Workflows
 - Repository Settings
@@ -27,21 +28,24 @@ Examples include:
 - Organizations
 - Gists
 
-There are many more examples, but you can consider scopes to be basically any major section of the Github API.
-We also will be using this software to work with Azure scopes, so those interfaces will become available here in future releases.
-
+There are many more examples, but you can consider scopes to be basically any
+major section of the Github API. We also will be using this software to work
+with Azure scopes, so those interfaces will become available here in future
+releases.
 
 ## Reporting methods
 
 This repo houses extensions for external reporting functions that occur as async
-calls through dynamic deno code evaluations. 
+calls through dynamic deno code evaluations.
 
-The purpose is to abstract the reporting methods into a JSR package which can be called using `deno run` by passing  the `--import-map` flag and referencing a JSON import map file containing this package.
-
+The purpose is to abstract the reporting methods into a JSR package which can be
+called using `deno run` by passing the `--import-map` flag and referencing a
+JSON import map file containing this package.
 
 > [!TIP]
 >
-> `--import-map` allows for any `deno run` commands to automatically include certain modules for use with `import` statements.
+> `--import-map` allows for any `deno run` commands to automatically include
+> certain modules for use with `import` statements.
 
 ### What is this?
 
@@ -49,15 +53,16 @@ The purpose is to abstract the reporting methods into a JSR package which can be
 >
 > This @softdist/extensions module is generic and opensource
 
-This is a library for reporting and scoring tools. These tools can be used for virtually any
-purpose as a standard reporting & notifications library. The project goal is to provide a
-variety of reporting options which can be extended easily for scoring, notifications, 
-or to generate complex reports based on the inspection of Github Scopes, Azure Scopes, and other objects.
+This is a library for reporting and scoring tools. These tools can be used for
+virtually any purpose as a standard reporting & notifications library. The
+project goal is to provide a variety of reporting options which can be extended
+easily for scoring, notifications, or to generate complex reports based on the
+inspection of Github Scopes, Azure Scopes, and other objects.
 
 ## Repo Features
 
-| Feature Name     | Purpose                                                                                   |
-| :---------------- |:-----------------------------------------------------------------------------------------|
+| Feature Name       | Purpose                                                                                   |
+| :----------------- | :---------------------------------------------------------------------------------------- |
 | `$report`          | Reporting function for scoring tabulation in streams, and notification functions in teams |
 | `$const`           | Declared generic constants for local system paths and GITHUB API                          |
 | `$compare`         | Comparison functions for deep YML objects.                                                |
@@ -70,7 +75,8 @@ or to generate complex reports based on the inspection of Github Scopes, Azure S
 
 ## Logical Diagram
 
-The following diagram explains the current logical flow of how to call and utilize this package.
+The following diagram explains the current logical flow of how to call and
+utilize this package.
 
 ```mermaid
 ---
@@ -83,16 +89,16 @@ title: Rule Engine Binary
       softdist_extensions-->notifications-->webhooks
 ```
 
-
-## About FileStream 
+## About FileStream
 
 > [!IMPORTANT]
-> **Note:**
-> This code relies on MIT licensed objects from `jsr:@onjara/optic`.  
+> **Note:** This code relies on MIT licensed objects from `jsr:@onjara/optic`.
 
-FileStreams 2.0.3 currently has a bug that disallows the use of FileStream objects from import statements,
-as there is no `mod.ts` file [here](https://github.com/onjara/optic/tree/master/streams/fileStream).  Once
-this bug is fixed we will remove the inclusion of optic code directly in our package.  (it's a stop gap measure)
+FileStreams 2.0.3 currently has a bug that disallows the use of FileStream
+objects from import statements, as there is no `mod.ts` file
+[here](https://github.com/onjara/optic/tree/master/streams/fileStream). Once
+this bug is fixed we will remove the inclusion of optic code directly in our
+package. (it's a stop gap measure)
 
 &nbsp;
 
