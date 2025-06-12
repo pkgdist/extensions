@@ -97,7 +97,6 @@ async function getTokenFromEnvcrypt(): Promise<string | null> {
  * @returns token string or null if not found
  */
 async function getToken(): Promise<string | null> {
-
   const prod_token = Deno.env.get('PROD_TOKEN')
   if (prod_token && prod_token.length > 0) {
     return prod_token
