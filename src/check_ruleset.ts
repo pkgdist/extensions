@@ -3,7 +3,9 @@ import * as $token from './func_token.ts'
 
 const token = await $token.getToken()
 if (!token) {
-  console.error('No GitHub token found. Please set the GITHUB_TOKEN environment variable.')
+  console.error(
+    'No GitHub token found. Please set the GITHUB_TOKEN environment variable.',
+  )
   Deno.exit(1)
 }
 
