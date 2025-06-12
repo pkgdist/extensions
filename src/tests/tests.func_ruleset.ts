@@ -1,8 +1,7 @@
-import { GITHUB_TOKEN } from "../declare_const.ts";
+import { GITHUB_TOKEN } from '../declare_const.ts'
 import * as $ruleset from '../func_rules.ts'
 import * as $token from '../func_token.ts'
 import { assertEquals } from 'jsr:@std/assert@^0.224.0/assert-equals'
-
 
 Deno.test({
   name: 'assertRulesetByIndexParameter - copilotCodeReviewEnabled is true',

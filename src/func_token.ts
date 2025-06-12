@@ -18,7 +18,6 @@ async function checkForCliToken(): Promise<string | null> {
     const { stdout } = await proc.output()
     const message = stdout ? new TextDecoder().decode(stdout).trim() : null
     return message
-
   } catch {
     // no error handling since we gracefully fallback on null
     return null
@@ -82,7 +81,6 @@ async function getTokenFromEnvcrypt(): Promise<string | null> {
     } else {
       return message.length > 0 ? message : null
     }
-
   } catch {
     // no error handling since we gracefully fallback on null
     return null
@@ -100,13 +98,10 @@ async function getTokenFromEnvcrypt(): Promise<string | null> {
  */
 async function getToken(): Promise<string | null> {
 
-  console.log('Checking for PROD_TOKEN...')
   const prod_token = Deno.env.get('PROD_TOKEN')
   if (prod_token && prod_token.length > 0) {
     return prod_token
   }
-
-  console.log('Checking for GitHub CLI token...')
 
   const cliToken = await checkForCliToken()
   if (cliToken && cliToken.length > 0) {

@@ -11,9 +11,7 @@ import { exit } from 'node:process'
  */
 const GITHUB_TOKEN: Type.AnonSecret = await $token.getToken()
 
-if (!GITHUB_TOKEN)
-{
-
+if (!GITHUB_TOKEN) {
   $error.logErrorWithType(
     `Please set PROD_TOKEN [env variable] or login to the GH CLI.`,
     '',
