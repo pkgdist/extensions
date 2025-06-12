@@ -9,9 +9,6 @@ if (!token) {
   Deno.exit(1)
 }
 
-// const result = await $ruleset.inspectReviewAndCopilotEnforcement(token, owner, repo, branch)
-// console.log(JSON.stringify(result, null, 2))
-
 const repoData = {
   token: token,
   owner: Deno.env.get('PROD_OWNER')!,
@@ -19,15 +16,6 @@ const repoData = {
   branch: 'main',
 }
 
-// -------- by number
-// const rulesetNumber = 5982553;
-// const parameterPath = "rules.2.parameters.automatic_copilot_code_review_enabled";
-// const value = true;
-
-// const result = await $ruleset.assertRulesetParameter(rulesetNumber, parameterPath, value, repoData);
-// console.log(result); // "true" or "false"
-
-// -------- by id
 
 /*
 copilotCodeReviewEnabled:
@@ -45,14 +33,15 @@ requireBranchesUpToDate
 rulesetMeta
 */
 
-const rulesetNumber = 0
-const parameterPath = 'rules.2.parameters.automatic_copilot_code_review_enabled'
-const value = true
+
+const result2 = await $ruleset.inspectReviewAndCopilotEnforcement(token, repoData.owner, repoData.repository, repoData.branch)
+console.log(JSON.stringify(result2, null, 2))
+
 
 const result = await $ruleset.assertRulesetByIndexParameter(
-  rulesetNumber,
-  parameterPath,
-  value,
+  0, // rulesetNumber
+  'requireBranchesUpToDate', // ruleset JSON path
+  true, // value to assert
   repoData,
 )
 console.log(result) // "true" or "false"
