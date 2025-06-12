@@ -1,9 +1,10 @@
 # Extensions
 
-Release notes for the `@softdist/extension` system:  An abstract extension system for inspection of Github scopes.
+Release notes for the `@softdist/extension` system: An abstract extension system
+for inspection of Github scopes.
 
-* Package: [@softdist/extensions](https://jsr.io/@softdist/extensions)
-* Repository: [@pkgdist/extensions](https://github.com/pkgdist/extensions)
+- Package: [@softdist/extensions](https://jsr.io/@softdist/extensions)
+- Repository: [@pkgdist/extensions](https://github.com/pkgdist/extensions)
 
 ## Version 0.2.2
 
@@ -14,12 +15,12 @@ Release notes for the `@softdist/extension` system:  An abstract extension syste
 >
 > PATCH UPDATE
 
-Github Scopes Update. 
+Github Scopes Update.
 
-> Expect a lot more of these types of features for detecting
-Github settings. 
+> Expect a lot more of these types of features for detecting Github settings.
 
-This is the first in the group, and it deals with Github Repository Rulesets, Rules, and their parameters.
+This is the first in the group, and it deals with Github Repository Rulesets,
+Rules, and their parameters.
 
 - **Ruleset checks**
   - Tests for Rulesets
@@ -64,24 +65,24 @@ multi-purpose.
 
 ## Exported Modules
 
-| Feature Name       | Purpose                                                                                   |
-| :----------------- | :---------------------------------------------------------------------------------------- |
-| `$colors`          | Automatic error logging and warn/notice stream logging with colors                        |
-| `$const`           | Declared generic constants for local system paths and GITHUB API                          |
-| `$compare`         | Comparison functions for deep YML objects.                                                |
-| `$error`           | Generic error functions for including messages with specific colors                       |
-| `$ruleset`         | Github Rulesets and Rule scopes for detecting branch protections                          |
-| `$report`          | Reporting function for scoring tabulation in streams, and notification functions in teams |
-| `$streams`         | Optic FileStream object for logging colored error messages to evaluated streams           |
-| `$token`           | Token acquisition for GitHub CLI default, or .envcrypt files, or environment vars         |
-| `$webhook`         | Webhook secret acquisition IFFE functions                                                 |
+| Feature Name | Purpose                                                                                   |
+| :----------- | :---------------------------------------------------------------------------------------- |
+| `$colors`    | Automatic error logging and warn/notice stream logging with colors                        |
+| `$const`     | Declared generic constants for local system paths and GITHUB API                          |
+| `$compare`   | Comparison functions for deep YML objects.                                                |
+| `$error`     | Generic error functions for including messages with specific colors                       |
+| `$ruleset`   | Github Rulesets and Rule scopes for detecting branch protections                          |
+| `$report`    | Reporting function for scoring tabulation in streams, and notification functions in teams |
+| `$streams`   | Optic FileStream object for logging colored error messages to evaluated streams           |
+| `$token`     | Token acquisition for GitHub CLI default, or .envcrypt files, or environment vars         |
+| `$webhook`   | Webhook secret acquisition IFFE functions                                                 |
 
 ## Exported Variables
 
-| Variable           | Description                                                                               |
-| :----------------- | :---------------------------------------------------------------------------------------- |
-| `generatedVersion` | Software Version Information                                                              |
-| `Type`             | Types used throughout this software                                                       |
+| Variable           | Description                         |
+| :----------------- | :---------------------------------- |
+| `generatedVersion` | Software Version Information        |
+| `Type`             | Types used throughout this software |
 
 Each registry of rules will be published in the engine itself, not this module.\
 The purpose of this module is to abstract any reporting or evaluation features

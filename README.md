@@ -30,29 +30,29 @@ inspection of Github Scopes, Azure Scopes, and other objects.
 
 ## Exported Modules
 
-| Feature Name       | Purpose                                                                                   |
-| :----------------- | :---------------------------------------------------------------------------------------- |
-| `$colors`          | Automatic error logging and warn/notice stream logging with colors                        |
-| `$const`           | Declared generic constants for local system paths and GITHUB API                          |
-| `$compare`         | Comparison functions for deep YML objects.                                                |
-| `$error`           | Generic error functions for including messages with specific colors                       |
-| `$ruleset`         | Github Rulesets and Rule scopes for detecting branch protections                          |
-| `$report`          | Reporting function for scoring tabulation in streams, and notification functions in teams |
-| `$streams`         | Optic FileStream object for logging colored error messages to evaluated streams           |
-| `$token`           | Token acquisition for GitHub CLI default, or .envcrypt files, or environment vars         |
-| `$webhook`         | Webhook secret acquisition IFFE functions                                                 |
+| Feature Name | Purpose                                                                                   |
+| :----------- | :---------------------------------------------------------------------------------------- |
+| `$colors`    | Automatic error logging and warn/notice stream logging with colors                        |
+| `$const`     | Declared generic constants for local system paths and GITHUB API                          |
+| `$compare`   | Comparison functions for deep YML objects.                                                |
+| `$error`     | Generic error functions for including messages with specific colors                       |
+| `$ruleset`   | Github Rulesets and Rule scopes for detecting branch protections                          |
+| `$report`    | Reporting function for scoring tabulation in streams, and notification functions in teams |
+| `$streams`   | Optic FileStream object for logging colored error messages to evaluated streams           |
+| `$token`     | Token acquisition for GitHub CLI default, or .envcrypt files, or environment vars         |
+| `$webhook`   | Webhook secret acquisition IFFE functions                                                 |
 
 ## Exported Variables
 
-| Variable           | Description                                                                               |
-| :----------------- | :---------------------------------------------------------------------------------------- |
-| `generatedVersion` | Software Version Information                                                              |
-| `Type`             | Types used throughout this software                                                       |
+| Variable           | Description                         |
+| :----------------- | :---------------------------------- |
+| `generatedVersion` | Software Version Information        |
+| `Type`             | Types used throughout this software |
 
 ## Github Scopes
 
 We refer to Github Scopes frequently, and by scopes we mean the resources that
-RBAC permissions apply to on Github. 
+RBAC permissions apply to on Github.
 
 #### Examples of Github Scopes
 
@@ -64,20 +64,21 @@ RBAC permissions apply to on Github.
 - Organizations
 - Gists
 
-There are many more examples, but you get the idea.  Scopes are basically any 
-major section of the Github API. 
+There are many more examples, but you get the idea. Scopes are basically any
+major section of the Github API.
 
 ## Other Scopes
 
-Currently this software only incorporates Github scopes, however in the future we will be adding 
-additional scopes such as:
+Currently this software only incorporates Github scopes, however in the future
+we will be adding additional scopes such as:
 
 1. Azure
 2. AWS
 3. JFrog
 4. Terraform IAC
 
-One option here is that we will likely be adding a connector for popular configuration management software such as Ansible in future versions.
+One option here is that we will likely be adding a connector for popular
+configuration management software such as Ansible in future versions.
 
 ## Reporting Features
 
@@ -88,32 +89,32 @@ The purpose is to abstract the reporting methods into a JSR package which can be
 called using `deno run` by passing the `--import-map` flag and referencing a
 JSON import map file containing this package.
 
-
 ### Notifications
 
-Currently the only notification feature is `webhook` fire.  This is used primarily for `MS Teams` integrations.
-You can use it by setting `TEAMS_WEB_HOOK` as an environment variable.
-
+Currently the only notification feature is `webhook` fire. This is used
+primarily for `MS Teams` integrations. You can use it by setting
+`TEAMS_WEB_HOOK` as an environment variable.
 
 ### Import Map
 
-Here is an example import map for testing `deno run --import-map ./deps.json ./src/check_ruleset.ts`:
+Here is an example import map for testing
+`deno run --import-map ./deps.json ./src/check_ruleset.ts`:
 
 ```json
-  {
-    "imports": {
-      "@octokit/core": "npm:@octokit/core@^7.0.2",
-      "@onjara/optic": "jsr:@onjara/optic@^2.0.3",
-      "@alikia/random-key": "jsr:@alikia/random-key@^1.0.1",
-      "@deno/dnt": "jsr:@deno/dnt@^0.41.2",
-      "@softdist/extensions": "jsr:@softdist/extensions@0.2.1",
-      "@std/assert": "jsr:@std/assert@1.0.13",
-      "@std/fmt": "jsr:@std/fmt@^1.0.7",
-      "@std/fs": "jsr:@std/fs@^1.0.17",
-      "@cliffy/command": "jsr:@cliffy/command@^1.0.0-rc.7",
-      "lefthook": "npm:lefthook@^1.11.12"
-    }
+{
+  "imports": {
+    "@octokit/core": "npm:@octokit/core@^7.0.2",
+    "@onjara/optic": "jsr:@onjara/optic@^2.0.3",
+    "@alikia/random-key": "jsr:@alikia/random-key@^1.0.1",
+    "@deno/dnt": "jsr:@deno/dnt@^0.41.2",
+    "@softdist/extensions": "jsr:@softdist/extensions@0.2.1",
+    "@std/assert": "jsr:@std/assert@1.0.13",
+    "@std/fmt": "jsr:@std/fmt@^1.0.7",
+    "@std/fs": "jsr:@std/fs@^1.0.17",
+    "@cliffy/command": "jsr:@cliffy/command@^1.0.0-rc.7",
+    "lefthook": "npm:lefthook@^1.11.12"
   }
+}
 ```
 
 > [!TIP]
