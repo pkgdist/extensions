@@ -12,7 +12,7 @@ async function checkForCliToken(): Promise<string | null> {
       args: ['auth', 'token'],
       stdin: 'piped',
       stdout: 'piped',
-      stderr: 'null',
+      stderr: 'piped',
     })
     proc = checkMake.spawn()
     const { stdout } = await proc.output()
@@ -33,20 +33,25 @@ async function checkForCliToken(): Promise<string | null> {
  * @description Checks if the 'make' command is available on the system.
  * @returns success boolean indicating if 'make' is available.
  */
-async function isMakeAvailable(): Promise<boolean> {
+async function isMakeAvailable(): Promise<boolean | null> {
+  let proc: Deno.ChildProcess | undefined
   try {
     const checkMake = new Deno.Command(`make`, {
       args: ['--version'],
-      stdin: 'null',
+      stdin: 'piped',
       stdout: 'piped',
-      stderr: 'null',
+      stderr: 'piped',
     })
-    const proc = checkMake.spawn()
+    proc = checkMake.spawn()
     const { success } = await proc.status
-    await proc.stdin.close()
     return success
   } catch {
-    return false
+    // no error handling since we gracefully fallback on null
+    return null
+  } finally {
+    if (proc) {
+      await proc.stdin.close()
+    }
   }
 }
 
