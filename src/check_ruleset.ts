@@ -16,7 +16,6 @@ const repoData = {
   branch: 'main',
 }
 
-
 /*
 copilotCodeReviewEnabled:
 rulesets.0.copilotCodeReviewEnabled
@@ -33,10 +32,13 @@ requireBranchesUpToDate
 rulesetMeta
 */
 
-
-const result2 = await $ruleset.inspectReviewAndCopilotEnforcement(token, repoData.owner, repoData.repository, repoData.branch)
+const result2 = await $ruleset.inspectReviewAndCopilotEnforcement(
+  token,
+  repoData.owner,
+  repoData.repository,
+  repoData.branch,
+)
 console.log(JSON.stringify(result2, null, 2))
-
 
 const result = await $ruleset.assertRulesetByIndexParameter(
   0, // rulesetNumber

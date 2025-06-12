@@ -14,16 +14,13 @@ Deno.test({
       repository: Deno.env.get('PROD_REPO')!,
       branch: 'main',
     }
-    const rulesetIndex = 0
-    const parameterPath = 'copilotCodeReviewEnabled'
-    const value = true
-
     const result = await $ruleset.assertRulesetByIndexParameter(
-      rulesetIndex,
-      parameterPath,
-      value,
+      0, // rulesetNumber
+      'copilotCodeReviewEnabled', // ruleset JSON path
+      true, // value to assert
       repoData,
     )
+    console.log(result) // "true" or "false"
     assertEquals(result, 'true')
   },
 })
@@ -45,16 +42,13 @@ Deno.test({
       repository: Deno.env.get('PROD_REPO')!,
       branch: 'main',
     }
-    const rulesetIndex = 0
-    const parameterPath = 'requireStatusChecksToPass'
-    const value = true
-
     const result = await $ruleset.assertRulesetByIndexParameter(
-      rulesetIndex,
-      parameterPath,
-      value,
+      0, // rulesetNumber
+      'requireStatusChecksToPass', // ruleset JSON path
+      true, // value to assert
       repoData,
     )
+    console.log(result) // "true" or "false"
     assertEquals(result, 'true')
   },
 })
@@ -76,16 +70,13 @@ Deno.test({
       repository: Deno.env.get('PROD_REPO')!,
       branch: 'main',
     }
-    const rulesetIndex = 0
-    const parameterPath = 'requireBranchesUpToDate'
-    const value = true
-
     const result = await $ruleset.assertRulesetByIndexParameter(
-      rulesetIndex,
-      parameterPath,
-      value,
+      0, // rulesetNumber
+      'requireBranchesUpToDate', // ruleset JSON path
+      true, // value to assert
       repoData,
     )
+    console.log(result) // "true" or "false"
     assertEquals(result, 'true')
   },
 })
