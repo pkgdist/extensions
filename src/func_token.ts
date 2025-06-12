@@ -1,5 +1,4 @@
 import { exists } from 'jsr:@std/fs@1.0.18/exists'
-import * as $error from './func_error.ts'
 
 /**
  * @function checkForCliToken
@@ -7,18 +6,26 @@ import * as $error from './func_error.ts'
  * @returns string token value or null if not found
  */
 async function checkForCliToken(): Promise<string | null> {
+  let proc: Deno.ChildProcess | undefined
   try {
     const checkMake = new Deno.Command(`gh`, {
       args: ['auth', 'token'],
-      stdin: 'null',
+      stdin: 'piped',
       stdout: 'piped',
       stderr: 'null',
     })
-    const checkChild = checkMake.spawn()
-    const { stdout } = await checkChild.output()
-    return stdout ? new TextDecoder().decode(stdout).trim() : null
+    proc = checkMake.spawn()
+    const { stdout } = await proc.output()
+    const message = stdout ? new TextDecoder().decode(stdout).trim() : null
+    return message
+
   } catch {
+    // no error handling since we gracefully fallback on null
     return null
+  } finally {
+    if (proc) {
+      await proc.stdin.close()
+    }
   }
 }
 
@@ -35,8 +42,9 @@ async function isMakeAvailable(): Promise<boolean> {
       stdout: 'piped',
       stderr: 'null',
     })
-    const checkChild = checkMake.spawn()
-    const { success } = await checkChild.status
+    const proc = checkMake.spawn()
+    const { success } = await proc.status
+    await proc.stdin.close()
     return success
   } catch {
     return false
@@ -51,47 +59,37 @@ async function isMakeAvailable(): Promise<boolean> {
 async function getTokenFromEnvcrypt(): Promise<string | null> {
   const envcrypt = await exists('.envcrypt', { isFile: true })
   if (!envcrypt) {
-    $error.logErrorWithType(
-      `'.envcrypt' file not found.`,
-      '',
-      'gray',
-      `       ╰───[INFO]`,
-    )
     return null
   }
 
+  let proc: Deno.ChildProcess | undefined
   try {
-    const process = new Deno.Command(`make`, {
+    const checkMake = new Deno.Command(`make`, {
       args: ['echo-PROD_TOKEN'],
-      stdin: 'null',
+      stdin: 'piped',
       stdout: 'piped',
       stderr: 'piped',
     })
-
-    const child = process.spawn()
-    const { stdout, stderr } = await child.output()
-    await child.stdin.close()
-    const outputText: string = new TextDecoder().decode(stdout).trim()
-    const errorText = new TextDecoder().decode(stderr).trim()
-
+    proc = checkMake.spawn()
+    const { stdout, stderr } = await proc.output()
+    const message = stdout ? new TextDecoder().decode(stdout).trim() : null
+    const errorText = stderr ? new TextDecoder().decode(stderr).trim() : null
     if (errorText) {
-      $error.logErrorWithType(
-        `Error retrieving PROD_TOKEN from .envcrypt: ${errorText}`,
-        '',
-        'red',
-        `          ╰───[WARN] `,
-      )
       return null
     }
-    return outputText.length > 0 ? outputText : null
-  } catch (error) {
-    $error.logErrorWithType(
-      `Exception retrieving PROD_TOKEN from .envcrypt`,
-      { message: error },
-      'red',
-      `          ╰───[WARN] `,
-    )
+    if (message === null) {
+      return null
+    } else {
+      return message.length > 0 ? message : null
+    }
+
+  } catch {
+    // no error handling since we gracefully fallback on null
     return null
+  } finally {
+    if (proc) {
+      await proc.stdin.close()
+    }
   }
 }
 
@@ -101,24 +99,26 @@ async function getTokenFromEnvcrypt(): Promise<string | null> {
  * @returns token string or null if not found
  */
 async function getToken(): Promise<string | null> {
-  // 1. Try PROD_TOKEN env var
+
+  console.log('Checking for PROD_TOKEN...')
   const prod_token = Deno.env.get('PROD_TOKEN')
   if (prod_token && prod_token.length > 0) {
     return prod_token
   }
 
-  // 2. Try .envcrypt via make
+  console.log('Checking for GitHub CLI token...')
+
+  const cliToken = await checkForCliToken()
+  if (cliToken && cliToken.length > 0) {
+    return cliToken
+  }
+
+  // last resort is to check for make then run make echo-PROD_TOKEN to retrieve from .envcrypt
   if (await isMakeAvailable()) {
     const envcryptToken = await getTokenFromEnvcrypt()
     if (envcryptToken && envcryptToken.length > 0) {
       return envcryptToken
     }
-  }
-
-  // 3. Try GH CLI
-  const cliToken = await checkForCliToken()
-  if (cliToken && cliToken.length > 0) {
-    return cliToken
   }
 
   // None found

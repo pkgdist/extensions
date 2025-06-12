@@ -1,20 +1,16 @@
+import { GITHUB_TOKEN } from "../declare_const.ts";
 import * as $ruleset from '../func_rules.ts'
 import * as $token from '../func_token.ts'
 import { assertEquals } from 'jsr:@std/assert@^0.224.0/assert-equals'
+
 
 Deno.test({
   name: 'assertRulesetByIndexParameter - copilotCodeReviewEnabled is true',
   sanitizeResources: false,
   sanitizeOps: false,
   async fn() {
-    const token = await $token.getToken()
-    if (!token) {
-      throw new Error(
-        'No GitHub token found. Please set the GITHUB_TOKEN environment variable.',
-      )
-    }
     const repoData = {
-      token,
+      token: GITHUB_TOKEN as string,
       owner: Deno.env.get('PROD_OWNER')!,
       repository: Deno.env.get('PROD_REPO')!,
       branch: 'main',
@@ -41,11 +37,11 @@ Deno.test({
     const token = await $token.getToken()
     if (!token) {
       throw new Error(
-        'No GitHub token found. Please set the GITHUB_TOKEN environment variable.',
+        'No GitHub token found. Please set the PROD_TOKEN environment variable.',
       )
     }
     const repoData = {
-      token,
+      token: GITHUB_TOKEN as string,
       owner: Deno.env.get('PROD_OWNER')!,
       repository: Deno.env.get('PROD_REPO')!,
       branch: 'main',
@@ -72,11 +68,11 @@ Deno.test({
     const token = await $token.getToken()
     if (!token) {
       throw new Error(
-        'No GitHub token found. Please set the GITHUB_TOKEN environment variable.',
+        'No GitHub token found. Please set the PROD_TOKEN environment variable.',
       )
     }
     const repoData = {
-      token,
+      token: GITHUB_TOKEN as string,
       owner: Deno.env.get('PROD_OWNER')!,
       repository: Deno.env.get('PROD_REPO')!,
       branch: 'main',
