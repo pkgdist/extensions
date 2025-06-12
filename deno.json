@@ -4,7 +4,9 @@
   "license": "MIT",
   "exports": "./src/mod.ts",
   "test": {
-    "include": []
+    "include": [
+      "src/tests/*.ts"
+    ]
   },
   "nodeModulesDir": "auto",
   "compilerOptions": {

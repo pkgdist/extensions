@@ -1,21 +1,43 @@
-# Extension System
+# Extensions
+
+Release notes for the `@softdist/extension` system:  An abstract extension system for inspection of Github scopes.
+
+* Package: [@softdist/extensions](https://jsr.io/@softdist/extensions)
+* Repository: [@pkgdist/extensions](https://github.com/pkgdist/extensions)
+
+## Version 0.2.2
 
 [![JSR release (latest)](https://img.shields.io/badge/JSR-module-hotpink)](https://jsr.io/@softdist/extensions)
 [![GitHub release (latest)](https://img.shields.io/badge/github-repo-8A2BE2)](https://github.com/pkgdist/extensions)
 
 > [!IMPORTANT]
 >
-> VERSION UPDATE 0.2.2
+> PATCH UPDATE
 
-Github Scopes Update. Expect a lot more of these types of features for detecting
-Github settings. This is the first in the group, and it deals with Github
-Repository Rulesets, Rules, and their parameters.
+Github Scopes Update. 
 
-- Ruleset checks
-- Branch Protection for status checks to pass
-- Branch Protection for up-to-date requirement
-- Copilot Code Review enabled
-- Any other rule can be determined by using a `JSON_PATH`
+> Expect a lot more of these types of features for detecting
+Github settings. 
+
+This is the first in the group, and it deals with Github Repository Rulesets, Rules, and their parameters.
+
+- **Ruleset checks**
+  - Tests for Rulesets
+- Documentation improvements
+  - Improved Release Notes and Readme
+  - Added Licensing Notes
+- Token complexity reduction
+  - Token graceful fallback improvements
+  - Dependency reduction
+- Housekeeping
+  - Updated scripts
+  - Updated Makefile
+  - Bumped version
+- Ruleset features
+  - Branch Protection for status checks to pass
+  - Branch Protection for up-to-date requirement
+  - Copilot Code Review enabled
+  - Any other rule can be determined by using a `JSON_PATH`
 
 ### Examples
 
@@ -40,17 +62,26 @@ multi-purpose.
 > Use a generic `import * as exts from 'jsr:@softdist/extensions@0.2.X'` and it
 > will automatically retrieve all the modules we export below:
 
-1. `$colors` - log colors
-2. `$const` - constants we often declare such as acquiring github cli token
-3. `$token` - gh cli token and envcrypt
-4. `$error` - generic errors
-5. `$deep` - deep object comparison
-6. `$report` - reporting mechanism
-7. `$ruleset` - github ruleset inspection mechanisms
-8. `$streams` - static FileStream objects for async and callback logging
-9. `$webhook` - generic webhooks
-10. `Type` - exported types used throughout these features
-11. `generatedVersion` - automatic git tag version embedded in this release
+## Exported Modules
+
+| Feature Name       | Purpose                                                                                   |
+| :----------------- | :---------------------------------------------------------------------------------------- |
+| `$colors`          | Automatic error logging and warn/notice stream logging with colors                        |
+| `$const`           | Declared generic constants for local system paths and GITHUB API                          |
+| `$compare`         | Comparison functions for deep YML objects.                                                |
+| `$error`           | Generic error functions for including messages with specific colors                       |
+| `$ruleset`         | Github Rulesets and Rule scopes for detecting branch protections                          |
+| `$report`          | Reporting function for scoring tabulation in streams, and notification functions in teams |
+| `$streams`         | Optic FileStream object for logging colored error messages to evaluated streams           |
+| `$token`           | Token acquisition for GitHub CLI default, or .envcrypt files, or environment vars         |
+| `$webhook`         | Webhook secret acquisition IFFE functions                                                 |
+
+## Exported Variables
+
+| Variable           | Description                                                                               |
+| :----------------- | :---------------------------------------------------------------------------------------- |
+| `generatedVersion` | Software Version Information                                                              |
+| `Type`             | Types used throughout this software                                                       |
 
 Each registry of rules will be published in the engine itself, not this module.\
 The purpose of this module is to abstract any reporting or evaluation features
@@ -67,3 +98,22 @@ Deno without the necessity to write Typescript code to the user's computer.
 
 - ARM64
 - X86_64
+
+## About FileStream
+
+> [!IMPORTANT]
+> **Note:** This code relies on MIT licensed objects from `jsr:@onjara/optic`.
+
+FileStreams 2.0.3 currently has a bug that disallows the use of FileStream
+objects from import statements, as there is no `mod.ts` file
+[here](https://github.com/onjara/optic/tree/master/streams/fileStream). Once
+this bug is fixed we will remove the inclusion of optic code directly in our
+package. (it's a stop gap measure)
+
+&nbsp;
+
+# LICENSE
+
+This code uses the [MIT License](LICENSE) for OSS.
+
+> © Lynsei Asynynivynya 2025.
