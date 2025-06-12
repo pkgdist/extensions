@@ -1,16 +1,16 @@
-import { exists } from 'jsr:@std/fs@1.0.18/exists'
+import { exists } from 'jsr:@std/fs/exists'
 import * as $error from './func_error.ts'
 
 /**
  * @function checkForCliToken
  * @description Fetches token from GH CLI
- * @returns string token value
+ * @returns string token value or null if not found
  */
 async function checkForCliToken(): Promise<string | null> {
   try {
     const checkMake = new Deno.Command(`gh`, {
       args: ['auth', 'token'],
-      stdin: 'piped',
+      stdin: 'null',
       stdout: 'piped',
       stderr: 'null',
     })
@@ -51,7 +51,6 @@ async function isMakeAvailable(): Promise<boolean> {
 async function getTokenFromEnvcrypt(): Promise<string | null> {
   const envcrypt = await exists('.envcrypt', { isFile: true })
   if (!envcrypt) {
-    // envcrypt not fouund
     $error.logErrorWithType(
       `'.envcrypt' file not found.`,
       '',
@@ -60,70 +59,70 @@ async function getTokenFromEnvcrypt(): Promise<string | null> {
     )
     return null
   }
-  // envcrypt found
-  const envcrypt_exists = true
 
-  const process = new Deno.Command(`make`, {
-    args: ['echo-PROD_TOKEN'],
-    stdin: 'piped',
-    stdout: 'piped',
-    stderr: 'piped',
-  })
+  try {
+    const process = new Deno.Command(`make`, {
+      args: ['echo-PROD_TOKEN'],
+      stdin: 'null',
+      stdout: 'piped',
+      stderr: 'piped',
+    })
 
-  const child = process.spawn()
-  const { stdout, stderr } = await child.output()
-  const outputText: string = new TextDecoder().decode(stdout).trim()
-  const errorText = new TextDecoder().decode(stderr).trim()
+    const child = process.spawn()
+    const { stdout, stderr } = await child.output()
+    await child.stdin.close()
+    const outputText: string = new TextDecoder().decode(stdout).trim()
+    const errorText = new TextDecoder().decode(stderr).trim()
 
-  // .envcrypt was found and attempting to use it
-
-  await child.stdin.close()
-
-  if (errorText) console.error('Error:', errorText)
-  return outputText
+    if (errorText) {
+      $error.logErrorWithType(
+        `Error retrieving PROD_TOKEN from .envcrypt: ${errorText}`,
+        '',
+        'red',
+        `          ╰───[WARN] `,
+      )
+      return null
+    }
+    return outputText.length > 0 ? outputText : null
+  } catch (error) {
+    $error.logErrorWithType(
+      `Exception retrieving PROD_TOKEN from .envcrypt`,
+      { message: error },
+      'red',
+      `          ╰───[WARN] `,
+    )
+    return null
+  }
 }
 
 /**
  * @function getToken
- * @description Anonymous function to get the Github CLI Token from our encrypted .envcrypt file or Github Secret
- * @returns token text to be stored and exported as GH_CLI_TOKEN
+ * @description Attempts to get the PROD_TOKEN from environment, .envcrypt, or GH CLI, in that order. Returns null if not found.
+ * @returns token string or null if not found
  */
-async function getToken(): Promise<string | undefined | null> {
-  const is_ci: unknown = Deno.env.get('CI')
+async function getToken(): Promise<string | null> {
+  // 1. Try PROD_TOKEN env var
   const prod_token = Deno.env.get('PROD_TOKEN')
-
-  // there was more complex error reporting here but since these are executed with each test it got annoying
-  if (is_ci) {
-    const ci_mode = true
-    return prod_token == undefined || prod_token == '' ? null : prod_token
-  } else {
-    const ci_mode = false
-  }
-
-  if (!prod_token || prod_token.length == 0) {
-    try {
-      if (!await isMakeAvailable()) {
-        const make_unavailable = true
-        return null
-      }
-      const make_unavailable = false
-
-      const token = await getTokenFromEnvcrypt()
-      return token
-    } catch (error) {
-      $error.logErrorWithType(
-        `Error setting prod token | `,
-        { message: error },
-        'red',
-        `      ╰───[WARN] `,
-      )
-
-      return null
-    }
-  } else {
-    const env_var_set = true
+  if (prod_token && prod_token.length > 0) {
     return prod_token
   }
+
+  // 2. Try .envcrypt via make
+  if (await isMakeAvailable()) {
+    const envcryptToken = await getTokenFromEnvcrypt()
+    if (envcryptToken && envcryptToken.length > 0) {
+      return envcryptToken
+    }
+  }
+
+  // 3. Try GH CLI
+  const cliToken = await checkForCliToken()
+  if (cliToken && cliToken.length > 0) {
+    return cliToken
+  }
+
+  // None found
+  return null
 }
 
 export { checkForCliToken, getToken, getTokenFromEnvcrypt, isMakeAvailable }

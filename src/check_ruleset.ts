@@ -1,10 +1,17 @@
 import * as $ruleset from './func_rules.ts'
+import * as $token from './func_token.ts'
+
+const token = await $token.getToken()
+if (!token) {
+  console.error('No GitHub token found. Please set the GITHUB_TOKEN environment variable.')
+  Deno.exit(1)
+}
 
 // const result = await $ruleset.inspectReviewAndCopilotEnforcement(token, owner, repo, branch)
 // console.log(JSON.stringify(result, null, 2))
 
 const repoData = {
-  token: Deno.env.get('PROD_TOKEN')!,
+  token: token,
   owner: Deno.env.get('PROD_OWNER')!,
   repository: Deno.env.get('PROD_REPO')!,
   branch: 'main',

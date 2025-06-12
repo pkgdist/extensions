@@ -12,8 +12,7 @@ requires reporting and inspection methods for Github scopes.
 
 ## Latest Updates
 
-Please review the [release notes](release-notes.md) for information on the
-latest release.
+Please review the [release notes](https://github.com/pkgdist/extensions/blob/main/release-notes.md) for information on the latest release.
 
 ## What are Github Scopes?
 

@@ -5,7 +5,7 @@
 
 > [!IMPORTANT]
 >
-> VERSION UPDATE 0.2.1
+> VERSION UPDATE 0.2.2
 
 Github Scopes Update. Expect a lot more of these types of features for detecting
 Github settings. This is the first in the group, and it deals with Github
