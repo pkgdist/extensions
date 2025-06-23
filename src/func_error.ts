@@ -6,18 +6,17 @@ import { ALL_COLORS, logColor } from './declare_colors.ts'
  * @purpose: provides tabstop strings for indentation in the code
  */
 const tabstop = {
-  t1 : '  ',
-  t2 : '    ',
-  t3 : '      ',
-  t4 : '        ',
-  t5 : '          ',
-  t6 : '            ',
-  t7 : '              ',
-  t8 : '                ',
-  t9 : '                  ',
-  t10: '                    '
+  t1: '  ',
+  t2: '    ',
+  t3: '      ',
+  t4: '        ',
+  t5: '          ',
+  t6: '            ',
+  t7: '              ',
+  t8: '                ',
+  t9: '                  ',
+  t10: '                    ',
 }
-
 
 /**
  * @function logErrorWithType
@@ -50,4 +49,4 @@ function logErrorWithType(
   logColor(safeColor as Parameters<typeof logColor>[0], msg)
 }
 
-export { tabstop, logErrorWithType }
+export { logErrorWithType, tabstop }

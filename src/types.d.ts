@@ -1,5 +1,4 @@
 export namespace ExtensionSystemTypes {
-
   /**
    * @type Original Report Type v0.2.1-0.2.4
    * @description This module contains generic types used throughout the application.
@@ -140,7 +139,6 @@ export namespace ExtensionSystemTypes {
     'X-GitHub-Api-Version': string
   }
 
-
   /*
    * GENERIC REPORT TYPES
    * @description This module contains interfaces used on reporting only
@@ -164,7 +162,8 @@ export namespace ExtensionSystemTypes {
    * @interface ReportEntryWithNone
    * @description Represents a single report entry extending the GenericReportEntry interface with no fields.
    */
-  export interface ReportEntryWithNone<T = unknown> extends GenericReportEntry<T> {
+  export interface ReportEntryWithNone<T = unknown>
+    extends GenericReportEntry<T> {
     customFields?: Record<string, unknown>
   }
 
@@ -172,7 +171,8 @@ export namespace ExtensionSystemTypes {
    * @interface ReportEntryWithErrors
    * @description Represents a single report entry as the base type.  This can be extended to include custom fields in the report entries.
    */
-  export interface ReportEntryWithErrors<T = unknown> extends GenericReportEntry<T> {
+  export interface ReportEntryWithErrors<T = unknown>
+    extends GenericReportEntry<T> {
     customFields?: Record<string, unknown>
     error?: Record<string, unknown>
   }
@@ -202,7 +202,7 @@ export namespace ExtensionSystemTypes {
    * @type ReportEntry
    * @description Represents a GenericReportEntry with unknown purpose.
    */
-  export type ReportEntrySpecific<T = unknown> = GenericReportEntry<T>;
+  export type ReportEntrySpecific<T = unknown> = GenericReportEntry<T>
 
   /**
    * @type ReportTypes

@@ -8,7 +8,7 @@ import { ExtensionSystemTypes as Type } from './types.d.ts'
  */
 export const reports: Type.ReportType<unknown> = {
   notifications: {},
-  entries: {}
+  entries: {},
 }
 
 /**
@@ -17,9 +17,14 @@ export const reports: Type.ReportType<unknown> = {
  * @param message - The message to be sent to Teams Hook URL via POST.
  * @returns responseText - The response object text from the TEAMS_WEB_HOOK promise response
  */
-export async function notifyTeamsHook(message: string): Promise<string | boolean> {
+export async function notifyTeamsHook(
+  message: string,
+): Promise<string | boolean> {
   $error.logErrorWithType(
-    `Attempted Teams Webhook Message: ${message}`, '', 'brightBlue', `${$error.tabstop.t4} ╰─── NOTICE	┈ HOOK	┈ `
+    `Attempted Teams Webhook Message: ${message}`,
+    '',
+    'brightBlue',
+    `${$error.tabstop.t4} ╰─── NOTICE	┈ HOOK	┈ `,
   )
   if (typeof TEAMS_WEB_HOOK === 'string' && TEAMS_WEB_HOOK.length > 0) {
     const response = await fetch(TEAMS_WEB_HOOK, {
@@ -65,7 +70,8 @@ export async function notifyTeamsHook(message: string): Promise<string | boolean
  */
 export class Reporting<T> {
   private aggregate: { repos: Record<string, T[]> } = { repos: {} }
-  private hooks: Array<(entry: Type.GenericReportEntry<T>) => Promise<void>> = []
+  private hooks: Array<(entry: Type.GenericReportEntry<T>) => Promise<void>> =
+    []
 
   constructor(private outputFile: string = 'report_aggregate.json') {}
 
@@ -75,27 +81,37 @@ export class Reporting<T> {
   }
 
   // Add a report entry and trigger hooks
-  async addEntry(name: string, entry: Type.GenericReportEntry<T>): Promise<void> {
+  async addEntry(
+    name: string,
+    entry: Type.GenericReportEntry<T>,
+  ): Promise<void> {
     if (!this.aggregate.repos[entry.repo]) {
       this.aggregate.repos[entry.repo] = []
-    }
-    // Use ReportEntries with ReportEntryWithErrors<T> generics
-    (this.aggregate as Type.ReportEntries<Type.ReportEntryWithErrors<T>>).repos[entry.repo].push(entry as Type.ReportEntryWithErrors<T>)
+    } // Use ReportEntries with ReportEntryWithErrors<T> generics
+
+    ;(this.aggregate as Type.ReportEntries<Type.ReportEntryWithErrors<T>>)
+      .repos[entry.repo].push(entry as Type.ReportEntryWithErrors<T>)
 
     // Trigger all hooks asynchronously (do not block on errors)
     await Promise.all(
       this.hooks.map(async (hook) => {
         try {
           $error.logErrorWithType(
-            `Attempting to add hook: `, entry, 'gray', `${$error.tabstop.t4} ╰─── NOTICE	┈ ADD HOOK TO REPORT	┈ `,
+            `Attempting to add hook: `,
+            entry,
+            'gray',
+            `${$error.tabstop.t4} ╰─── NOTICE	┈ ADD HOOK TO REPORT	┈ `,
           )
           await hook(entry)
         } catch (e) {
           $error.logErrorWithType(
-            `Could not add Hook to map: ${e}`, entry, 'red', `${$error.tabstop.t4} ╰─── ERROR	┈ ADD HOOK TO REPORT	┈ `,
+            `Could not add Hook to map: ${e}`,
+            entry,
+            'red',
+            `${$error.tabstop.t4} ╰─── ERROR	┈ ADD HOOK TO REPORT	┈ `,
           )
         }
-      })
+      }),
     )
 
     // Persist the aggregate report to file
@@ -104,7 +120,10 @@ export class Reporting<T> {
 
   // Save the aggregate report as JSON
   private async save() {
-    await Deno.writeTextFile(this.outputFile, JSON.stringify(this.aggregate, null, 2))
+    await Deno.writeTextFile(
+      this.outputFile,
+      JSON.stringify(this.aggregate, null, 2),
+    )
   }
 
   // Optionally, load an existing report file
@@ -127,10 +146,10 @@ export class Reporting<T> {
  * @returns A promise that resolves to the Reporting instance.
  */
 export async function createReport<
-  T = unknown
+  T = unknown,
 >(
   hooks: Array<(entry: Type.GenericReportEntry<T>) => Promise<void>> = [],
-  outputFile: string = 'report_aggregate.json'
+  outputFile: string = 'report_aggregate.json',
 ): Promise<Reporting<T>> {
   const reporting = new Reporting<T>(outputFile)
   for (const hook of hooks) {
@@ -140,12 +159,13 @@ export async function createReport<
   return reporting
 }
 
-
 /**
  * @function createReportEntry
  * @description Creates a new report entry using GenericReportEntry or any extended interfaces using it as a base.
  * @param entry - The report entry to be created.
  */
-export function createReportEntry<T extends Type.GenericReportEntry<any>>(entry: T): T {
+export function createReportEntry<T extends Type.GenericReportEntry<any>>(
+  entry: T,
+): T {
   return entry
 }
