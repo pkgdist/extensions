@@ -213,8 +213,7 @@ export namespace ExtensionSystemTypes {
     entries: Record<string, ReportEntrySpecific<T>[]>
   }
 
-  export type PathValue = { path: string; value: unknown };
-
+  export type PathValue = { path: string; value: unknown }
 
   /**
    * @typedef {Object} ReviewEnforcementSummary

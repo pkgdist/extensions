@@ -15,8 +15,10 @@ for inspection of Github scopes.
 >
 > PATCH UPDATE
 
-* This patch version `0.2.7` addresses the lack of a function for finding paths and values: `findParamPaths`
-* It also addresses the need for a set of generic-type data objects for json based on:
+- This patch version `0.2.7` addresses the lack of a function for finding paths
+  and values: `findParamPaths`
+- It also addresses the need for a set of generic-type data objects for json
+  based on:
 
 ```bash
 repos: { 

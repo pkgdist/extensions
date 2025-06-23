@@ -250,25 +250,25 @@ export function getByPath(obj: any, path: string): any {
 export function findParamPaths(
   obj: Record<string, unknown>,
   key: string,
-  basePath = ''
+  basePath = '',
 ): Type.PathValue[] {
-  const results: Type.PathValue[] = [];
+  const results: Type.PathValue[] = []
 
   function search(current: any, path: string) {
-    if (typeof current !== 'object' || current === null) return;
+    if (typeof current !== 'object' || current === null) return
     for (const [k, v] of Object.entries(current)) {
-      const newPath = path ? `${path}.${k}` : k;
+      const newPath = path ? `${path}.${k}` : k
       if (k === key) {
-        results.push({ path: newPath, value: v });
+        results.push({ path: newPath, value: v })
       }
       if (typeof v === 'object' && v !== null) {
-        search(v, newPath);
+        search(v, newPath)
       }
     }
   }
 
-  search(obj, basePath);
-  return results;
+  search(obj, basePath)
+  return results
 }
 
 /**

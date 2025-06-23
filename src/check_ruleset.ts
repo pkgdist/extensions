@@ -44,12 +44,14 @@ const result = await $ruleset.assertRulesetByIndexParameter(
   0, // rulesetNumber
   'requireBranchesUpToDate', // ruleset JSON path
   true, // value to assert
-  repoData
+  repoData,
 )
 console.log(result) // "true" or "false"
 
-
-const rs_results = $ruleset.findParamPaths({ str: result2 } , "check_response_timeout_minutes")
+const rs_results = $ruleset.findParamPaths(
+  { str: result2 },
+  'check_response_timeout_minutes',
+)
 console.log(rs_results)
 
 // if rs_results > 0
