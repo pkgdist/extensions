@@ -10,7 +10,7 @@ fi
 echo "Last Tag: $tag"
 
 # Generate build tag
-newtag=v$(./scripts/semver.sh bump major $(git tag -l | tail -n 1))
+newtag=$(./scripts/semver.sh bump major $(git tag -l | tail -n 1))
 echo "New Tag: $newtag"
 
 # Generate commit tag

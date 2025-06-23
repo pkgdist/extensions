@@ -10,7 +10,7 @@ fi
 echo "Last Tag: $tag"
 
 # Generate build tag
-newtag=v$(./scripts/semver.sh bump build $(shuf -i 10000-99999 -n 1) $(git tag -l | tail -n 1))
+newtag=$(./scripts/semver.sh bump build $(shuf -i 10000-99999 -n 1) $(git tag -l | tail -n 1))
 build=$(echo "$newtag" | cut -d'+' -f 2)
 
 echo "Build number: $build"
