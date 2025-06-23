@@ -31,16 +31,20 @@ test:  ## Run Deno Unit and Integration Tests
 	deno test --allow-all --coverage=coverage --trace-leaks
 
 run:  ## Run the program with no log-level set
-	deno run --allow-all --no-check ./src/mod.ts
+	deno run --allow-all ./src/mod.ts
 
 trace:  ## Run Program in Debug Mode
-	deno run --allow-all --no-check --log-level trace ./src/mod.ts
+	deno run --allow-all --log-level trace ./src/mod.ts
 
 debug:  ## Run Program in Debug Mode
 	deno run --allow-all --no-check --log-level debug ./src/mod.ts
 
 check: ## Run deno check
 	deno check ./src/mod.ts
+
+format:  ## Format the code using deno fmt
+	deno fmt --check --indent-width 2 --unstable-yaml --no-semicolons --single-quote
+	deno fmt --indent-width 2 --unstable-yaml --no-semicolons --single-quote 2>&1 | tee _.report.lizard.log
 
 compile-darwin:  ## Compile for Darwin x86 and ARM64
 	mkdir -p ./bin/aarch64-apple-darwin ./bin/x86_64-apple-darwin
@@ -134,3 +138,15 @@ bump-build:  ## Bump the build version to a random build number
 
 build-release:  ## Run release build
 	./scripts/build_release.sh
+
+ci-bump:  ## Build number (bump) releases:  Full CI Add-Commit-Tag-Push Process                                i.e.- '$make ci-bump int="109" msg="feature/story_109: Msg"'
+	./scripts/ci_bump.sh $(int) "$(msg)"
+
+ci-patch:  ## Patch releases: Full CI Add-Commit-Tag-Push Process
+	./scripts/ci_patch.sh $(int) "$(msg)"
+
+ci-minor:  ## Minor releases: Full CI Process Add-Commit-Tag-Push Process
+	./scripts/ci_minor.sh $(int) "$(msg)"
+
+ci-major:  ## Major releases: Full CI Process Add-Commit-Tag-Push Process
+	./scripts/ci_minor.sh $(int) "$(msg)"

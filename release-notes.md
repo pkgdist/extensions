@@ -6,7 +6,7 @@ for inspection of Github scopes.
 - Package: [@softdist/extensions](https://jsr.io/@softdist/extensions)
 - Repository: [@pkgdist/extensions](https://github.com/pkgdist/extensions)
 
-## Version 0.2.4
+## Version 0.2.5
 
 [![JSR release (latest)](https://img.shields.io/badge/JSR-module-hotpink)](https://jsr.io/@softdist/extensions)
 [![GitHub release (latest)](https://img.shields.io/badge/github-repo-8A2BE2)](https://github.com/pkgdist/extensions)
@@ -15,7 +15,65 @@ for inspection of Github scopes.
 >
 > PATCH UPDATE
 
-Github Scopes Update.
+This patch version `0.2.5` addresses the need for a set of generic-type data objects for json based on:
+```bash
+      repos: { 
+        repo: [
+          { 
+            entry1: unknown, 
+            entry2: unknown 
+            entry3: unknown
+          }
+        ] 
+      }
+```
+
+The reporting object can now be extended by using custom exceptions or other object types, and by simply passing any functions as hooks to the `createReport` function.
+
+
+### Custom Object Types
+
+Passing custom objects to the `createReport` function is now trivial.
+
+#### Extending createReportEntry\<custom\>
+
+You can easily use the generic reporting object by instantiating it with a custom type.
+
+The example below illustrates how custom `Exception` error reporting objects are passed to the Reporting class:
+
+```typescript
+// a custom error exception called Exception:
+export type Exception = Error | string | Record<string, unknown>
+// a custom HookExample function call to illustrate passing as a hook:
+export async function HookExample(entry: string = '') { console.log(entry) }
+
+    export const report = await createReport(
+      [
+        async (entry) => {
+          await HookExample( // pass function as hook
+            `Test Function`
+          );
+        }
+      ],
+      'report_aggregate.json' // specify report JSON file
+    )
+    // add an entry to the 'example_report' with error type <Exception> for <ReportEntryWithErrors>
+    await report.addEntry(
+      'example_report',
+      createReportEntry<ReportEntryWithErrors<Exception>>({
+        score: 3,
+        rule: 'example_rule',
+        description: 'This is an example rule',
+        repo: 'test_repo',
+        path: '',
+        success: true,
+        error: { error: 'test error'},
+      })
+    )
+```
+
+
+### Github Scopes Update. 0.2.4
 
 > Expect a lot more of these types of features for detecting Github settings.
 

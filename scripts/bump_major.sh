@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-pushd . && cd src
-  . .envrc
-popd
+
+source .envrc
 
 # Get the last tag
 tag=$(git tag -l | tail -n 1)
@@ -11,7 +10,7 @@ fi
 echo "Last Tag: $tag"
 
 # Generate build tag
-newtag=$(./scripts/semver.sh bump major $(git tag -l | tail -n 1))
+newtag=v$(./scripts/semver.sh bump major $(git tag -l | tail -n 1))
 echo "New Tag: $newtag"
 
 # Generate commit tag
