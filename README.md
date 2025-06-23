@@ -90,7 +90,6 @@ The purpose is to abstract the reporting methods into a JSR package which can be
 called using `deno run` by passing the `--import-map` flag and referencing a
 JSON import map file containing this package.
 
-
 ### Reporting Custom Objects in 0.2.6
 
 Passing custom objects to the `createReport` function is now trivial.
