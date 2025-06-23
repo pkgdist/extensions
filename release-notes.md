@@ -6,7 +6,7 @@ for inspection of Github scopes.
 - Package: [@softdist/extensions](https://jsr.io/@softdist/extensions)
 - Repository: [@pkgdist/extensions](https://github.com/pkgdist/extensions)
 
-## Version 0.2.5
+## Version 0.2.6
 
 [![JSR release (latest)](https://img.shields.io/badge/JSR-module-hotpink)](https://jsr.io/@softdist/extensions)
 [![GitHub release (latest)](https://img.shields.io/badge/github-repo-8A2BE2)](https://github.com/pkgdist/extensions)
@@ -15,7 +15,7 @@ for inspection of Github scopes.
 >
 > PATCH UPDATE
 
-This patch version `0.2.5` addresses the need for a set of generic-type data
+This patch version `0.2.6` addresses the need for a set of generic-type data
 objects for json based on:
 
 ```bash
@@ -34,7 +34,7 @@ The reporting object can now be extended by using custom exceptions or other
 object types, and by simply passing any functions as hooks to the `createReport`
 function.
 
-### Custom Object Types
+### Custom Object Types in 0.2.6
 
 Passing custom objects to the `createReport` function is now trivial.
 
@@ -79,7 +79,7 @@ await report.addEntry(
 )
 ```
 
-### Github Scopes Update. 0.2.4
+### Github Scopes Update. 0.2.4 - 0.2.5
 
 > Expect a lot more of these types of features for detecting Github settings.
 
