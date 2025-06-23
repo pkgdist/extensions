@@ -6,7 +6,7 @@ for inspection of Github scopes.
 - Package: [@softdist/extensions](https://jsr.io/@softdist/extensions)
 - Repository: [@pkgdist/extensions](https://github.com/pkgdist/extensions)
 
-## Version 0.2.6
+## Version 0.2.7
 
 [![JSR release (latest)](https://img.shields.io/badge/JSR-module-hotpink)](https://jsr.io/@softdist/extensions)
 [![GitHub release (latest)](https://img.shields.io/badge/github-repo-8A2BE2)](https://github.com/pkgdist/extensions)
@@ -15,8 +15,8 @@ for inspection of Github scopes.
 >
 > PATCH UPDATE
 
-This patch version `0.2.6` addresses the need for a set of generic-type data
-objects for json based on:
+* This patch version `0.2.7` addresses the lack of a function for finding paths and values: `findParamPaths`
+* It also addresses the need for a set of generic-type data objects for json based on:
 
 ```bash
 repos: { 

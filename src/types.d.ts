@@ -213,5 +213,52 @@ export namespace ExtensionSystemTypes {
     entries: Record<string, ReportEntrySpecific<T>[]>
   }
 
+  export type PathValue = { path: string; value: unknown };
+
+
+  /**
+   * @typedef {Object} ReviewEnforcementSummary
+   * @property {Object} branchProtection - Summary of branch protection rules.
+   * @property {string} branchProtection.branch - The name of the branch.
+   * @property {boolean} branchProtection.enabled - Whether branch protection is enabled.
+   * @property {number} [branchProtection.requiredApprovals] - Number of required approvals for pull requests.
+   * @property {boolean} [branchProtection.requireCodeOwnerReviews] - Whether code owner reviews are required.
+   * @property {string[]} [branchProtection.copilotChecks] - List of Copilot checks configured for the branch.
+   * @property {Array<Object>} rulesets - List of rulesets applied to the repository.
+   */
+  export interface ReviewEnforcementSummary {
+    branchProtection: {
+      branch: string
+      enabled: boolean
+      requiredApprovals?: number
+      requireCodeOwnerReviews?: boolean
+      copilotChecks?: string[]
+    }
+    rulesets: Array<{
+      rulesetId: number
+      name: string
+      enforcement: string
+      targets: string[]
+      requiredApprovals?: number
+      requireCodeOwnerReviews?: boolean
+      copilotChecks?: string[]
+      copilotScanDetected?: boolean
+    }>
+  }
+
+  /**
+   * Asserts that a parameter in a ruleset matches the expected value.
+   * @param rulesetNumber The ruleset ID to check.
+   * @param parameterPath Dot-separated path to the parameter (e.g., "rules.2.parameters.require_code_owner_review").
+   * @param value The value to assert against.
+   * @returns "true" if the value matches, "false" otherwise.
+   */
+  export interface RepoParams {
+    token: string
+    owner: string
+    repository: string
+    branch?: string
+  }
+
   // end namespace
 }
