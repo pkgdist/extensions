@@ -328,46 +328,55 @@ export async function assertRulesetByIndexParameter(
   return (actual === value) ? 'true' : 'false'
 }
 
-
 /**
  * Get a bypass list of actors for all rulesets in a repository
  * @param repoData The repository parameters including token, owner, repository, and branch.
  * @returns allBypassActors An array of bypass actors with actor_id, actor_type, and bypass_mode.
  */
 export async function getRulesetBypassList(
-  repoData: Type.RepoParams = { token: '', owner: '', repository: '', branch: '' },
+  repoData: Type.RepoParams = {
+    token: '',
+    owner: '',
+    repository: '',
+    branch: '',
+  },
 ): Promise<Type.RulesetBypassActor[]> {
-
   const octokit = new Octokit({ auth: repoData.token })
 
   // Get all rulesets
   const { data: rulesets } = await octokit.request(
     'GET /repos/{owner}/{repo}/rulesets',
-    { owner: repoData.owner, repo: repoData.repository }
-  );
+    { owner: repoData.owner, repo: repoData.repository },
+  )
 
-  const allBypassActors: Type.RulesetBypassActor[] = [];
+  const allBypassActors: Type.RulesetBypassActor[] = []
 
   for (const rulesetMeta of Array.isArray(rulesets) ? rulesets : []) {
     // Fetch detailed ruleset (which includes bypass_actors)
     const { data: ruleset } = await octokit.request(
       'GET /repos/{owner}/{repo}/rulesets/{ruleset_id}',
-    { owner: repoData.owner as string, repo: repoData.repository as string, ruleset_id: rulesetMeta.id }
-    );
+      {
+        owner: repoData.owner as string,
+        repo: repoData.repository as string,
+        ruleset_id: rulesetMeta.id,
+      },
+    )
     // If bypass_actors exist, add only those with valid actor_id (number) to the array
     if (Array.isArray(ruleset.bypass_actors)) {
       allBypassActors.push(
         ...ruleset.bypass_actors
-          .filter((actor) => typeof actor.actor_id === 'number' && actor.actor_id !== null && actor.actor_id !== undefined)
-          .map(actor => ({
+          .filter((actor) =>
+            typeof actor.actor_id === 'number' && actor.actor_id !== null &&
+            actor.actor_id !== undefined
+          )
+          .map((actor) => ({
             actor_id: actor.actor_id as number,
             actor_type: actor.actor_type,
-            bypass_mode: actor.bypass_mode ?? ''
-          } as Type.RulesetBypassActor))
-      );
+            bypass_mode: actor.bypass_mode ?? '',
+          } as Type.RulesetBypassActor)),
+      )
     }
   }
 
-return allBypassActors;
-
+  return allBypassActors
 }

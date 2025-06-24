@@ -25,29 +25,28 @@ const result2 = await $ruleset.inspectReviewAndCopilotEnforcement(
 )
 // console.log(JSON.stringify(result2, null, 2))
 
-const allBypassActors = await $ruleset.getRulesetBypassList( repoData )
+const allBypassActors = await $ruleset.getRulesetBypassList(repoData)
 
-  console.log(allBypassActors)
+console.log(allBypassActors)
 
-  const inspection_results = $ruleset.findParamPaths(
-    { str: allBypassActors },
-    'actor_id',
+const inspection_results = $ruleset.findParamPaths(
+  { str: allBypassActors },
+  'actor_id',
+)
+
+const analysis_results = $ruleset.findParamPaths(
+  { str: inspection_results },
+  'value',
+)
+
+if (
+  analysis_results.length > 0 &&
+  analysis_results.some(
+    (item: Type.PathValue) => typeof item.value === 'number' && item.value > 0,
   )
-
-  const analysis_results = $ruleset.findParamPaths(
-    { str: inspection_results },
-    'value',
-  )
-
-  if (
-    analysis_results.length > 0 &&
-    analysis_results.some(
-      (item: Type.PathValue) =>
-        typeof item.value === 'number' && item.value > 0,
-    )
-  ) {
-    // at least one ruleset value for check_response_timeout_minutes was >= 1
-    console.log('true')
-  } else {
-    console.log('false')
-  }
+) {
+  // at least one ruleset value for check_response_timeout_minutes was >= 1
+  console.log('true')
+} else {
+  console.log('false')
+}
