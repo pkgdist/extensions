@@ -1,37 +1,7 @@
 // deno-lint-ignore-file no-explicit-any
 import * as octo from 'npm:@octokit/core@7.0.2'
-
+import { ExtensionSystemTypes as Type } from './types.d.ts'
 const Octokit = octo.Octokit
-
-/**
- * @typedef {Object} ReviewEnforcementSummary
- * @property {Object} branchProtection - Summary of branch protection rules.
- * @property {string} branchProtection.branch - The name of the branch.
- * @property {boolean} branchProtection.enabled - Whether branch protection is enabled.
- * @property {number} [branchProtection.requiredApprovals] - Number of required approvals for pull requests.
- * @property {boolean} [branchProtection.requireCodeOwnerReviews] - Whether code owner reviews are required.
- * @property {string[]} [branchProtection.copilotChecks] - List of Copilot checks configured for the branch.
- * @property {Array<Object>} rulesets - List of rulesets applied to the repository.
- */
-interface ReviewEnforcementSummary {
-  branchProtection: {
-    branch: string
-    enabled: boolean
-    requiredApprovals?: number
-    requireCodeOwnerReviews?: boolean
-    copilotChecks?: string[]
-  }
-  rulesets: Array<{
-    rulesetId: number
-    name: string
-    enforcement: string
-    targets: string[]
-    requiredApprovals?: number
-    requireCodeOwnerReviews?: boolean
-    copilotChecks?: string[]
-    copilotScanDetected?: boolean
-  }>
-}
 
 /**
  * @function getBranchProtection
@@ -42,13 +12,13 @@ interface ReviewEnforcementSummary {
  * @param branch [string] The name of the branch to check.
  * @returns {Promise<ReviewEnforcementSummary["branchProtection"]>} A promise that resolves to the branch protection summary.
  */
-async function getBranchProtection(
+export async function getBranchProtection(
   octokit: octo.Octokit,
   owner: string,
   repo: string,
   branch: string,
-): Promise<ReviewEnforcementSummary['branchProtection']> {
-  const branchProtection: ReviewEnforcementSummary['branchProtection'] = {
+): Promise<Type.ReviewEnforcementSummary['branchProtection']> {
+  const branchProtection: Type.ReviewEnforcementSummary['branchProtection'] = {
     branch,
     enabled: false,
   }
@@ -99,7 +69,7 @@ async function getBranchProtection(
  * @param state [object] The state object to update with extracted information.
  * @returns void
  */
-function processRule(
+export function processRule(
   rule: any,
   state: {
     requiredApprovals?: number
@@ -158,9 +128,9 @@ function processRule(
  * @param ruleset [any] The ruleset object to process.
  * @returns {ReviewEnforcementSummary["rulesets"][number] & { rules: any[]; copilotCodeReviewEnabled?: boolean; requireStatusChecksToPass?: boolean; requireBranchesUpToDate?: boolean }}
  */
-function processRuleset(
+export function processRuleset(
   ruleset: any,
-): ReviewEnforcementSummary['rulesets'][number] & {
+): Type.ReviewEnforcementSummary['rulesets'][number] & {
   rules: any[]
   copilotCodeReviewEnabled?: boolean
   requireStatusChecksToPass?: boolean
@@ -224,15 +194,15 @@ function processRuleset(
  * @param owner [string] The owner of the repository.
  * @param repo [string] The name of the repository.
  */
-async function inspectReviewAndCopilotEnforcement(
+export async function inspectReviewAndCopilotEnforcement(
   token: string,
   owner: string,
   repo: string,
   branch: string = 'main',
-): Promise<ReviewEnforcementSummary> {
+): Promise<Type.ReviewEnforcementSummary> {
   const octokit = new Octokit({ auth: token })
 
-  const summary: ReviewEnforcementSummary = {
+  const summary: Type.ReviewEnforcementSummary = {
     branchProtection: await getBranchProtection(octokit, owner, repo, branch),
     rulesets: [],
   }
@@ -256,27 +226,13 @@ async function inspectReviewAndCopilotEnforcement(
 }
 
 /**
- * Asserts that a parameter in a ruleset matches the expected value.
- * @param rulesetNumber The ruleset ID to check.
- * @param parameterPath Dot-separated path to the parameter (e.g., "rules.2.parameters.require_code_owner_review").
- * @param value The value to assert against.
- * @returns "true" if the value matches, "false" otherwise.
- */
-interface RepoParams {
-  token: string
-  owner: string
-  repository: string
-  branch?: string
-}
-
-/**
  * @function getByPath
  * @description Retrieves a value from an object by a dot-separated path.
  * @param obj The object to search.
  * @param path The dot-separated path to the value (e.g., "rules.2.parameters.require_code_owner_review").
  * @returns The value at the specified path, or undefined if not found.
  */
-function getByPath(obj: any, path: string): any {
+export function getByPath(obj: any, path: string): any {
   return path.split('.').reduce((acc, key) => {
     // Handle array indices like rules.2.parameters
     if (acc && typeof key === 'string' && /^\d+$/.test(key)) {
@@ -284,6 +240,35 @@ function getByPath(obj: any, path: string): any {
     }
     return acc ? acc[key] : undefined
   }, obj)
+}
+
+/**
+ * @function findParamPaths
+ * @description Finds all paths in an object that match a specific key and returns their values.
+ * @param obj The object to search.
+ */
+export function findParamPaths(
+  obj: Record<string, unknown>,
+  key: string,
+  basePath = '',
+): Type.PathValue[] {
+  const results: Type.PathValue[] = []
+
+  function search(current: any, path: string) {
+    if (typeof current !== 'object' || current === null) return
+    for (const [k, v] of Object.entries(current)) {
+      const newPath = path ? `${path}.${k}` : k
+      if (k === key) {
+        results.push({ path: newPath, value: v })
+      }
+      if (typeof v === 'object' && v !== null) {
+        search(v, newPath)
+      }
+    }
+  }
+
+  search(obj, basePath)
+  return results
 }
 
 /**
@@ -295,11 +280,11 @@ function getByPath(obj: any, path: string): any {
  * @param repo The repository parameters.
  * @returns "true" if the value matches, "false" otherwise.
  */
-async function assertRulesetParameter(
+export async function assertRulesetParameter(
   rulesetNumber: number,
   parameterPath: string,
   value: unknown,
-  repo: RepoParams = { token: '', owner: '', repository: '', branch: '' },
+  repo: Type.RepoParams = { token: '', owner: '', repository: '', branch: '' },
 ): Promise<string> {
   const { token, owner, repository, branch } = repo
   const result = await inspectReviewAndCopilotEnforcement(
@@ -323,11 +308,11 @@ async function assertRulesetParameter(
  * @param repo The repository parameters.
  * @returns "true" if the value matches, "false" otherwise.
  */
-async function assertRulesetByIndexParameter(
+export async function assertRulesetByIndexParameter(
   rulesetIndex: number,
   parameterPath: string,
   value: unknown,
-  repo: RepoParams = { token: '', owner: '', repository: '', branch: '' },
+  repo: Type.RepoParams = { token: '', owner: '', repository: '', branch: '' },
 ): Promise<string> {
   const { token, owner, repository, branch } = repo
   const result = await inspectReviewAndCopilotEnforcement(
@@ -342,13 +327,3 @@ async function assertRulesetByIndexParameter(
   const actual = getByPath(ruleset, parameterPath)
   return (actual === value) ? 'true' : 'false'
 }
-
-export {
-  assertRulesetByIndexParameter,
-  assertRulesetParameter,
-  getBranchProtection,
-  inspectReviewAndCopilotEnforcement,
-  Octokit,
-  processRuleset,
-}
-export type { ReviewEnforcementSummary }

@@ -47,3 +47,17 @@ const result = await $ruleset.assertRulesetByIndexParameter(
   repoData,
 )
 console.log(result) // "true" or "false"
+
+const rs_results = $ruleset.findParamPaths(
+  { str: result2 },
+  'check_response_timeout_minutes',
+)
+console.log(rs_results)
+
+// if rs_results > 0
+
+if (rs_results.length > 0) {
+  console.table(rs_results)
+  console.log(rs_results[0].value)
+  console.log('At least one rule parameter was returned')
+}

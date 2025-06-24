@@ -1,6 +1,23 @@
 import { ExtensionSystemTypes as Type } from './types.d.ts'
 import { logToDebug } from './func_streams.ts'
 import { ALL_COLORS, logColor } from './declare_colors.ts'
+
+/**
+ * @purpose: provides tabstop strings for indentation in the code
+ */
+const tabstop = {
+  t1: '  ',
+  t2: '    ',
+  t3: '      ',
+  t4: '        ',
+  t5: '          ',
+  t6: '            ',
+  t7: '              ',
+  t8: '                ',
+  t9: '                  ',
+  t10: '                    ',
+}
+
 /**
  * @function logErrorWithType
  * @description Synchronus error function: Logs a message using the logToDebug stream and displays a logColor message to the console associated by a prefix.
@@ -32,4 +49,4 @@ function logErrorWithType(
   logColor(safeColor as Parameters<typeof logColor>[0], msg)
 }
 
-export { logErrorWithType }
+export { logErrorWithType, tabstop }

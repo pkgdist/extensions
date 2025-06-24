@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
-pushd . && cd src
-  . .envrc
-popd
+
+source .envrc
 
 # Get the last tag
 tag=$(git tag -l | tail -n 1)

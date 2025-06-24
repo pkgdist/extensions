@@ -38,6 +38,7 @@ inspection of Github Scopes, Azure Scopes, and other objects.
 | `$error`     | Generic error functions for including messages with specific colors                       |
 | `$ruleset`   | Github Rulesets and Rule scopes for detecting branch protections                          |
 | `$report`    | Reporting function for scoring tabulation in streams, and notification functions in teams |
+| `$reporting` | v2 of the report functionality implements a Reporting object and the concept of hooks     |
 | `$streams`   | Optic FileStream object for logging colored error messages to evaluated streams           |
 | `$token`     | Token acquisition for GitHub CLI default, or .envcrypt files, or environment vars         |
 | `$webhook`   | Webhook secret acquisition IFFE functions                                                 |
@@ -88,6 +89,47 @@ calls through dynamic deno code evaluations.
 The purpose is to abstract the reporting methods into a JSR package which can be
 called using `deno run` by passing the `--import-map` flag and referencing a
 JSON import map file containing this package.
+
+### Reporting Custom Objects in 0.2.6
+
+Passing custom objects to the `createReport` function is now trivial.
+
+#### Extending createReportEntry\<custom\>
+
+You can easily use the generic reporting object by instantiating it with a
+custom type.
+
+The example below illustrates how custom `Exception` error reporting objects are
+passed to the Reporting class:
+
+```typescript
+// a custom error exception called Exception:
+export type Exception = Error | string | Record<string, unknown>
+// a custom HookExample function call to illustrate passing as a hook:
+export async function HookExample(entry: string = '') {
+  console.log(entry)
+}
+
+export const report = await createReport(
+  [
+    async (entry) => {
+      await HookExample( // pass function as hook
+        `Test Function`,
+      )
+    },
+  ],
+  'report_aggregate.json', // specify report JSON file
+)
+// add an entry to the 'example_report' with error type <Exception> for <ReportEntryWithErrors> to test_repo
+await report.addEntry(
+  'example_report',
+  createReportEntry<ReportEntryWithErrors<Exception>>({
+    repo: 'test_repo',
+    score: '3',
+    error: { error: 'test error' },
+  }),
+)
+```
 
 ### Notifications
 

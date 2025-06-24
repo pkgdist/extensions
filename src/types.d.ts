@@ -1,4 +1,8 @@
 export namespace ExtensionSystemTypes {
+  /**
+   * @type Original Report Type v0.2.1-0.2.4
+   * @description This module contains generic types used throughout the application.
+   */
   export type Report = {
     id: string
     path: string
@@ -120,8 +124,6 @@ export namespace ExtensionSystemTypes {
   /*
    * INTERFACES
    * @description This module contains interfaces used throughout the application.
-   * @module types.d.ts
-   * @description This module contains type definitions and interfaces used throughout the application.
    */
 
   export interface YamlFiles {
@@ -136,5 +138,126 @@ export namespace ExtensionSystemTypes {
     Authorization: string
     'X-GitHub-Api-Version': string
   }
+
+  /*
+   * GENERIC REPORT TYPES
+   * @description This module contains interfaces used on reporting only
+   */
+
+  /**
+   * @type GenericReportEntry
+   * @description Represents a single report entry as the base type.  This can be extended to include custom fields in the report entries.
+   */
+  export interface GenericReportEntry<T = unknown> {
+    score: number
+    rule: string
+    description: string
+    repo: string
+    path: string
+    success: boolean
+    extra?: T // Allows extension with custom fields
+  }
+
+  /**
+   * @interface ReportEntryWithNone
+   * @description Represents a single report entry extending the GenericReportEntry interface with no fields.
+   */
+  export interface ReportEntryWithNone<T = unknown>
+    extends GenericReportEntry<T> {
+    customFields?: Record<string, unknown>
+  }
+
+  /**
+   * @interface ReportEntryWithErrors
+   * @description Represents a single report entry as the base type.  This can be extended to include custom fields in the report entries.
+   */
+  export interface ReportEntryWithErrors<T = unknown>
+    extends GenericReportEntry<T> {
+    customFields?: Record<string, unknown>
+    error?: Record<string, unknown>
+  }
+
+  /**
+   * @interface ReportEntries
+   * @description Represents a single report entry.
+   */
+  export type ReportEntries<T = unknown> = {
+    repos: Record<string, T[]>
+  }
+
+  /**
+   * @interface GenericReport
+   * @description Represents a report function with unknown purpose:
+   */
+  export interface GenericReport<T> {
+    id: string
+    name: string
+    description: string
+    datestamp: Date
+    purpose: unknown
+    entries: ReportEntries<T>[]
+  }
+
+  /**
+   * @type ReportEntry
+   * @description Represents a GenericReportEntry with unknown purpose.
+   */
+  export type ReportEntrySpecific<T = unknown> = GenericReportEntry<T>
+
+  /**
+   * @type ReportTypes
+   * @description All current report types as keys with generic objects as values.  Will be associated to each report.
+   */
+  export interface ReportType<T> {
+    notifications: Record<string, ReportEntrySpecific<T>[]>
+    entries: Record<string, ReportEntrySpecific<T>[]>
+  }
+
+  export type PathValue = { path: string; value: unknown }
+
+  /**
+   * @typedef {Object} ReviewEnforcementSummary
+   * @property {Object} branchProtection - Summary of branch protection rules.
+   * @property {string} branchProtection.branch - The name of the branch.
+   * @property {boolean} branchProtection.enabled - Whether branch protection is enabled.
+   * @property {number} [branchProtection.requiredApprovals] - Number of required approvals for pull requests.
+   * @property {boolean} [branchProtection.requireCodeOwnerReviews] - Whether code owner reviews are required.
+   * @property {string[]} [branchProtection.copilotChecks] - List of Copilot checks configured for the branch.
+   * @property {Array<Object>} rulesets - List of rulesets applied to the repository.
+   */
+  export interface ReviewEnforcementSummary {
+    branchProtection: {
+      branch: string
+      enabled: boolean
+      requiredApprovals?: number
+      requireCodeOwnerReviews?: boolean
+      copilotChecks?: string[]
+    }
+    rulesets: Array<{
+      rulesetId: number
+      name: string
+      enforcement: string
+      targets: string[]
+      requiredApprovals?: number
+      requireCodeOwnerReviews?: boolean
+      copilotChecks?: string[]
+      copilotScanDetected?: boolean
+    }>
+  }
+
+  /**
+   * Asserts that a parameter in a ruleset matches the expected value.
+   * @param rulesetNumber The ruleset ID to check.
+   * @param parameterPath Dot-separated path to the parameter (e.g., "rules.2.parameters.require_code_owner_review").
+   * @param value The value to assert against.
+   * @returns "true" if the value matches, "false" otherwise.
+   */
+  export interface RepoParams {
+    token: string
+    owner: string
+    repository: string
+    branch?: string
+  }
+
   // end namespace
 }

@@ -3,6 +3,17 @@ import * as $ruleset from '../func_rules.ts'
 import * as $token from '../func_token.ts'
 import { assertEquals } from 'jsr:@std/assert@^0.224.0/assert-equals'
 
+function requireEnvVars(...vars: string[]) {
+  for (const v of vars) {
+    if (!Deno.env.get(v)) {
+      console.warn(`Skipping tests: ${v} is not set.`)
+      Deno.exit(0)
+    }
+  }
+}
+
+requireEnvVars('PROD_OWNER', 'PROD_REPO')
+
 Deno.test({
   name: 'assertRulesetByIndexParameter - copilotCodeReviewEnabled is true',
   sanitizeResources: false,
