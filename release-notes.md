@@ -10,9 +10,72 @@ _An abstract extension system for inspection of Github scopes and settings_
 - Package: [@softdist/extensions](https://jsr.io/@softdist/extensions)
 - Repository: [@pkgdist/extensions](https://github.com/pkgdist/extensions)
 
-## Version 0.2.9
+## ^0.2.9
 
-Key Information:
+### Key Information:
+
+- Implemented `customFields` for report types from dynamic object for use in
+  rules reporting in pass/fail report scenarios
+- Implemented `custom exceptions` for report types
+- Implemented `dynamic repository + owner` object for executeCode() in
+  `customFields` by default
+- Implemented `createReport` function with `hooks` which are now dynamic
+  functions executed at runtime in `reportExecution`
+- Implemented `createReportEntry` function accepting `CustomWith*` generic types
+  for handling exceptions as part of the rules engine reporting feature.
+- Implemented `report.addEntry` and `Reporting` object using observer pattern to
+  accept new entries and merge them into the JSON aggregation object.
+
+#### Example: custom fields
+
+In the below example we use
+`exts.$reporting.createReportEntry<exts.Type.ReportEntryWithNone<ReportRecord>>`
+
+That is the `reportEntry type`and its interface allows:
+
+- `exts.Type.ReportEntryWithNone<ReportRecord>`
+- `exts.Type.ReportEntryWithErrors<ReportRecord>`
+
+This flexibility allows any developer to create custom fields and even custom
+object types for the aggregate reporting capabilities:
+
+1. Custom Object Types i.e.- `type ReportRecord = Record<string, unknown>` for
+   `customFields` automatically uses your type in the Report class.
+2. Use `exts.$reporting.createReport` to create a new report object for each
+   test on each repository
+3. Use `exts.$reporting.notifyTeamsHook`to create teams notifications as a hook
+4. Use `anyFunction` as a hook in `exts.$reporting.createReport`
+5. Customize the report entry easily using a dynamic report:
+
+```typescript
+// passing test dynamic-report:
+import * as exts from 'jsr:@softdist/extensions@0.2.9'
+const report = await exts.$reporting.createReport(
+  [async (entry) => {
+    await exts.$reporting.notifyTeamsHook(
+      `Rule: ${entry.rule} | Repo: ${entry.repo} | Status: ${
+        entry.success ? 'PASS' : 'FAIL'
+      }`,
+    )
+  }],
+  'report_aggregate.json',
+)
+type ReportRecord = Record<string, unknown>
+
+await report.addEntry(
+  'aggregate_report',
+  exts.$reporting.createReportEntry<
+    exts.Type.ReportEntryWithNone<ReportRecord>
+  >({
+    data: '',
+    success: true,
+    customFields: {
+    },
+  }),
+)
+```
+
+## Ruleset Information
 
 We added `$ruleset.getRulesetBypassList()` as a method for pulling all bypass
 actors for all rulesets. This is a requirement as we finish the complete
@@ -24,7 +87,7 @@ We also added a bunch of 0.2.9 types:
 - `RulesetBypassActor` for bypassActor interface
 - `RulesetConditionRefName` for rulesetConditions interface
 
-## Version 0.2.8
+## ^0.2.8
 
 This release impacts primarily our build system and handling of error messages
 using custom types such as:
