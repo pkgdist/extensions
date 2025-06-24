@@ -10,17 +10,26 @@ _An abstract extension system for inspection of Github scopes and settings_
 - Package: [@softdist/extensions](https://jsr.io/@softdist/extensions)
 - Repository: [@pkgdist/extensions](https://github.com/pkgdist/extensions)
 
-## Version 0.2.8
+## Version 0.2.9
 
-Key Information:
+Key Information: 
+
+We added `$ruleset.getRulesetBypassList()` as a method for pulling all bypass actors for all rulesets.
+This is a requirement as we finish the complete Ruleset, Rule, and Branch Protection/ Bypass framework.
+
+We also added a bunch of 0.2.9 types: 
+* `GithubRuleset` and associated interfaces
+* `RulesetBypassActor` for bypassActor interface
+* `RulesetConditionRefName` for rulesetConditions interface
+
+## Version 0.2.8
 
 This release impacts primarily our build system and handling of error messages
 using custom types such as:
 
 - `ReviewEnforcementSummary` - now relocated into `types.d.ts`
 - `ReportEntryWithErrors` - a with errors type for error exceptions handlers
-- `ReportEntryWithNone` - a custom field type for default behaviors of custom
-  field records
+- `ReportEntryWithNone` - a custom field type for default behaviors of custom field records
 
 ### Updates Impact
 
@@ -29,6 +38,7 @@ using custom types such as:
 > PATCH UPDATE
 
 No breaking changes to be introduced in this release. This release impacts the
+
 following:
 
 | Feature Name | Purpose                                                                                      |
