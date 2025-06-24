@@ -1,21 +1,45 @@
 # Extensions
 
-Release notes for the `@softdist/extension` system: An abstract extension system
-for inspection of Github scopes.
+[![JSR release (latest)](https://img.shields.io/badge/JSR-module-hotpink)](https://jsr.io/@softdist/extensions)
+[![GitHub release (latest)](https://img.shields.io/badge/github-repo-8A2BE2)](https://github.com/pkgdist/extensions)
+
+> Release notes for the `@softdist/extension` github scopes extensions: 
+
+_An abstract extension system for inspection of Github scopes and settings_
 
 - Package: [@softdist/extensions](https://jsr.io/@softdist/extensions)
 - Repository: [@pkgdist/extensions](https://github.com/pkgdist/extensions)
 
-## Version 0.2.7
+## Version 0.2.8
 
-[![JSR release (latest)](https://img.shields.io/badge/JSR-module-hotpink)](https://jsr.io/@softdist/extensions)
-[![GitHub release (latest)](https://img.shields.io/badge/github-repo-8A2BE2)](https://github.com/pkgdist/extensions)
+Key Information:
+
+This release impacts primarily our build system and handling of error messages using custom types such as:
+
+* `ReviewEnforcementSummary` - now relocated into `types.d.ts`
+* `ReportEntryWithErrors` - a with errors type for error exceptions handlers
+* `ReportEntryWithNone` - a custom field type for default behaviors of custom field records
+
+### Updates Impact
 
 > [!IMPORTANT]
 >
 > PATCH UPDATE
 
-- This patch version `0.2.7` addresses the lack of a function for finding paths
+No breaking changes to be introduced in this release.  This release impacts the following:
+
+| Feature Name | Purpose                                                                                                  |
+| :----------- | :------------------------------------------------------------------------------------------------------- |
+| `$error`     | Updated Generic error functions for including messages with specific colors                              |
+| `$ruleset`   | Updated rule functions in Github Rulesets and Rule scopes for detecting branch protections               |
+| `$reporting` | Updated v0.2.8 Reporting object and the concept of hooks and custom entry types/ exceptions.             |
+| `Type`       | Updated System interfaces and types with generic types for Reports                                       |
+
+
+## Change Log
+
+- Version `0.2.8` implement exception handlers and reporting hooks along with improvenents to bump* scripts and .envrc, and also changes to `install-tools` makefile process for `lefthook` pre-commit checks.  This is a mandatory upgrade as we move to a CI based build process with attestations.
+- Version `0.2.7` addresses the lack of a function for finding paths
   and values: `findParamPaths`
 - It also addresses the need for a set of generic-type data objects for json
   based on:
@@ -128,27 +152,6 @@ multi-purpose.
 > [!TIP]
 > Use a generic `import * as exts from 'jsr:@softdist/extensions@0.2.X'` and it
 > will automatically retrieve all the modules we export below:
-
-## Exported Modules
-
-| Feature Name | Purpose                                                                                   |
-| :----------- | :---------------------------------------------------------------------------------------- |
-| `$colors`    | Automatic error logging and warn/notice stream logging with colors                        |
-| `$const`     | Declared generic constants for local system paths and GITHUB API                          |
-| `$compare`   | Comparison functions for deep YML objects.                                                |
-| `$error`     | Generic error functions for including messages with specific colors                       |
-| `$ruleset`   | Github Rulesets and Rule scopes for detecting branch protections                          |
-| `$report`    | Reporting function for scoring tabulation in streams, and notification functions in teams |
-| `$streams`   | Optic FileStream object for logging colored error messages to evaluated streams           |
-| `$token`     | Token acquisition for GitHub CLI default, or .envcrypt files, or environment vars         |
-| `$webhook`   | Webhook secret acquisition IFFE functions                                                 |
-
-## Exported Variables
-
-| Variable           | Description                         |
-| :----------------- | :---------------------------------- |
-| `generatedVersion` | Software Version Information        |
-| `Type`             | Types used throughout this software |
 
 Each registry of rules will be published in the engine itself, not this module.\
 The purpose of this module is to abstract any reporting or evaluation features

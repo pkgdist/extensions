@@ -84,6 +84,7 @@ install: ## Install all required SAST tools, hooks, and repository tags, multi-c
 	make setup-brew
 	make install-tools
 	make tag
+	make test
 	make check
 	make bump-build
 	make set-version
