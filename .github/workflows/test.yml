@@ -19,6 +19,7 @@ jobs:
           PROD_TOKEN: ${{ secrets.PROD_TOKEN }}
           PROD_REPO: ${{ secrets.PROD_REPO }}
           PROD_OWNER: ${{ secrets.PROD_OWNER }}
+          TEAMS_WEB_HOOK: ${{ secrets.TEAMS_WEB_HOOK }}
         run: |
           deno test --allow-env --allow-read --allow-write --allow-net --allow-sys --allow-run --coverage=coverage --trace-leaks
       - name: Generate coverage report
@@ -26,6 +27,7 @@ jobs:
           PROD_TOKEN: ${{ secrets.PROD_TOKEN }}
           PROD_REPO: ${{ secrets.PROD_REPO }}
           PROD_OWNER: ${{ secrets.PROD_OWNER }}
+          TEAMS_WEB_HOOK: ${{ secrets.TEAMS_WEB_HOOK }}
         run: |
           deno coverage coverage --lcov > coverage.lcov
           deno coverage coverage --html report
