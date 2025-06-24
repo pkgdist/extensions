@@ -14,7 +14,7 @@ jobs:
 
       - name: Install npm Dependencies
         run: deno install
-      - name: Run Test Coverage
+      - name: Unit and Integration Tests Job
         env:
           PROD_TOKEN: ${{ secrets.PROD_TOKEN }}
           PROD_REPO: ${{ secrets.PROD_REPO }}
