@@ -69,8 +69,7 @@ await report.addEntry(
   >({
     data: '',
     success: true,
-    customFields: {
-    },
+    customFields: {},
   }),
 )
 ```
