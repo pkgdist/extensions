@@ -1,6 +1,6 @@
 {
   "name": "@softdist/extensions",
-  "version": "0.2.9+42081",
+  "version": "0.2.9+11168",
   "license": "MIT",
   "exports": "./src/mod.ts",
   "test": {
