@@ -22,32 +22,33 @@ for information on the latest release.
 >
 > This @softdist/extensions module is generic and opensource
 
-This is a general library for comparison, github scopes, and reporting. These tools can be used for
-virtually any purpose as a standard reporting & notifications library. The
-project goal is to provide a variety of reporting options which can be extended
-easily for scoring, notifications, or to generate complex reports based on the
-inspection of Github Scopes, Azure Scopes, and other objects.
+This is a general library for comparison, github scopes, and reporting. These
+tools can be used for virtually any purpose as a standard reporting &
+notifications library. The project goal is to provide a variety of reporting
+options which can be extended easily for scoring, notifications, or to generate
+complex reports based on the inspection of Github Scopes, Azure Scopes, and
+other objects.
 
 ## Exported Modules
 
-| Feature Name | Purpose                                                                                   |
-| :----------- | :---------------------------------------------------------------------------------------- |
-| `$colors`    | Automatic error logging and warn/notice stream logging with colors                        |
-| `$const`     | Declared generic constants for local system paths and GITHUB API                          |
-| `$compare`   | Comparison functions for deep YML objects.                                                |
-| `$error`     | Generic error functions for including messages with specific colors                       |
-| `$ruleset`   | Github Rulesets and Rule scopes for detecting branch protections                          |
-| `$report`    | Async reporting stream for tabulation of callback data into a simplified report stream    |
-| `$reporting` | Reporting object and the concept of hooks and custom entry types/ exceptions.             |
-| `$streams`   | Optic FileStream object for logging colored error messages to evaluated streams           |
-| `$token`     | Token acquisition for GitHub CLI default, or .envcrypt files, or environment vars         |
-| `$webhook`   | Webhook secret acquisition IFFE functions                                                 |
+| Feature Name | Purpose                                                                                |
+| :----------- | :------------------------------------------------------------------------------------- |
+| `$colors`    | Automatic error logging and warn/notice stream logging with colors                     |
+| `$const`     | Declared generic constants for local system paths and GITHUB API                       |
+| `$compare`   | Comparison functions for deep YML objects.                                             |
+| `$error`     | Generic error functions for including messages with specific colors                    |
+| `$ruleset`   | Github Rulesets and Rule scopes for detecting branch protections                       |
+| `$report`    | Async reporting stream for tabulation of callback data into a simplified report stream |
+| `$reporting` | Reporting object and the concept of hooks and custom entry types/ exceptions.          |
+| `$streams`   | Optic FileStream object for logging colored error messages to evaluated streams        |
+| `$token`     | Token acquisition for GitHub CLI default, or .envcrypt files, or environment vars      |
+| `$webhook`   | Webhook secret acquisition IFFE functions                                              |
 
 ## Exported Variables
 
-| Variable           | Description                         |
-| :----------------- | :---------------------------------- |
-| `generatedVersion` | Software Version Information        |
+| Variable           | Description                                        |
+| :----------------- | :------------------------------------------------- |
+| `generatedVersion` | Software Version Information                       |
 | `Type`             | Types and Interfaces used throughout this software |
 
 ## Github Scopes
@@ -169,11 +170,12 @@ Here is an example import map for testing
 The following diagram explains the current logical flow of how to call and
 utilize this package.
 
-
 ## Logical Diagram
 
-The following logical diagram is written in Mermaid and does not display on jsr.io.
-[View Diagram on Github](https://github.com/pkgdist/extensions?tab=readme-ov-file#logical-diagram). 
+The following logical diagram is written in Mermaid and does not display on
+jsr.io.
+[View Diagram on Github](https://github.com/pkgdist/extensions?tab=readme-ov-file#logical-diagram).
+
 ```mermaid
 ---
 title: Extensions

@@ -3,7 +3,7 @@
 [![JSR release (latest)](https://img.shields.io/badge/JSR-module-hotpink)](https://jsr.io/@softdist/extensions)
 [![GitHub release (latest)](https://img.shields.io/badge/github-repo-8A2BE2)](https://github.com/pkgdist/extensions)
 
-> Release notes for the `@softdist/extension` github scopes extensions: 
+> Release notes for the `@softdist/extension` github scopes extensions:
 
 _An abstract extension system for inspection of Github scopes and settings_
 
@@ -14,11 +14,13 @@ _An abstract extension system for inspection of Github scopes and settings_
 
 Key Information:
 
-This release impacts primarily our build system and handling of error messages using custom types such as:
+This release impacts primarily our build system and handling of error messages
+using custom types such as:
 
-* `ReviewEnforcementSummary` - now relocated into `types.d.ts`
-* `ReportEntryWithErrors` - a with errors type for error exceptions handlers
-* `ReportEntryWithNone` - a custom field type for default behaviors of custom field records
+- `ReviewEnforcementSummary` - now relocated into `types.d.ts`
+- `ReportEntryWithErrors` - a with errors type for error exceptions handlers
+- `ReportEntryWithNone` - a custom field type for default behaviors of custom
+  field records
 
 ### Updates Impact
 
@@ -26,21 +28,24 @@ This release impacts primarily our build system and handling of error messages u
 >
 > PATCH UPDATE
 
-No breaking changes to be introduced in this release.  This release impacts the following:
+No breaking changes to be introduced in this release. This release impacts the
+following:
 
-| Feature Name | Purpose                                                                                                  |
-| :----------- | :------------------------------------------------------------------------------------------------------- |
-| `$error`     | Updated Generic error functions for including messages with specific colors                              |
-| `$ruleset`   | Updated rule functions in Github Rulesets and Rule scopes for detecting branch protections               |
-| `$reporting` | Updated v0.2.8 Reporting object and the concept of hooks and custom entry types/ exceptions.             |
-| `Type`       | Updated System interfaces and types with generic types for Reports                                       |
-
+| Feature Name | Purpose                                                                                      |
+| :----------- | :------------------------------------------------------------------------------------------- |
+| `$error`     | Updated Generic error functions for including messages with specific colors                  |
+| `$ruleset`   | Updated rule functions in Github Rulesets and Rule scopes for detecting branch protections   |
+| `$reporting` | Updated v0.2.8 Reporting object and the concept of hooks and custom entry types/ exceptions. |
+| `Type`       | Updated System interfaces and types with generic types for Reports                           |
 
 ## Change Log
 
-- Version `0.2.8` implement exception handlers and reporting hooks along with improvenents to bump* scripts and .envrc, and also changes to `install-tools` makefile process for `lefthook` pre-commit checks.  This is a mandatory upgrade as we move to a CI based build process with attestations.
-- Version `0.2.7` addresses the lack of a function for finding paths
-  and values: `findParamPaths`
+- Version `0.2.8` implement exception handlers and reporting hooks along with
+  improvenents to bump* scripts and .envrc, and also changes to `install-tools`
+  makefile process for `lefthook` pre-commit checks. This is a mandatory upgrade
+  as we move to a CI based build process with attestations.
+- Version `0.2.7` addresses the lack of a function for finding paths and values:
+  `findParamPaths`
 - It also addresses the need for a set of generic-type data objects for json
   based on:
 
