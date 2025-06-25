@@ -10,6 +10,14 @@ _An abstract extension system for inspection of Github scopes and settings_
 - Package: [@softdist/extensions](https://jsr.io/@softdist/extensions)
 - Repository: [@pkgdist/extensions](https://github.com/pkgdist/extensions)
 
+## ^0.3.0
+
+| Name | Description |
+| :---- | :--- |
+| check_ruleset_bypass | example of bypass list retrieval |
+| check_ruleset_conditions | example of conditions list retrieval |
+
+
 ## ^0.2.9
 
 ### Key Information:
@@ -140,7 +148,7 @@ The reporting object can now be extended by using custom exceptions or other
 object types, and by simply passing any functions as hooks to the `createReport`
 function.
 
-### Custom Object Types in 0.2.6
+## ^0.2.6
 
 Passing custom objects to the `createReport` function is now trivial.
 
@@ -185,7 +193,7 @@ await report.addEntry(
 )
 ```
 
-### Github Scopes Update. 0.2.4 - 0.2.5
+## ^0.2.5
 
 > Expect a lot more of these types of features for detecting Github settings.
 
@@ -227,16 +235,19 @@ information. It is specifically for calling error display, report scoring, deep
 object comparison, and other helper functions that are generic and
 multi-purpose.
 
-### Features
+
+
+### ^0.2.0
 
 > [!TIP]
 > Use a generic `import * as exts from 'jsr:@softdist/extensions@0.2.X'` and it
 > will automatically retrieve all the modules we export below:
 
-Each registry of rules will be published in the engine itself, not this module.\
-The purpose of this module is to abstract any reporting or evaluation features
-into re-usable interfaces so they may be called in dynamic code evaluations in
-Deno without the necessity to write Typescript code to the user's computer.
+_Baselines were created for the following:_
+
+- Reporting
+- Comparison
+- Scoring
 
 ## Platforms
 

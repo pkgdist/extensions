@@ -150,7 +150,7 @@ Here is an example import map for testing
     "@onjara/optic": "jsr:@onjara/optic@^2.0.3",
     "@alikia/random-key": "jsr:@alikia/random-key@^1.0.1",
     "@deno/dnt": "jsr:@deno/dnt@^0.41.2",
-    "@softdist/extensions": "jsr:@softdist/extensions@0.2.8",
+    "@softdist/extensions": "jsr:@softdist/extensions@0.3.0",
     "@std/assert": "jsr:@std/assert@1.0.13",
     "@std/fmt": "jsr:@std/fmt@^1.0.7",
     "@std/fs": "jsr:@std/fs@^1.0.17",

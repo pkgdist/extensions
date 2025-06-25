@@ -123,7 +123,7 @@ export function processRule(
 }
 
 /**
- * @function processRuleset
+ * @function processRuleset Process a ruleset object to extract relevant information and ensure consistent data types.
  * @description Processes a ruleset object to extract relevant information and ensure consistent data types.
  * @param ruleset [any] The ruleset object to process.
  * @returns {ReviewEnforcementSummary["rulesets"][number] & { rules: any[]; copilotCodeReviewEnabled?: boolean; requireStatusChecksToPass?: boolean; requireBranchesUpToDate?: boolean }}
@@ -301,7 +301,7 @@ export async function assertRulesetParameter(
 }
 
 /**
- * Asserts that a parameter in a ruleset (by index) matches the expected value.
+ * @function assertRulesByIndexParameter Asserts that a parameter in a ruleset (by index) matches the expected value.
  * @param rulesetIndex The index of the ruleset in the rulesets array (0-based).
  * @param parameterPath Dot-separated path to the parameter (e.g., "rules.2.parameters.require_code_owner_review").
  * @param value The value to assert against.
@@ -329,7 +329,7 @@ export async function assertRulesetByIndexParameter(
 }
 
 /**
- * Get a bypass list of actors for all rulesets in a repository
+ * @function getRulesetBypassList - Get Bypass Actors for Rulesets
  * @param repoData The repository parameters including token, owner, repository, and branch.
  * @returns allBypassActors An array of bypass actors with actor_id, actor_type, and bypass_mode.
  */
@@ -379,4 +379,60 @@ export async function getRulesetBypassList(
   }
 
   return allBypassActors
+}
+
+
+/**
+ * @function getRulesetConditionsList
+ * @param repoData The repository parameters including token, owner, repository, and branch.
+ * @returns conditions An array of condition objects with include and exclude rules.
+ */
+export async function getRulesetConditionsList(
+  repoData: Type.RepoParams = {
+    token: '',
+    owner: '',
+    repository: '',
+    branch: '',
+  },
+): Promise<Type.RulesetConditions[]> {
+  const octokit = new Octokit({ auth: repoData.token })
+
+  // Get all rulesets
+  const { data: rulesets } = await octokit.request(
+    'GET /repos/{owner}/{repo}/rulesets',
+    { owner: repoData.owner, repo: repoData.repository },
+  )
+
+  const conditions: Type.RulesetConditions[] = []
+
+  for (const rulesetMeta of Array.isArray(rulesets) ? rulesets : []) {
+    // Fetch detailed ruleset
+    const { data: ruleset } = await octokit.request(
+      'GET /repos/{owner}/{repo}/rulesets/{ruleset_id}',
+      {
+        owner: repoData.owner as string,
+        repo: repoData.repository as string,
+        ruleset_id: rulesetMeta.id,
+      },
+    )
+    // check primarily for 'ref_name.include[]' Arrray conditions
+    // this function does not determine if the ruleset conditions apply to a branch of not
+    // it only returns the *any* conditions existing in the rulesets
+    if (
+      typeof ruleset.conditions === 'object' &&
+      ruleset.conditions !== null &&
+      typeof ruleset.conditions.ref_name === 'object' &&
+      ruleset.conditions.ref_name !== null &&
+      Array.isArray(ruleset.conditions.ref_name.include)
+    ) {
+      conditions.push({
+        include: ruleset.conditions.ref_name.include as Array<string>,
+        exclude: Array.isArray(ruleset.conditions.ref_name.exclude)
+          ? (ruleset.conditions.ref_name.exclude as Array<string>)
+          : [],
+      } as Type.RulesetConditions)
+    }
+  }
+
+  return conditions
 }

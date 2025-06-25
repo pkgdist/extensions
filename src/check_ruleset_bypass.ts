@@ -45,7 +45,7 @@ if (
     (item: Type.PathValue) => typeof item.value === 'number' && item.value > 0,
   )
 ) {
-  // at least one ruleset value for check_response_timeout_minutes was >= 1
+  // at least one ruleset value for bypass actor
   console.log('true')
 } else {
   console.log('false')
