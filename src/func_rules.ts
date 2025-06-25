@@ -381,7 +381,6 @@ export async function getRulesetBypassList(
   return allBypassActors
 }
 
-
 /**
  * @function getRulesetConditionsList
  * @param repoData The repository parameters including token, owner, repository, and branch.

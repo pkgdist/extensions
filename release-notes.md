@@ -12,11 +12,10 @@ _An abstract extension system for inspection of Github scopes and settings_
 
 ## ^0.3.0
 
-| Name | Description |
-| :---- | :--- |
-| check_ruleset_bypass | example of bypass list retrieval |
+| Name                     | Description                          |
+| :----------------------- | :----------------------------------- |
+| check_ruleset_bypass     | example of bypass list retrieval     |
 | check_ruleset_conditions | example of conditions list retrieval |
-
 
 ## ^0.2.9
 
@@ -234,8 +233,6 @@ external systems we manage. It contains no private data nor proprietary
 information. It is specifically for calling error display, report scoring, deep
 object comparison, and other helper functions that are generic and
 multi-purpose.
-
-
 
 ### ^0.2.0
 

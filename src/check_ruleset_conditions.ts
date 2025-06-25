@@ -1,4 +1,4 @@
-import { INSPECT_MAX_BYTES } from "node:buffer";
+import { INSPECT_MAX_BYTES } from 'node:buffer'
 import * as $ruleset from './func_rules.ts'
 import * as $token from './func_token.ts'
 
@@ -44,10 +44,10 @@ const analysis_results = $ruleset.findParamPaths(
 // regex to match any of the primary default branch names
 const regex = /main|master|default/
 
-const hasMainBranch = analysis_results.some(result =>
+const hasMainBranch = analysis_results.some((result) =>
   Array.isArray(result.value) &&
   result.value.some((v: string) => regex.test(v))
-);
+)
 
 // output the result as a string [has conditions on main branch?]
 console.log(hasMainBranch ? 'true' : 'false') // true if any conditions.ref_name.internal matches the regex
