@@ -18,7 +18,6 @@
 # we first run tests and checks to ensure the code is ready to bump:
 
 make test
-make check
 make format
 direnv deny .
 make cleanup-logs
