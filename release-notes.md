@@ -16,7 +16,7 @@ _An abstract extension system for inspection of Github scopes and settings_
 | :----------------------- | :----------------------------------- |
 | check_ruleset_bypass     | example of bypass list retrieval     |
 | check_ruleset_conditions | example of conditions list retrieval |
-| func_rules | update of rules functions |
+| func_rules               | update of rules functions            |
 
 ## ^0.2.9
 
