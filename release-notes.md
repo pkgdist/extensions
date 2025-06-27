@@ -10,6 +10,16 @@ _An abstract extension system for inspection of Github scopes and settings_
 - Package: [@softdist/extensions](https://jsr.io/@softdist/extensions)
 - Repository: [@pkgdist/extensions](https://github.com/pkgdist/extensions)
 
+## ^0.3.1
+
+Additional comparison functions and permissions functions:
+
+| Name                     | Description                          |
+| :----------------------- | :----------------------------------- |
+| func_file                | file regex and other features        |
+| func_permissions         | functions for permissions scans      |
+| check_permissions        | update of rules functions            |
+
 ## ^0.3.0
 
 | Name                     | Description                          |

@@ -1,6 +1,6 @@
 {
   "name": "@softdist/extensions",
-  "version": "0.3.0+41161",
+  "version": "0.3.1",
   "license": "MIT",
   "exports": "./src/mod.ts",
   "test": {
@@ -61,8 +61,9 @@
     "@deno/dnt": "jsr:@deno/dnt@^0.42.1",
     "@std/assert": "jsr:@std/assert@1.0.13",
     "@std/fmt": "jsr:@std/fmt@^1.0.7",
-    "@std/fs": "jsr:@std/fs@^1.0.17",
+    "@std/fs": "jsr:@std/fs@^1.0.18",
     "@cliffy/command": "jsr:@cliffy/command@^1.0.0-rc.7",
+    "@std/path": "jsr:@std/path@^1.1.0",
     "lefthook": "npm:lefthook@^1.11.14"
   }
 }
