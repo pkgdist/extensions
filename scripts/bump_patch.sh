@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-
+[[ "$PWD" =~ pkgd|softd|lots ]] && PREFIX='' && echo ' - Automatically use JSR versioning'
+[[ "$PWD" =~ mck ]] && PREFIX='v' && echo ' - Automatically use Semantic Versioning.'
 source .envrc
 
 # Get the last tag
@@ -10,7 +11,7 @@ fi
 echo "Last Tag: $tag"
 
 # Generate build tag
-newtag=$(./scripts/semver.sh bump patch $(git tag -l | tail -n 1))
+newtag=$PREFIX$(./scripts/semver.sh bump patch $(git tag -l | tail -n 1))
 echo "New Tag: $newtag"
 
 # Generate commit tag

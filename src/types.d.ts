@@ -259,5 +259,71 @@ export namespace ExtensionSystemTypes {
     branch?: string
   }
 
+  // version: ^0.2.9 types below:
+
+  /**
+   * @interface RulesetBypassActor
+   * @description Represents an actor that can bypass a ruleset.
+   */
+  interface RulesetBypassActor {
+    actor_id: number
+    actor_type: string
+    bypass_mode: string
+  }
+
+  /**
+   * @interface RulesetConditionRefName
+   * @description Represents Ruleset Condition Ref Name.
+   */
+  interface RulesetConditionRefName {
+    include?: string[]
+    exclude?: string[]
+  }
+
+  /**
+   * @interface RulesetConditions
+   * @description Represents RulesetConditions.
+   */
+  interface RulesetConditions {
+    ref_name?: RulesetConditionRefName
+    // Add other possible conditions here as needed
+  }
+
+  /**
+   * @interface RulesetRule
+   * @description Represents RulesetRule containing records.
+   */
+  interface RulesetRule {
+    type: string
+    parameters: Record<string, unknown>
+  }
+  /**
+   * @interface RulesetLinks
+   * @description Represents links associated with a ruleset.
+   */
+  interface RulesetLinks {
+    self: { href: string }
+    html: { href: string }
+  }
+
+  /**
+   * @interface GithubRuleset
+   * @description Represents a GitHub ruleset.
+   */
+  interface GithubRuleset {
+    id: number
+    name: string
+    target?: string
+    source_type?: string
+    source: string
+    enforcement: string
+    bypass_actors: RulesetBypassActor[]
+    conditions: RulesetConditions
+    rules: RulesetRule[]
+    node_id: string
+    _links: RulesetLinks
+    created_at: string
+    updated_at: string
+  }
   // end namespace
 }

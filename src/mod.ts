@@ -4,6 +4,8 @@ import * as $const from './declare_const.ts'
 import * as $colors from './declare_colors.ts'
 import * as $deep from './func_compare.ts'
 import * as $error from './func_error.ts'
+import * as $file from './func_file.ts'
+import * as $perms from './func_permissions.ts'
 import * as $report from './func_report.ts'
 import * as $reporting from './class_reporting.ts'
 import * as $token from './func_token.ts'
@@ -16,6 +18,8 @@ export {
   $const,
   $deep,
   $error,
+  $file,
+  $perms,
   $report,
   $reporting,
   $ruleset,

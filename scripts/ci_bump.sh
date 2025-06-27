@@ -19,7 +19,6 @@
 
 make test
 make check
-make format
 direnv deny .
 make cleanup-logs
 

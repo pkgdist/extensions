@@ -84,6 +84,7 @@ install: ## Install all required SAST tools, hooks, and repository tags, multi-c
 	make setup-brew
 	make install-tools
 	make tag
+	make test
 	make check
 	make bump-build
 	make set-version
@@ -139,14 +140,14 @@ bump-build:  ## Bump the build version to a random build number
 build-release:  ## Run release build
 	./scripts/build_release.sh
 
-ci-bump:  ## Build number (bump) releases:  Full CI Add-Commit-Tag-Push Process                                i.e.- '$make ci-bump int="109" msg="feature/story_109: Msg"'
+ci-bump:  ## Bump the build bump and commit-tag-push                               i.e.- '$make ci-bump int="109" msg="feature/story_109: Msg"'
 	./scripts/ci_bump.sh $(int) "$(msg)"
 
-ci-patch:  ## Patch releases: Full CI Add-Commit-Tag-Push Process
+ci-patch:  ## Patch releases bump and commit-tag-push
 	./scripts/ci_patch.sh $(int) "$(msg)"
 
-ci-minor:  ## Minor releases: Full CI Process Add-Commit-Tag-Push Process
+ci-minor:  ## Minor releases bump and commit-tag-push
 	./scripts/ci_minor.sh $(int) "$(msg)"
 
-ci-major:  ## Major releases: Full CI Process Add-Commit-Tag-Push Process
+ci-major:  ## Major releases bump and commit-tag-push
 	./scripts/ci_minor.sh $(int) "$(msg)"
