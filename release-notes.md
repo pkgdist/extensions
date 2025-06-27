@@ -14,11 +14,11 @@ _An abstract extension system for inspection of Github scopes and settings_
 
 Additional comparison functions and permissions functions:
 
-| Name                     | Description                          |
-| :----------------------- | :----------------------------------- |
-| func_file                | file regex and other features        |
-| func_permissions         | functions for permissions scans      |
-| check_permissions        | update of rules functions            |
+| Name              | Description                     |
+| :---------------- | :------------------------------ |
+| func_file         | file regex and other features   |
+| func_permissions  | functions for permissions scans |
+| check_permissions | update of rules functions       |
 
 ## ^0.3.0
 
