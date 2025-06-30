@@ -1,22 +1,144 @@
 # Extensions
 
-Release notes for the `@softdist/extension` system: An abstract extension system
-for inspection of Github scopes.
+[![JSR release (latest)](https://img.shields.io/badge/JSR-module-hotpink)](https://jsr.io/@softdist/extensions)
+[![GitHub release (latest)](https://img.shields.io/badge/github-repo-8A2BE2)](https://github.com/pkgdist/extensions)
+
+> Release notes for the `@softdist/extension` github scopes extensions:
+
+_An abstract extension system for inspection of Github scopes and settings_
 
 - Package: [@softdist/extensions](https://jsr.io/@softdist/extensions)
 - Repository: [@pkgdist/extensions](https://github.com/pkgdist/extensions)
 
-## Version 0.2.7
+## ^0.3.1
 
-[![JSR release (latest)](https://img.shields.io/badge/JSR-module-hotpink)](https://jsr.io/@softdist/extensions)
-[![GitHub release (latest)](https://img.shields.io/badge/github-repo-8A2BE2)](https://github.com/pkgdist/extensions)
+Additional comparison functions and permissions functions:
+
+| Name              | Description                     |
+| :---------------- | :------------------------------ |
+| func_file         | file regex and other features   |
+| func_permissions  | functions for permissions scans |
+| check_permissions | update of rules functions       |
+
+## ^0.3.0
+
+| Name                     | Description                          |
+| :----------------------- | :----------------------------------- |
+| check_ruleset_bypass     | example of bypass list retrieval     |
+| check_ruleset_conditions | example of conditions list retrieval |
+| func_rules               | update of rules functions            |
+
+## ^0.2.9
+
+### Key Information:
+
+- Implemented `customFields` for report types from dynamic object for use in
+  rules reporting in pass/fail report scenarios
+- Implemented `custom exceptions` for report types
+- Implemented `dynamic repository + owner` object for executeCode() in
+  `customFields` by default
+- Implemented `createReport` function with `hooks` which are now dynamic
+  functions executed at runtime in `reportExecution`
+- Implemented `createReportEntry` function accepting `CustomWith*` generic types
+  for handling exceptions as part of the rules engine reporting feature.
+- Implemented `report.addEntry` and `Reporting` object using observer pattern to
+  accept new entries and merge them into the JSON aggregation object.
+
+#### Example: custom fields
+
+In the below example we use
+`exts.$reporting.createReportEntry<exts.Type.ReportEntryWithNone<ReportRecord>>`
+
+That is the `reportEntry type`and its interface allows:
+
+- `exts.Type.ReportEntryWithNone<ReportRecord>`
+- `exts.Type.ReportEntryWithErrors<ReportRecord>`
+
+This flexibility allows any developer to create custom fields and even custom
+object types for the aggregate reporting capabilities:
+
+1. Custom Object Types i.e.- `type ReportRecord = Record<string, unknown>` for
+   `customFields` automatically uses your type in the Report class.
+2. Use `exts.$reporting.createReport` to create a new report object for each
+   test on each repository
+3. Use `exts.$reporting.notifyTeamsHook`to create teams notifications as a hook
+4. Use `anyFunction` as a hook in `exts.$reporting.createReport`
+5. Customize the report entry easily using a dynamic report:
+
+```typescript
+// passing test dynamic-report:
+import * as exts from 'jsr:@softdist/extensions@0.2.9'
+const report = await exts.$reporting.createReport(
+  [async (entry) => {
+    await exts.$reporting.notifyTeamsHook(
+      `Rule: ${entry.rule} | Repo: ${entry.repo} | Status: ${
+        entry.success ? 'PASS' : 'FAIL'
+      }`,
+    )
+  }],
+  'report_aggregate.json',
+)
+type ReportRecord = Record<string, unknown>
+
+await report.addEntry(
+  'aggregate_report',
+  exts.$reporting.createReportEntry<
+    exts.Type.ReportEntryWithNone<ReportRecord>
+  >({
+    data: '',
+    success: true,
+    customFields: {},
+  }),
+)
+```
+
+## Ruleset Information
+
+We added `$ruleset.getRulesetBypassList()` as a method for pulling all bypass
+actors for all rulesets. This is a requirement as we finish the complete
+Ruleset, Rule, and Branch Protection/ Bypass framework.
+
+We also added a bunch of 0.2.9 types:
+
+- `GithubRuleset` and associated interfaces
+- `RulesetBypassActor` for bypassActor interface
+- `RulesetConditionRefName` for rulesetConditions interface
+
+## ^0.2.8
+
+This release impacts primarily our build system and handling of error messages
+using custom types such as:
+
+- `ReviewEnforcementSummary` - now relocated into `types.d.ts`
+- `ReportEntryWithErrors` - a with errors type for error exceptions handlers
+- `ReportEntryWithNone` - a custom field type for default behaviors of custom
+  field records
+
+### Updates Impact
 
 > [!IMPORTANT]
 >
 > PATCH UPDATE
 
-- This patch version `0.2.7` addresses the lack of a function for finding paths
-  and values: `findParamPaths`
+No breaking changes to be introduced in this release. This release impacts the
+
+following:
+
+| Feature Name | Purpose                                                                                      |
+| :----------- | :------------------------------------------------------------------------------------------- |
+| `$error`     | Updated Generic error functions for including messages with specific colors                  |
+| `$ruleset`   | Updated rule functions in Github Rulesets and Rule scopes for detecting branch protections   |
+| `$reporting` | Updated v0.2.8 Reporting object and the concept of hooks and custom entry types/ exceptions. |
+| `Type`       | Updated System interfaces and types with generic types for Reports                           |
+
+## Change Log
+
+- Version `0.2.8` implement exception handlers and reporting hooks along with
+  improvenents to bump* scripts and .envrc, and also changes to `install-tools`
+  makefile process for `lefthook` pre-commit checks. This is a mandatory upgrade
+  as we move to a CI based build process with attestations.
+- Version `0.2.7` addresses the lack of a function for finding paths and values:
+  `findParamPaths`
 - It also addresses the need for a set of generic-type data objects for json
   based on:
 
@@ -36,7 +158,7 @@ The reporting object can now be extended by using custom exceptions or other
 object types, and by simply passing any functions as hooks to the `createReport`
 function.
 
-### Custom Object Types in 0.2.6
+## ^0.2.6
 
 Passing custom objects to the `createReport` function is now trivial.
 
@@ -81,7 +203,7 @@ await report.addEntry(
 )
 ```
 
-### Github Scopes Update. 0.2.4 - 0.2.5
+## ^0.2.5
 
 > Expect a lot more of these types of features for detecting Github settings.
 
@@ -123,37 +245,17 @@ information. It is specifically for calling error display, report scoring, deep
 object comparison, and other helper functions that are generic and
 multi-purpose.
 
-### Features
+### ^0.2.0
 
 > [!TIP]
 > Use a generic `import * as exts from 'jsr:@softdist/extensions@0.2.X'` and it
 > will automatically retrieve all the modules we export below:
 
-## Exported Modules
+_Baselines were created for the following:_
 
-| Feature Name | Purpose                                                                                   |
-| :----------- | :---------------------------------------------------------------------------------------- |
-| `$colors`    | Automatic error logging and warn/notice stream logging with colors                        |
-| `$const`     | Declared generic constants for local system paths and GITHUB API                          |
-| `$compare`   | Comparison functions for deep YML objects.                                                |
-| `$error`     | Generic error functions for including messages with specific colors                       |
-| `$ruleset`   | Github Rulesets and Rule scopes for detecting branch protections                          |
-| `$report`    | Reporting function for scoring tabulation in streams, and notification functions in teams |
-| `$streams`   | Optic FileStream object for logging colored error messages to evaluated streams           |
-| `$token`     | Token acquisition for GitHub CLI default, or .envcrypt files, or environment vars         |
-| `$webhook`   | Webhook secret acquisition IFFE functions                                                 |
-
-## Exported Variables
-
-| Variable           | Description                         |
-| :----------------- | :---------------------------------- |
-| `generatedVersion` | Software Version Information        |
-| `Type`             | Types used throughout this software |
-
-Each registry of rules will be published in the engine itself, not this module.\
-The purpose of this module is to abstract any reporting or evaluation features
-into re-usable interfaces so they may be called in dynamic code evaluations in
-Deno without the necessity to write Typescript code to the user's computer.
+- Reporting
+- Comparison
+- Scoring
 
 ## Platforms
 

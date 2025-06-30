@@ -1,6 +1,6 @@
 {
   "name": "@softdist/extensions",
-  "version": "0.2.7",
+  "version": "0.3.1",
   "license": "MIT",
   "exports": "./src/mod.ts",
   "test": {
@@ -58,11 +58,12 @@
     "@octokit/core": "npm:@octokit/core@^7.0.2",
     "@onjara/optic": "jsr:@onjara/optic@^2.0.3",
     "@alikia/random-key": "jsr:@alikia/random-key@^1.0.1",
-    "@deno/dnt": "jsr:@deno/dnt@^0.41.2",
+    "@deno/dnt": "jsr:@deno/dnt@^0.42.1",
     "@std/assert": "jsr:@std/assert@1.0.13",
     "@std/fmt": "jsr:@std/fmt@^1.0.7",
-    "@std/fs": "jsr:@std/fs@^1.0.17",
+    "@std/fs": "jsr:@std/fs@^1.0.18",
     "@cliffy/command": "jsr:@cliffy/command@^1.0.0-rc.7",
-    "lefthook": "npm:lefthook@^1.11.12"
+    "@std/path": "jsr:@std/path@^1.1.0",
+    "lefthook": "npm:lefthook@^1.11.14"
   }
 }
