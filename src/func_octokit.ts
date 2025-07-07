@@ -4,7 +4,6 @@ import * as octo from 'npm:@octokit/core@7.0.2'
 import { throttling } from 'npm:@octokit/plugin-throttling@^11.0.1'
 import { retry } from 'npm:@octokit/plugin-retry@^8.0.1'
 import { Octokit as OctokitRest } from 'npm:@octokit/rest@^22.0.0'
-import { Octokit } from '@octokit/core'
 
 /**
  * @function initOctokitWithThrottlingAndRetry
