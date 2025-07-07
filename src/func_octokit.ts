@@ -1,11 +1,10 @@
-
 import * as $token from './func_token.ts'
 import { ExtensionSystemTypes as Type } from './types.d.ts'
 import * as octo from 'npm:@octokit/core@7.0.2'
 import { throttling } from 'npm:@octokit/plugin-throttling@^11.0.1'
 import { retry } from 'npm:@octokit/plugin-retry@^8.0.1'
 import { Octokit as OctokitRest } from 'npm:@octokit/rest@^22.0.0'
-import { Octokit } from "@octokit/core";
+import { Octokit } from '@octokit/core'
 
 /**
  * @function initOctokitWithThrottlingAndRetry
@@ -16,7 +15,9 @@ import { Octokit } from "@octokit/core";
  *             If an invalid type is provided, an error is logged and the process exits.
  * @returns {Promise<octo.Octokit>}
  */
-export async function initOctokitWithThrottlingAndRetry(type: string = 'core'): Promise<octo.Octokit | OctokitRest> {
+export async function initOctokitWithThrottlingAndRetry(
+  type: string = 'core',
+): Promise<octo.Octokit | OctokitRest> {
   let OctokitVersion: typeof octo.Octokit | typeof OctokitRest
   if (type === 'core') {
     OctokitVersion = octo.Octokit.plugin(throttling, retry)
@@ -59,7 +60,11 @@ export async function initOctokitWithThrottlingAndRetry(type: string = 'core'): 
         console.error('Retry limit reached. Exiting.')
         return false
       },
-      onSecondaryRateLimit: (retryAfter: number, options: any, octokit: any) => {
+      onSecondaryRateLimit: (
+        retryAfter: number,
+        options: any,
+        octokit: any,
+      ) => {
         console.warn(
           `Secondary quota detected for request ${options.method} ${options.url}`,
         )
@@ -69,7 +74,9 @@ export async function initOctokitWithThrottlingAndRetry(type: string = 'core'): 
       retries: retryCount,
       retryAfter: retryAfter,
       onRetry: (retryCount: number, error: any) => {
-        console.log(`Retry attempt ${retryCount} due to error: ${error.message}`)
+        console.log(
+          `Retry attempt ${retryCount} due to error: ${error.message}`,
+        )
         if (retryCount >= 5) {
           console.error('Max retry attempts reached. Exiting.')
           throw new Error('Max retry attempts reached.')

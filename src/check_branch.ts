@@ -21,12 +21,17 @@ const branch = await $ruleset.inspectDetailedBranchProtection(
   token,
   repoData.owner,
   repoData.repository,
-  repoData.branch
+  repoData.branch,
 )
 
-const branch_results = $ruleset.findParamPaths({ str: branch }, 'required_pull_request_reviews')
+const branch_results = $ruleset.findParamPaths(
+  { str: branch },
+  'required_pull_request_reviews',
+)
 
-console.log(Array.isArray(branch_results) && branch_results.length > 0 ? 'true' : 'false')
+console.log(
+  Array.isArray(branch_results) && branch_results.length > 0 ? 'true' : 'false',
+)
 
 /* NOSONAR_START
 

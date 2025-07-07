@@ -18,7 +18,6 @@ export async function getBranchProtection(
   repo: string,
   branch: string,
 ): Promise<Type.ReviewEnforcementSummary['branchProtection']> {
-
   const branchProtection: Type.ReviewEnforcementSummary['branchProtection'] = {
     branch,
     enabled: false,
@@ -201,7 +200,6 @@ export async function inspectReviewAndCopilotEnforcement(
   repo: string,
   branch: string = 'main',
 ): Promise<Type.ReviewEnforcementSummary> {
-
   const octokit = await $octokit.initOctokitWithThrottlingAndRetry()
 
   const summary: Type.ReviewEnforcementSummary = {
@@ -223,13 +221,12 @@ export async function inspectReviewAndCopilotEnforcement(
     )
     // Check if ruleset applies to main, default, or master branch
     const includes = ruleset?.conditions?.ref_name?.include ?? []
-    const matchesMain =
-      includes.some((pattern: string) =>
-        pattern === '~DEFAULT_BRANCH' ||
-        pattern === 'refs/heads/main' ||
-        pattern === 'refs/heads/master' ||
-        pattern === 'refs/heads/default'
-      )
+    const matchesMain = includes.some((pattern: string) =>
+      pattern === '~DEFAULT_BRANCH' ||
+      pattern === 'refs/heads/main' ||
+      pattern === 'refs/heads/master' ||
+      pattern === 'refs/heads/default'
+    )
     if (matchesMain) {
       summary.rulesets.push(processRuleset(ruleset))
     }
@@ -319,7 +316,7 @@ export async function inspectDetailedBranchProtection(
     required_linear_history: { enabled: false },
     lock_branch: { enabled: false },
     enforce_admins: { enabled: false },
-    restrictions: { },
+    restrictions: {},
     allow_force_pushes: { enabled: false },
     allow_deletions: { enabled: false },
   }
@@ -333,17 +330,22 @@ export async function inspectDetailedBranchProtection(
     // Pull Request Reviews
     if (data.required_pull_request_reviews) {
       const rpr = data.required_pull_request_reviews
-      if (rpr !== undefined && branchProtection.required_pull_request_reviews !== undefined) {
+      if (
+        rpr !== undefined &&
+        branchProtection.required_pull_request_reviews !== undefined
+      ) {
         Object.assign(
           branchProtection.required_pull_request_reviews,
           {
-            required_approving_review_count: rpr.required_approving_review_count ?? 0,
+            required_approving_review_count:
+              rpr.required_approving_review_count ?? 0,
             dismiss_stale_reviews: rpr.dismiss_stale_reviews ?? false,
             require_code_owner_reviews: rpr.require_code_owner_reviews ?? false,
             dismissal_restrictions: rpr.dismissal_restrictions ?? undefined,
-            bypass_pull_request_allowances: rpr.bypass_pull_request_allowances ?? undefined,
+            bypass_pull_request_allowances:
+              rpr.bypass_pull_request_allowances ?? undefined,
             require_last_push_approval: rpr.require_last_push_approval ?? false,
-          }
+          },
         )
       }
     }
@@ -363,16 +365,14 @@ export async function inspectDetailedBranchProtection(
       data.required_signatures?.enabled ?? false
     branchProtection.required_linear_history.enabled =
       data.required_linear_history?.enabled ?? false
-    branchProtection.lock_branch.enabled =
-      data.lock_branch?.enabled ?? false
-    branchProtection.enforce_admins.enabled =
-      data.enforce_admins?.enabled ?? false
+    branchProtection.lock_branch.enabled = data.lock_branch?.enabled ?? false
+    branchProtection.enforce_admins.enabled = data.enforce_admins?.enabled ??
+      false
     branchProtection.restrictions = data.restrictions
     branchProtection.allow_force_pushes.enabled =
       data.allow_force_pushes?.enabled ?? false
-    branchProtection.allow_deletions.enabled =
-      data.allow_deletions?.enabled ?? false
-
+    branchProtection.allow_deletions.enabled = data.allow_deletions?.enabled ??
+      false
   } catch (err) {
     if (
       typeof err === 'object' &&
