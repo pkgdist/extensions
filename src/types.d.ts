@@ -244,6 +244,70 @@ export namespace ExtensionSystemTypes {
       copilotScanDetected?: boolean
     }>
   }
+  /**
+   * @typedef {Object} BranchProtectionDetails
+   * @property {Object} required_pull_request_reviews - Required pull request reviews
+   * @property {number} required_pull_request_reviews.required_approving_review_count - Number of required approving reviews
+   * @property {boolean} required_pull_request_reviews.dismiss_stale_reviews - Whether to dismiss stale reviews
+   * @property {boolean} required_pull_request_reviews.require_code_owner_reviews - Whether to require code owner reviews
+   * @property {Object|null} required_pull_request_reviews.dismissal_restrictions - Dismissal restrictions for reviews
+   * @property {Object|null} required_pull_request_reviews.bypass_pull_request_allowances - Bypass allowances for pull request reviews
+   * @property {boolean} required_pull_request_reviews.require_last_push_approval - Whether to require last push approval
+   * @property {Object|null} required_status_checks - Required status checks
+   * @property {boolean} required_status_checks.strict - Whether status checks are strict
+   * @property {string[]} required_status_checks.contexts - List of required status check contexts
+   * @property {Object} required_conversation_resolution - Required conversation resolution
+   * @property {boolean} required_conversation_resolution.enabled - Whether conversation resolution is required
+   * @property {Object} required_signatures - Required signatures
+   * @property {boolean} required_signatures.enabled - Whether signatures are required
+   * @property {Object} required_linear_history - Required linear history
+   * @property {boolean} required_linear_history.enabled - Whether linear history is required
+   * @property {Object} lock_branch - Lock branch settings
+   * @property {boolean} lock_branch.enabled - Whether the branch is locked
+   * @property {Object} enforce_admins - Admin enforcement settings
+   * @property {boolean} enforce_admins.enabled - Whether admin enforcement is enabled
+   * @property {Object|null} restrictions - Branch restrictions
+   * @property {Object} allow_force_pushes - Allow force pushes settings
+   * @property {boolean} allow_force_pushes.enabled - Whether force pushes are allowed
+   * @property {Object} allow_deletions - Allow deletions settings
+   * @property {boolean} allow_deletions.enabled - Whether deletions are allowed
+   */
+  export interface BranchProtectionDetails {
+    required_pull_request_reviews: {
+      required_approving_review_count: number
+      dismiss_stale_reviews: boolean
+      require_code_owner_reviews: boolean
+      dismissal_restrictions: Record<string, unknown> | undefined
+      bypass_pull_request_allowances: Record<string, unknown> | undefined
+      require_last_push_approval: boolean
+    } | undefined
+    required_status_checks: {
+      strict: boolean
+      contexts: string[]
+    }
+    required_conversation_resolution: {
+      enabled: boolean
+    }
+    required_signatures: {
+      enabled: boolean
+    }
+    required_linear_history: {
+      enabled: boolean
+    }
+    lock_branch: {
+      enabled: boolean
+    }
+    enforce_admins: {
+      enabled: boolean
+    }
+    restrictions: Record<string, unknown> | undefined
+    allow_force_pushes: {
+      enabled: boolean
+    }
+    allow_deletions: {
+      enabled: boolean
+    }
+  }
 
   /**
    * Asserts that a parameter in a ruleset matches the expected value.

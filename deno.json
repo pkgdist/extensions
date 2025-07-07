@@ -1,6 +1,6 @@
 {
   "name": "@softdist/extensions",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "license": "MIT",
   "exports": "./src/mod.ts",
   "test": {
@@ -56,6 +56,9 @@
   },
   "imports": {
     "@octokit/core": "npm:@octokit/core@^7.0.2",
+    "@octokit/plugin-retry": "npm:@octokit/plugin-retry@^8.0.1",
+    "@octokit/plugin-throttling": "npm:@octokit/plugin-throttling@^11.0.1",
+    "@octokit/rest": "npm:@octokit/rest@^22.0.0",
     "@onjara/optic": "jsr:@onjara/optic@^2.0.3",
     "@alikia/random-key": "jsr:@alikia/random-key@^1.0.1",
     "@deno/dnt": "jsr:@deno/dnt@^0.42.1",

@@ -39,7 +39,7 @@ other objects.
 | `$error`     | Generic error functions for including messages with specific colors                    |
 | `$file`      | File regex and comparison functions.                                                   |
 | `$perms`     | Permissions scanning functions                                                         |
-| `$ruleset`   | Github Rulesets and Rule scopes for detecting branch protections                       |
+| `$ruleset`   | Github Rulesets next generation and support for legacy Branch Protections              |
 | `$report`    | Async reporting stream for tabulation of callback data into a simplified report stream |
 | `$reporting` | Reporting object and the concept of hooks and custom entry types/ exceptions.          |
 | `$streams`   | Optic FileStream object for logging colored error messages to evaluated streams        |
