@@ -1,6 +1,8 @@
 import { log } from 'node:console'
 import * as $ruleset from './func_rules.ts'
 import * as $token from './func_token.ts'
+import * as $reporting from './class_reporting.ts'
+import { ExtensionSystemTypes as Type } from './types.d.ts'
 
 const token = await $token.getToken()
 
@@ -34,6 +36,26 @@ const branch_results = $ruleset.findParamPaths(
 console.log(
   Array.isArray(branch_results) && branch_results.length > 0 ? 'true' : 'false',
 )
+
+// mock the reporting for fun
+  const report = await $reporting.createReport([], 'report_aggregate.json')
+  type ReportRecord = Record<string, unknown>
+  await report.addEntry(
+    'aggregate_report',
+    $reporting.createReportEntry<Type.ReportEntryWithNone<ReportRecord>>({
+      score: 2,
+      rule: 'branch-require-pull-request-before-merging',
+      description: 'Branch Protections requires all commits must be made to a non-protected branch and submitted via a pull request before they can be merged into the [main|master|default] branch',
+      repo: 'test',
+      path: 'test',
+      success: true,
+      customFields: {
+        notify: 'teams1',
+        owner: 'dynamic.owner'
+      }
+    })
+  )
+
 
 /* NOSONAR_START
 
