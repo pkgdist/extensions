@@ -1,3 +1,4 @@
+import { log } from "node:console";
 import * as $ruleset from './func_rules.ts'
 import * as $token from './func_token.ts'
 
@@ -23,6 +24,7 @@ const branch = await $ruleset.inspectDetailedBranchProtection(
   repoData.repository,
   repoData.branch,
 )
+console.log(branch)
 
 const branch_results = $ruleset.findParamPaths(
   { str: branch },

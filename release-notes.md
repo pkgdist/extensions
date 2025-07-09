@@ -10,6 +10,10 @@ _An abstract extension system for inspection of Github scopes and settings_
 - Package: [@softdist/extensions](https://jsr.io/@softdist/extensions)
 - Repository: [@pkgdist/extensions](https://github.com/pkgdist/extensions)
 
+## ^0.3.3
+
+- Added a write lock queue for report class aggregate file saves to fix a bug where parallel write truncate the report unintentionally
+
 ## ^0.3.2
 
 - Added Throttle and Retry Plugins to default Octokit.
