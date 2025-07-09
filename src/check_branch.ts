@@ -38,24 +38,24 @@ console.log(
 )
 
 // mock the reporting for fun
-  const report = await $reporting.createReport([], 'report_aggregate.json')
-  type ReportRecord = Record<string, unknown>
-  await report.addEntry(
-    'aggregate_report',
-    $reporting.createReportEntry<Type.ReportEntryWithNone<ReportRecord>>({
-      score: 2,
-      rule: 'branch-require-pull-request-before-merging',
-      description: 'Branch Protections requires all commits must be made to a non-protected branch and submitted via a pull request before they can be merged into the [main|master|default] branch',
-      repo: 'test',
-      path: 'test',
-      success: true,
-      customFields: {
-        notify: 'teams1',
-        owner: 'dynamic.owner'
-      }
-    })
-  )
-
+const report = await $reporting.createReport([], 'report_aggregate.json')
+type ReportRecord = Record<string, unknown>
+await report.addEntry(
+  'aggregate_report',
+  $reporting.createReportEntry<Type.ReportEntryWithNone<ReportRecord>>({
+    score: 2,
+    rule: 'branch-require-pull-request-before-merging',
+    description:
+      'Branch Protections requires all commits must be made to a non-protected branch and submitted via a pull request before they can be merged into the [main|master|default] branch',
+    repo: 'test',
+    path: 'test',
+    success: true,
+    customFields: {
+      notify: 'teams1',
+      owner: 'dynamic.owner',
+    },
+  }),
+)
 
 /* NOSONAR_START
 
