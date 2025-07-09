@@ -70,8 +70,9 @@ export async function notifyTeamsHook(
  */
 export class Reporting<T> {
   private aggregate: { repos: Record<string, T[]> } = { repos: {} }
-  private hooks: Array<(entry: Type.GenericReportEntry<T>) => Promise<void>> = []
-  private writeLock: Promise<void> = Promise.resolve();
+  private hooks: Array<(entry: Type.GenericReportEntry<T>) => Promise<void>> =
+    []
+  private writeLock: Promise<void> = Promise.resolve()
 
   constructor(private outputFile: string = 'report_aggregate.json') {}
 

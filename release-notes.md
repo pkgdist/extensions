@@ -12,7 +12,8 @@ _An abstract extension system for inspection of Github scopes and settings_
 
 ## ^0.3.3
 
-- Added a write lock queue for report class aggregate file saves to fix a bug where parallel write truncate the report unintentionally
+- Added a write lock queue for report class aggregate file saves to fix a bug
+  where parallel write truncate the report unintentionally
 
 ## ^0.3.2
 

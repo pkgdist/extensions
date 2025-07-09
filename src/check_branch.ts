@@ -1,4 +1,4 @@
-import { log } from "node:console";
+import { log } from 'node:console'
 import * as $ruleset from './func_rules.ts'
 import * as $token from './func_token.ts'
 
