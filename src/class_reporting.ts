@@ -72,6 +72,7 @@ export class Reporting<T> {
   private aggregate: { repos: Record<string, T[]> } = { repos: {} }
   private hooks: Array<(entry: Type.GenericReportEntry<T>) => Promise<void>> =
     []
+  private writeLock: Promise<void> = Promise.resolve()
 
   constructor(private outputFile: string = 'report_aggregate.json') {}
 
@@ -120,10 +121,14 @@ export class Reporting<T> {
 
   // Save the aggregate report as JSON
   private async save() {
-    await Deno.writeTextFile(
-      this.outputFile,
-      JSON.stringify(this.aggregate, null, 2),
-    )
+    // Wait for any ongoing write to finish using a write lock queue
+    this.writeLock = this.writeLock.then(async () => {
+      await Deno.writeTextFile(
+        this.outputFile,
+        JSON.stringify(this.aggregate, null, 2),
+      )
+    })
+    await this.writeLock
   }
 
   // Optionally, load an existing report file

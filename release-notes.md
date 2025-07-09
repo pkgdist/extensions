@@ -10,6 +10,59 @@ _An abstract extension system for inspection of Github scopes and settings_
 - Package: [@softdist/extensions](https://jsr.io/@softdist/extensions)
 - Repository: [@pkgdist/extensions](https://github.com/pkgdist/extensions)
 
+## ^0.3.3
+
+- Added a write lock queue for report class aggregate file saves to fix a bug
+  where parallel write truncate the report unintentionally
+
+## ^0.3.2
+
+- Added Throttle and Retry Plugins to default Octokit.
+- Added Octokit.graphql and OctokitRest object called as:
+
+```typescript
+const octokit = await $octokit.initOctokitWithThrottlingAndRetry('core')
+// or REST
+const octokit = await $octokit.initOctokitWithThrottlingAndRetry('rest')
+```
+
+- Added Legacy Branch Protections API:
+
+| Name       | Description                                                  |
+| :--------- | :----------------------------------------------------------- |
+| func_rules | inspectDetailedBranchProtection function supports legacy API |
+
+## Support for Branch Protections API
+
+| **ID**                                      | **Description**                                                                                                                                                     | **Object**                                                    | **Logic**               |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- | ----------------------- |
+| branch-require-pull-request-before-merging  | Branch requires all commits must be made to a non-protected branch and submitted via a pull request before they can be merged into a branch that matches this rule. | required_pull_request_reviews                                 | If object exists        |
+| branch-require-pull-request-approvals       | Branch requires pull requests targeting a matching branch require a number of approvals and no changes requested before they can be merged.                         | required_pull_request_reviews.required_approving_review_count | If number > 0           |
+| Branch-require-pull-request-approval-number | Branch requires pull requests have this number of unique approvers                                                                                                  | required_pull_request_reviews.required_approving_review_count | If number exists        |
+| branch-dismiss-stale-reviews                | Branch requires PR checks will dismiss stale pull request approvals when new commits are pushed.                                                                    | required_pull_request_reviews.dismiss_stale_reviews           | If boolean true         |
+| branch-require-code-owner-reviews           | Branch requires code owner reviews before merging.                                                                                                                  | required_pull_request_reviews.require_code_owner_reviews      | If boolean true         |
+| branch-require-dismissal-restrictions       | Branch require certain users, teams, or apps can dismiss restrictions on pull requests                                                                              | required_pull_request_reviews.dismissal_restrictions          | If object exists        |
+| branch-require-bypass-allowances            | Branch requires certain users, teams, or apps can bypass required pull requests                                                                                     | required_pull_request_reviews.bypass_pull_request_allowances  | If object exists        |
+| branch-allow-force-pushes                   | Branch requires most recent reviewable push must be approved by someone other than the person who pushed it.                                                        | required_pull_request_reviews.require_last_push_approval      | If boolean is true      |
+| branch-require-status-checks                | Branch requires status checks to pass before merging.                                                                                                               | required_status_checks                                        | If object exists        |
+| branch-require-strict-status-checks         | Require branches to be up to date before merging.                                                                                                                   | required_status_checks.strict                                 | If boolean true         |
+| branch-require-status-checks-contexts       | Branch requires items of the list for status checks exist                                                                                                           | required_status_checks.contexts                               | If array contains items |
+| branch-require-conversation-resolution      | Require all conversations to be resolved before merging.                                                                                                            | required_conversation_resolution.enabled                      | If boolean true         |
+| branch-require-signed-commits               | Branch requires signed commits on PR to main/master.                                                                                                                | required_signatures.enabled                                   | If boolean true         |
+| branch-require-linear-history               | Branch requires PR will require linear commit history.                                                                                                              | required_linear_history.enabled                               | If boolean true         |
+| branch-lock-branch                          | Branch requires the branch is read-only. Users cannot push to the branch.                                                                                           | lock_branch.enabled                                           | If boolean true         |
+| branch-enforce-admins                       | Enforce branch protection for administrators.                                                                                                                       | enforce_admins.enabled                                        | If boolean true         |
+| branch-restrict-push                        | Branch restricts who can push                                                                                                                                       | restrictions                                                  | If object exists        |
+| branch-restrict-new                         | Branch restricts new branch creation                                                                                                                                | restrictions                                                  | If object exists        |
+| branch-allow-force-pushes                   | Allow force pushes to matching branches.                                                                                                                            | allow_force_pushes.enabled                                    | If boolean is true      |
+| branch-allow-deletions                      | Allow deletion of matching branches.                                                                                                                                | allow_deletions.enabled                                       | If boolean is true      |
+| branch-lock-branch                          | Lock matching branches.                                                                                                                                             | lock_branch.enabled                                           | If boolean is true      |
+| branch-copilot-code-review-enabled          | Require Copilot AI code review agent for PRs to main branch.                                                                                                        | NOT AVAILABLE IN API                                          |                         |
+| branch-restrict-commit-metadata             | Restrict commit metadata (e.g., author, committer, dates).                                                                                                          | NOT AVAILABLE IN API                                          |                         |
+| branch-require-codescanning-results         | Require code scanning results before merging.                                                                                                                       | NOT AVAILABLE IN API                                          |                         |
+| branch-merge-queue                          | Branch Merge Queue settings                                                                                                                                         | NOT AVAILABLE IN API                                          |                         |
+| branch-require-review-before-deployment     | Branch requires review before deploy                                                                                                                                | NOT AVAILABLE IN API                                          |                         |
+
 ## ^0.3.1
 
 Additional comparison functions and permissions functions:
