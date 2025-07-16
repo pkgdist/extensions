@@ -136,7 +136,7 @@ export class Reporting<T> {
   }
 
   // Combine all temporary files into the final aggregate report
-  static async combineReports() {
+  static async combineReports(filename: string = 'report_aggregate.json') {
     const combinedData: { repos: Record<string, unknown[]> } = { repos: {} }
     // needs to loop through all temporary files and push each object into the appropriate repo key
     const tempFiles = Array.from(Deno.readDirSync('.'))
@@ -170,14 +170,14 @@ export class Reporting<T> {
     }
 
     // Write the combined data to the final output file
-    const finalTempFile = `report_aggregate.json.tmp`
+    const finalTempFile = `${filename}.tmp`
     await Deno.writeTextFile(
       finalTempFile,
       JSON.stringify(combinedData, null, 2),
     )
-    await Deno.rename(finalTempFile, 'report_aggregate.json')
+    await Deno.rename(finalTempFile, filename)
     console.log(
-      `Combined all repo data into final report: report_aggregate.json`,
+      `Combined all repo data into final report: ${filename}`,
     )
   }
 
