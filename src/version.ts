@@ -1,3 +1,2 @@
-
 // This file is auto-generated. Do not edit.
-export const generatedVersion = "0.3.4+72952";
+export const generatedVersion = '0.3.4+72952'
