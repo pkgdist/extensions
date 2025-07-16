@@ -1,0 +1,18 @@
+[
+  {
+    "score": 2,
+    "rule": "test-rule",
+    "description": "desc",
+    "repo": "repoA",
+    "path": "/repoA",
+    "success": true
+  },
+  {
+    "score": 3,
+    "rule": "test-rule-2",
+    "description": "desc2",
+    "repo": "repoA",
+    "path": "/repoA",
+    "success": false
+  }
+]

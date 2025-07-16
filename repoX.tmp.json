@@ -1,0 +1,10 @@
+[
+  {
+    "score": 1,
+    "rule": "hook-test",
+    "description": "desc",
+    "repo": "repoX",
+    "path": "/repoX",
+    "success": true
+  }
+]

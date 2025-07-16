@@ -1,4 +1,3 @@
-import { log } from 'node:console'
 import * as $ruleset from './func_rules.ts'
 import * as $token from './func_token.ts'
 import * as $reporting from './class_reporting.ts'
@@ -47,7 +46,7 @@ await report.addEntry(
     rule: 'branch-require-pull-request-before-merging',
     description:
       'Branch Protections requires all commits must be made to a non-protected branch and submitted via a pull request before they can be merged into the [main|master|default] branch',
-    repo: 'test',
+    repo: 'repo5',
     path: 'test',
     success: true,
     customFields: {
@@ -56,6 +55,148 @@ await report.addEntry(
     },
   }),
 )
+
+await report.addEntry(
+  'aggregate_report',
+  $reporting.createReportEntry<Type.ReportEntryWithNone<ReportRecord>>({
+    score: 2,
+    rule: 'branch-require-pull-request-before-other',
+    description:
+      'Branch Other requires all commits must be made to a non-protected branch and submitted via a pull request before they can be merged into the [main|master|default] branch',
+    repo: 'repo5',
+    path: 'test',
+    success: true,
+    customFields: {
+      notify: 'teams1',
+      owner: 'dynamic.owner',
+    },
+  }),
+)
+
+await report.addEntry(
+  'aggregate_report',
+  $reporting.createReportEntry<Type.ReportEntryWithNone<ReportRecord>>({
+    score: 2,
+    rule: 'branch-require-pull-request-before-something',
+    description:
+      'Branch Something requires all commits must be made to a non-protected branch and submitted via a pull request before they can be merged into the [main|master|default] branch',
+    repo: 'repo5',
+    path: 'test',
+    success: true,
+    customFields: {
+      notify: 'teams1',
+      owner: 'dynamic.owner',
+    },
+  }),
+)
+
+await report.addEntry(
+  'aggregate_report',
+  $reporting.createReportEntry<Type.ReportEntryWithNone<ReportRecord>>({
+    score: 2,
+    rule: 'branch-require-pull-request-before-stuff',
+    description:
+      'Branch Stuff requires all commits must be made to a non-protected branch and submitted via a pull request before they can be merged into the [main|master|default] branch',
+    repo: 'repo5',
+    path: 'test',
+    success: true,
+    customFields: {
+      notify: 'teams1',
+      owner: 'dynamic.owner',
+    },
+  }),
+)
+
+
+await report.addEntry(
+  'aggregate_report',
+  $reporting.createReportEntry<Type.ReportEntryWithNone<ReportRecord>>({
+    score: 0,
+    rule: 'branch-require-pull-request-before-other',
+    description:
+      'Branch Other requires all commits must be made to a non-protected branch and submitted via a pull request before they can be merged into the [main|master|default] branch',
+    repo: 'repo4',
+    path: 'test',
+    success: true,
+    customFields: {
+      notify: 'teams1',
+      owner: 'dynamic.owner',
+    },
+  }),
+)
+
+await report.addEntry(
+  'aggregate_report',
+  $reporting.createReportEntry<Type.ReportEntryWithNone<ReportRecord>>({
+    score: 2,
+    rule: 'branch-require-pull-request-before-something',
+    description:
+      'Branch Something requires all commits must be made to a non-protected branch and submitted via a pull request before they can be merged into the [main|master|default] branch',
+    repo: 'repo4',
+    path: 'test',
+    success: true,
+    customFields: {
+      notify: 'teams1',
+      owner: 'dynamic.owner',
+    },
+  }),
+)
+
+await report.addEntry(
+  'aggregate_report',
+  $reporting.createReportEntry<Type.ReportEntryWithNone<ReportRecord>>({
+    score: 2,
+    rule: 'branch-require-pull-request-before-what',
+    description:
+      'Branch What requires all commits must be made to a non-protected branch and submitted via a pull request before they can be merged into the [main|master|default] branch',
+    repo: 'repo4',
+    path: 'test',
+    success: true,
+    customFields: {
+      notify: 'teams1',
+      owner: 'dynamic.owner',
+    },
+  }),
+)
+
+await report.addEntry(
+  'aggregate_report',
+  $reporting.createReportEntry<Type.ReportEntryWithNone<ReportRecord>>({
+    score: 2,
+    rule: 'branch-require-pull-request-before-other',
+    description:
+      'Branch Other requires all commits must be made to a non-protected branch and submitted via a pull request before they can be merged into the [main|master|default] branch',
+    repo: 'repo3',
+    path: 'test',
+    success: true,
+    customFields: {
+      notify: 'teams1',
+      owner: 'dynamic.owner',
+    },
+  }),
+)
+
+await report.addEntry(
+  'aggregate_report',
+  $reporting.createReportEntry<Type.ReportEntryWithNone<ReportRecord>>({
+    score: 2,
+    rule: 'branch-require-pull-request-before-what',
+    description:
+      'Branch What requires all commits must be made to a non-protected branch and submitted via a pull request before they can be merged into the [main|master|default] branch',
+    repo: 'repo3',
+    path: 'test',
+    success: true,
+    customFields: {
+      notify: 'teams1',
+      owner: 'dynamic.owner',
+    },
+  }),
+)
+
+// Combine all temporary files into the final report
+await $reporting.Reporting.combineReports()
+
+
 
 /* NOSONAR_START
 

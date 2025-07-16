@@ -10,6 +10,11 @@ _An abstract extension system for inspection of Github scopes and settings_
 - Package: [@softdist/extensions](https://jsr.io/@softdist/extensions)
 - Repository: [@pkgdist/extensions](https://github.com/pkgdist/extensions)
 
+## ^0.3.4
+
+- Reporting aggregation uses temporary files now for easier debugging
+- To combine individual reports, a trigger must be called:  `await $reporting.Reporting.combineReports()`
+
 ## ^0.3.3
 
 - Added a write lock queue for report class aggregate file saves to fix a bug
