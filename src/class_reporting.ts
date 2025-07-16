@@ -70,7 +70,8 @@ export async function notifyTeamsHook(
  */
 export class Reporting<T> {
   private aggregate: { repos: Record<string, T[]> } = { repos: {} }
-  private hooks: Array<(entry: Type.GenericReportEntry<T>) => Promise<void>> = []
+  private hooks: Array<(entry: Type.GenericReportEntry<T>) => Promise<void>> =
+    []
   private writeLock: Promise<void> = Promise.resolve()
 
   constructor(private outputFile: string = 'report_aggregate.json') {}
@@ -154,18 +155,30 @@ export class Reporting<T> {
         combinedData.repos[repo] = JSON.parse(data)
       } catch (error) {
         if (error && typeof error === 'object' && 'message' in error) {
-          console.error(`Failed to read temporary file for repo: ${repo}. Error: ${(error as { message: string }).message}`)
+          console.error(
+            `Failed to read temporary file for repo: ${repo}. Error: ${
+              (error as { message: string }).message
+            }`,
+          )
         } else {
-          console.error(`Failed to read temporary file for repo: ${repo}. Error:`, error)
+          console.error(
+            `Failed to read temporary file for repo: ${repo}. Error:`,
+            error,
+          )
         }
       }
     }
 
     // Write the combined data to the final output file
     const finalTempFile = `report_aggregate.json.tmp`
-    await Deno.writeTextFile(finalTempFile, JSON.stringify(combinedData, null, 2))
+    await Deno.writeTextFile(
+      finalTempFile,
+      JSON.stringify(combinedData, null, 2),
+    )
     await Deno.rename(finalTempFile, 'report_aggregate.json')
-    console.log(`Combined all repo data into final report: report_aggregate.json`)
+    console.log(
+      `Combined all repo data into final report: report_aggregate.json`,
+    )
   }
 
   // Optionally, load an existing report file
@@ -179,7 +192,11 @@ export class Reporting<T> {
         this.aggregate = { repos: {} }
       } else {
         if (error && typeof error === 'object' && 'message' in error) {
-          console.error(`Failed to load report file: ${(error as { message: string }).message}`)
+          console.error(
+            `Failed to load report file: ${
+              (error as { message: string }).message
+            }`,
+          )
         } else {
           console.error('Failed to load report file:', error)
         }

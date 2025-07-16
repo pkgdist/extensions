@@ -107,7 +107,6 @@ await report.addEntry(
   }),
 )
 
-
 await report.addEntry(
   'aggregate_report',
   $reporting.createReportEntry<Type.ReportEntryWithNone<ReportRecord>>({
@@ -195,8 +194,6 @@ await report.addEntry(
 
 // Combine all temporary files into the final report
 await $reporting.Reporting.combineReports()
-
-
 
 /* NOSONAR_START
 
