@@ -1,11 +1,16 @@
 {
   "name": "@softdist/extensions",
-  "version": "0.3.3+50090",
+  "version": "0.3.4+72952",
   "license": "MIT",
   "exports": "./src/mod.ts",
   "test": {
     "include": [
       "src/tests/*.ts"
+    ],
+    "exclude": [
+      "tmp_*.ts",
+      "src/optic/**/*.ts",
+      "optic/**/*.ts"
     ]
   },
   "nodeModulesDir": "auto",

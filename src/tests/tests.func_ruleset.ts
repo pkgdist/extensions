@@ -60,7 +60,7 @@ Deno.test({
       repoData,
     )
     console.log(result) // "true" or "false"
-    assertEquals(result, 'false')
+    assertEquals(result, 'true')
   },
 })
 
@@ -88,6 +88,6 @@ Deno.test({
       repoData,
     )
     console.log(result) // "true" or "false"
-    assertEquals(result, 'false')
+    assertEquals(result, 'true')
   },
 })

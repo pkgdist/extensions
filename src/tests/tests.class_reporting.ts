@@ -1,5 +1,6 @@
 import { assert, assertEquals } from 'jsr:@std/assert@1.0.13'
 import { Reporting } from '../class_reporting.ts'
+import * as $reporting from '../class_reporting.ts'
 
 // Mock notifyTeams to avoid real network calls
 const mockNotifyTeams = async (_entry: unknown) => {
@@ -15,17 +16,26 @@ async function cleanup(file: string) {
   }
 }
 
+// Helper for cleaning up all *.tmp.json files
+async function cleanupTmpFiles(extension: string = '.tmp.json') {
+  const tempFiles = Array.from(Deno.readDirSync('.'))
+    .filter((file) => file.name.endsWith(extension))
+    .map((file) => file.name)
+
+  await Promise.all(tempFiles.map(cleanup))
+}
+
 Deno.test('Reporting: creates and saves aggregate report with correct structure', async () => {
   const testFile = 'test_report_aggregate.json'
   await cleanup(testFile)
 
-  const reporting = new Reporting(testFile)
+  const report = await $reporting.createReport([], testFile)
 
   // Register mock hook
-  reporting.registerHook(mockNotifyTeams)
+  report.registerHook(mockNotifyTeams)
 
   // Add entries for two repos
-  await reporting.addEntry('name', {
+  await report.addEntry('name', {
     score: 1,
     rule: 'require-connect-yml',
     description: 'desc1',
@@ -33,7 +43,7 @@ Deno.test('Reporting: creates and saves aggregate report with correct structure'
     path: '/repo1',
     success: true,
   })
-  await reporting.addEntry('name', {
+  await report.addEntry('name', {
     score: 0,
     rule: 'require-connect-yml',
     description: 'desc2',
@@ -41,6 +51,8 @@ Deno.test('Reporting: creates and saves aggregate report with correct structure'
     path: '/repo2',
     success: false,
   })
+
+  await $reporting.Reporting.combineReports(testFile)
 
   // Read and check file structure
   const data = await Deno.readTextFile(testFile)
@@ -52,10 +64,11 @@ Deno.test('Reporting: creates and saves aggregate report with correct structure'
   assertEquals(json.repos.repo2[0].success, false)
 
   await cleanup(testFile)
+  await cleanupTmpFiles()
 })
 
 Deno.test('Reporting: load() restores previous aggregate state', async () => {
-  const testFile = 'test_report_aggregate.json'
+  const testFile = 'report_aggregate.json'
   await cleanup(testFile)
 
   // Write a fake report file
@@ -75,11 +88,11 @@ Deno.test('Reporting: load() restores previous aggregate state', async () => {
   }
   await Deno.writeTextFile(testFile, JSON.stringify(fake))
 
-  const reporting = new Reporting(testFile)
-  await reporting.load()
+  const report = await $reporting.createReport([], testFile)
+  await report.load()
 
   // Add another entry to the same repo
-  await reporting.addEntry('name', {
+  await report.addEntry('name', {
     score: 3,
     rule: 'test-rule-2',
     description: 'desc2',
@@ -88,6 +101,8 @@ Deno.test('Reporting: load() restores previous aggregate state', async () => {
     success: false,
   })
 
+  await $reporting.Reporting.combineReports(testFile)
+
   const data = await Deno.readTextFile(testFile)
   const json = JSON.parse(data)
 
@@ -95,6 +110,7 @@ Deno.test('Reporting: load() restores previous aggregate state', async () => {
   assertEquals(json.repos.repoA[1].score, 3)
 
   await cleanup(testFile)
+  await cleanupTmpFiles()
 })
 
 Deno.test('Reporting: hooks are called for each entry', async () => {
@@ -106,10 +122,10 @@ Deno.test('Reporting: hooks are called for each entry', async () => {
     called = true
   }
 
-  const reporting = new Reporting(testFile)
-  reporting.registerHook(hook)
+  const report = await $reporting.createReport([], testFile)
+  report.registerHook(hook)
 
-  await reporting.addEntry('name', {
+  await report.addEntry('name', {
     score: 1,
     rule: 'hook-test',
     description: 'desc',
@@ -118,7 +134,10 @@ Deno.test('Reporting: hooks are called for each entry', async () => {
     success: true,
   })
 
+  await $reporting.Reporting.combineReports(testFile)
+
   assert(called, 'Hook should have been called')
 
   await cleanup(testFile)
+  await cleanupTmpFiles()
 })
