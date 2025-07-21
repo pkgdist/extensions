@@ -11,12 +11,15 @@ _An abstract extension system for inspection of Github scopes and settings_
 - Repository: [@pkgdist/extensions](https://github.com/pkgdist/extensions)
 
 ## ^0.3.5
-- Implemented a bug where the repo aggregator was not seeing other extensiobs of the `GenericReportEntry<T>` interface 
-- Logic change now accepts any generic extension of this class as the report object that is processed.
+
+- Implemented a bug where the repo aggregator was not seeing other extensiobs of
+  the `GenericReportEntry<T>` interface
+- Logic change now accepts any generic extension of this class as the report
+  object that is processed.
 
 ```ts
-    (this.aggregate as Type.ReportEntries<Type.GenericReportEntry<T>>)
-      .repos[entry.repo].push(entry)
+;(this.aggregate as Type.ReportEntries<Type.GenericReportEntry<T>>)
+  .repos[entry.repo].push(entry)
 ```
 
 ## ^0.3.4
