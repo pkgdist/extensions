@@ -37,9 +37,9 @@ console.log(
 )
 
 // mock the reporting for fun
-const report = await $reporting.createReport([], 'report_aggregate.json')
+const report1 = await $reporting.createReport([], 'report_aggregate.json')
 type ReportRecord = Record<string, unknown>
-await report.addEntry(
+await report1.addEntry(
   'aggregate_report',
   $reporting.createReportEntry<Type.ReportEntryWithNone<ReportRecord>>({
     score: 2,
@@ -55,8 +55,8 @@ await report.addEntry(
     },
   }),
 )
-
-await report.addEntry(
+const report2 = await $reporting.createReport([], 'report_aggregate.json')
+await report2.addEntry(
   'aggregate_report',
   $reporting.createReportEntry<Type.ReportEntryWithNone<ReportRecord>>({
     score: 2,
@@ -72,8 +72,8 @@ await report.addEntry(
     },
   }),
 )
-
-await report.addEntry(
+const report3 = await $reporting.createReport([], 'report_aggregate.json')
+await report3.addEntry(
   'aggregate_report',
   $reporting.createReportEntry<Type.ReportEntryWithNone<ReportRecord>>({
     score: 2,
@@ -90,7 +90,8 @@ await report.addEntry(
   }),
 )
 
-await report.addEntry(
+const report4 = await $reporting.createReport([], 'report_aggregate.json')
+await report4.addEntry(
   'aggregate_report',
   $reporting.createReportEntry<Type.ReportEntryWithNone<ReportRecord>>({
     score: 2,
@@ -107,7 +108,8 @@ await report.addEntry(
   }),
 )
 
-await report.addEntry(
+const report5 = await $reporting.createReport([], 'report_aggregate.json')
+await report5.addEntry(
   'aggregate_report',
   $reporting.createReportEntry<Type.ReportEntryWithNone<ReportRecord>>({
     score: 0,
@@ -124,7 +126,8 @@ await report.addEntry(
   }),
 )
 
-await report.addEntry(
+const report6 = await $reporting.createReport([], 'report_aggregate.json')
+await report6.addEntry(
   'aggregate_report',
   $reporting.createReportEntry<Type.ReportEntryWithNone<ReportRecord>>({
     score: 2,
@@ -141,7 +144,8 @@ await report.addEntry(
   }),
 )
 
-await report.addEntry(
+const report7 = await $reporting.createReport([], 'report_aggregate.json')
+await report7.addEntry(
   'aggregate_report',
   $reporting.createReportEntry<Type.ReportEntryWithNone<ReportRecord>>({
     score: 2,
@@ -158,7 +162,8 @@ await report.addEntry(
   }),
 )
 
-await report.addEntry(
+const report8 = await $reporting.createReport([], 'report_aggregate.json')
+await report8.addEntry(
   'aggregate_report',
   $reporting.createReportEntry<Type.ReportEntryWithNone<ReportRecord>>({
     score: 2,
@@ -175,7 +180,8 @@ await report.addEntry(
   }),
 )
 
-await report.addEntry(
+const report9 = await $reporting.createReport([], 'report_aggregate.json')
+await report9.addEntry(
   'aggregate_report',
   $reporting.createReportEntry<Type.ReportEntryWithNone<ReportRecord>>({
     score: 2,
