@@ -90,8 +90,8 @@ export class Reporting<T> {
       this.aggregate.repos[entry.repo] = []
     }
 
-    ;(this.aggregate as Type.ReportEntries<Type.ReportEntryWithErrors<T>>)
-      .repos[entry.repo].push(entry as Type.ReportEntryWithErrors<T>)
+    (this.aggregate as Type.ReportEntries<Type.GenericReportEntry<T>>)
+      .repos[entry.repo].push(entry)
 
     // Trigger all hooks asynchronously (do not block on errors)
     await Promise.all(
