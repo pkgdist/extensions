@@ -122,17 +122,27 @@ export class Reporting<T> {
   // Save each repo's data to a temporary JSON file
   private async saveRepo(repo: string) {
     const tempFile = `${repo}.tmp.json`
-    const repoData = this.aggregate.repos[repo]
-    if (!repoData) {
-      console.error(`No data found for repo: ${repo}. Skipping save.`)
-      return
+    let existingData: Type.GenericReportEntry<T>[] = []
+
+    // Load existing data from the temporary file if it exists
+    try {
+      const data = await Deno.readTextFile(tempFile)
+      existingData = JSON.parse(data)
+    } catch (error) {
+      if (error instanceof Deno.errors.NotFound) {
+        console.log(`No existing data found for repo: ${repo}. Starting fresh.`)
+      } else {
+        console.error(`Failed to load temporary file for repo: ${repo}. Error:`, error)
+        throw error
+      }
     }
 
-    this.writeLock = this.writeLock.then(async () => {
-      await Deno.writeTextFile(tempFile, JSON.stringify(repoData, null, 2))
-      console.log(`Saved temporary file for repo: ${repo}`)
-    })
-    await this.writeLock
+    // Append new data to the existing data
+    const updatedData = [...existingData, ...this.aggregate.repos[repo]]
+
+    // Write the updated data back to the temporary file
+    await Deno.writeTextFile(tempFile, JSON.stringify(updatedData, null, 2))
+    console.log(`Saved updated data for repo: ${repo} to ${tempFile}`)
   }
 
   // Combine all temporary files into the final aggregate report
@@ -185,6 +195,7 @@ export class Reporting<T> {
   async load() {
     try {
       const data = await Deno.readTextFile(this.outputFile)
+      console.log(`Loading report file: ${this.outputFile}`)
       this.aggregate = JSON.parse(data)
     } catch (error) {
       if (error instanceof Deno.errors.NotFound) {

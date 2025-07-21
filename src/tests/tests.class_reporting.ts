@@ -29,13 +29,11 @@ Deno.test('Reporting: creates and saves aggregate report with correct structure'
   const testFile = 'test_report_aggregate.json'
   await cleanup(testFile)
 
-  const report = await $reporting.createReport([], testFile)
-
-  // Register mock hook
-  report.registerHook(mockNotifyTeams)
+  const report1 = await $reporting.createReport([], testFile)
+  report1.registerHook(mockNotifyTeams)
 
   // Add entries for two repos
-  await report.addEntry('name', {
+  await report1.addEntry('name', {
     score: 1,
     rule: 'require-connect-yml',
     description: 'desc1',
@@ -43,7 +41,10 @@ Deno.test('Reporting: creates and saves aggregate report with correct structure'
     path: '/repo1',
     success: true,
   })
-  await report.addEntry('name', {
+
+  const report2 = await $reporting.createReport([], testFile)
+  report2.registerHook(mockNotifyTeams)
+  await report2.addEntry('name', {
     score: 0,
     rule: 'require-connect-yml',
     description: 'desc2',
