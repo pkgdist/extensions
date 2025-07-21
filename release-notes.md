@@ -11,10 +11,14 @@ _An abstract extension system for inspection of Github scopes and settings_
 - Repository: [@pkgdist/extensions](https://github.com/pkgdist/extensions)
 
 ## ^0.3.6
-- Implement a new saveRepo object in `class_reporting.ts` because repos keep getting clobbered due to using `createReport` before each dynamic test in `deno run`
+
+- Implement a new saveRepo object in `class_reporting.ts` because repos keep
+  getting clobbered due to using `createReport` before each dynamic test in
+  `deno run`
 - New object saves data by appending to existing files.
-- Updated the `check_branch.ts` file and multi-test case in `tests.class_reporting.ts`
-  
+- Updated the `check_branch.ts` file and multi-test case in
+  `tests.class_reporting.ts`
+
 ## ^0.3.5
 
 - Implemented a bug where the repo aggregator was not seeing other extensiobs of

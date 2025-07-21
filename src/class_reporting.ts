@@ -132,7 +132,10 @@ export class Reporting<T> {
       if (error instanceof Deno.errors.NotFound) {
         console.log(`No existing data found for repo: ${repo}. Starting fresh.`)
       } else {
-        console.error(`Failed to load temporary file for repo: ${repo}. Error:`, error)
+        console.error(
+          `Failed to load temporary file for repo: ${repo}. Error:`,
+          error,
+        )
         throw error
       }
     }
