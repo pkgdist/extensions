@@ -1,4 +1,4 @@
-import * as $ruleset from './func_rules.ts'
+import * as $branch from './func_branch.ts'
 import * as $token from './func_token.ts'
 import * as $reporting from './class_reporting.ts'
 import { ExtensionSystemTypes as Type } from './types.d.ts'
@@ -19,220 +19,27 @@ const repoData = {
   branch: 'main',
 }
 
-const branch = await $ruleset.inspectDetailedBranchProtection(
+const branch = await $branch.inspectDetailedBranchProtection(
   token,
   repoData.owner,
   repoData.repository,
   repoData.branch,
 )
-console.log(branch)
 
-const branch_results = $ruleset.findParamPaths(
+const branch_results = $branch.findParamPaths(
+  { str: branch },
+  'required_approving_review_count',
+)
+console.table(branch_results)
+console.log(
+  Array.isArray(branch_results) && branch_results.length > 0 ? 'true' : 'false',
+)
+
+const branch_results2 = $branch.findParamPaths(
   { str: branch },
   'required_pull_request_reviews',
 )
 
 console.log(
-  Array.isArray(branch_results) && branch_results.length > 0 ? 'true' : 'false',
+  Array.isArray(branch_results2) && branch_results2.length > 0 ? 'true' : 'false',
 )
-
-// mock the reporting for fun
-const report1 = await $reporting.createReport([], 'report_aggregate.json')
-type ReportRecord = Record<string, unknown>
-await report1.addEntry(
-  'aggregate_report',
-  $reporting.createReportEntry<Type.ReportEntryWithNone<ReportRecord>>({
-    score: 2,
-    rule: 'branch-require-pull-request-before-merging',
-    description:
-      'Branch Protections requires all commits must be made to a non-protected branch and submitted via a pull request before they can be merged into the [main|master|default] branch',
-    repo: 'repo5',
-    path: 'test',
-    success: true,
-    customFields: {
-      notify: 'teams1',
-      owner: 'dynamic.owner',
-    },
-  }),
-)
-const report2 = await $reporting.createReport([], 'report_aggregate.json')
-await report2.addEntry(
-  'aggregate_report',
-  $reporting.createReportEntry<Type.ReportEntryWithNone<ReportRecord>>({
-    score: 2,
-    rule: 'branch-require-pull-request-before-other',
-    description:
-      'Branch Other requires all commits must be made to a non-protected branch and submitted via a pull request before they can be merged into the [main|master|default] branch',
-    repo: 'repo5',
-    path: 'test',
-    success: true,
-    customFields: {
-      notify: 'teams1',
-      owner: 'dynamic.owner',
-    },
-  }),
-)
-const report3 = await $reporting.createReport([], 'report_aggregate.json')
-await report3.addEntry(
-  'aggregate_report',
-  $reporting.createReportEntry<Type.ReportEntryWithNone<ReportRecord>>({
-    score: 2,
-    rule: 'branch-require-pull-request-before-something',
-    description:
-      'Branch Something requires all commits must be made to a non-protected branch and submitted via a pull request before they can be merged into the [main|master|default] branch',
-    repo: 'repo5',
-    path: 'test',
-    success: true,
-    customFields: {
-      notify: 'teams1',
-      owner: 'dynamic.owner',
-    },
-  }),
-)
-
-const report4 = await $reporting.createReport([], 'report_aggregate.json')
-await report4.addEntry(
-  'aggregate_report',
-  $reporting.createReportEntry<Type.ReportEntryWithNone<ReportRecord>>({
-    score: 2,
-    rule: 'branch-require-pull-request-before-stuff',
-    description:
-      'Branch Stuff requires all commits must be made to a non-protected branch and submitted via a pull request before they can be merged into the [main|master|default] branch',
-    repo: 'repo5',
-    path: 'test',
-    success: true,
-    customFields: {
-      notify: 'teams1',
-      owner: 'dynamic.owner',
-    },
-  }),
-)
-
-const report5 = await $reporting.createReport([], 'report_aggregate.json')
-await report5.addEntry(
-  'aggregate_report',
-  $reporting.createReportEntry<Type.ReportEntryWithNone<ReportRecord>>({
-    score: 0,
-    rule: 'branch-require-pull-request-before-other',
-    description:
-      'Branch Other requires all commits must be made to a non-protected branch and submitted via a pull request before they can be merged into the [main|master|default] branch',
-    repo: 'repo4',
-    path: 'test',
-    success: true,
-    customFields: {
-      notify: 'teams1',
-      owner: 'dynamic.owner',
-    },
-  }),
-)
-
-const report6 = await $reporting.createReport([], 'report_aggregate.json')
-await report6.addEntry(
-  'aggregate_report',
-  $reporting.createReportEntry<Type.ReportEntryWithNone<ReportRecord>>({
-    score: 2,
-    rule: 'branch-require-pull-request-before-something',
-    description:
-      'Branch Something requires all commits must be made to a non-protected branch and submitted via a pull request before they can be merged into the [main|master|default] branch',
-    repo: 'repo4',
-    path: 'test',
-    success: true,
-    customFields: {
-      notify: 'teams1',
-      owner: 'dynamic.owner',
-    },
-  }),
-)
-
-const report7 = await $reporting.createReport([], 'report_aggregate.json')
-await report7.addEntry(
-  'aggregate_report',
-  $reporting.createReportEntry<Type.ReportEntryWithNone<ReportRecord>>({
-    score: 2,
-    rule: 'branch-require-pull-request-before-what',
-    description:
-      'Branch What requires all commits must be made to a non-protected branch and submitted via a pull request before they can be merged into the [main|master|default] branch',
-    repo: 'repo4',
-    path: 'test',
-    success: true,
-    customFields: {
-      notify: 'teams1',
-      owner: 'dynamic.owner',
-    },
-  }),
-)
-
-const report8 = await $reporting.createReport([], 'report_aggregate.json')
-await report8.addEntry(
-  'aggregate_report',
-  $reporting.createReportEntry<Type.ReportEntryWithNone<ReportRecord>>({
-    score: 2,
-    rule: 'branch-require-pull-request-before-other',
-    description:
-      'Branch Other requires all commits must be made to a non-protected branch and submitted via a pull request before they can be merged into the [main|master|default] branch',
-    repo: 'repo3',
-    path: 'test',
-    success: true,
-    customFields: {
-      notify: 'teams1',
-      owner: 'dynamic.owner',
-    },
-  }),
-)
-
-const report9 = await $reporting.createReport([], 'report_aggregate.json')
-await report9.addEntry(
-  'aggregate_report',
-  $reporting.createReportEntry<Type.ReportEntryWithNone<ReportRecord>>({
-    score: 2,
-    rule: 'branch-require-pull-request-before-what',
-    description:
-      'Branch What requires all commits must be made to a non-protected branch and submitted via a pull request before they can be merged into the [main|master|default] branch',
-    repo: 'repo3',
-    path: 'test',
-    success: true,
-    customFields: {
-      notify: 'teams1',
-      owner: 'dynamic.owner',
-    },
-  }),
-)
-
-// Combine all temporary files into the final report
-await $reporting.Reporting.combineReports()
-
-/* NOSONAR_START
-
-// this code shows a manual API process for branch protection
-// we used this for debug but I want to keep it for reference
-try {
-  const branch_result = await octokit.request(
-    'GET /repos/{owner}/{repo}/branches/{branch}/protection',
-    {
-      owner: repoData.owner,
-      repo: repoData.repository,
-      branch: repoData.branch,
-    }
-  )
-
-
-  const rulesets = await octokit.request(
-    'GET /repos/{owner}/{repo}/rulesets',
-    {
-      owner: repoData.owner,
-      repo: repoData.repository,
-      branch: repoData.branch,
-    }
-  )
-
-  console.log(JSON.stringify(rulesets, null, 2))
-
-
-
-} catch (error) {
-  console.error('Error fetching branch protection:', error)
-}
-
-
-
-NOSONAR_END */

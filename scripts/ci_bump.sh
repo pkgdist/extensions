@@ -52,7 +52,7 @@ git tag -d $version_tag
 git tag -a $version_tag -m "$version_tag"
 
 # we push normally here:
-git push origin feature/story_$1
+git push origin $1
 git push --force --tags
 
 echo "Pushed: $version_tag"

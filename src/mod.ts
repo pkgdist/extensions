@@ -12,6 +12,7 @@ import * as $token from './func_token.ts'
 import * as $webhook from './func_webhook.ts'
 import * as $streams from './func_streams.ts'
 import * as $ruleset from './func_rules.ts'
+import * as $branch from './func_branch.ts'
 
 export {
   $colors,
@@ -23,6 +24,7 @@ export {
   $report,
   $reporting,
   $ruleset,
+  $branch,
   $streams,
   $token,
   $webhook,

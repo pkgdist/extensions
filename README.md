@@ -33,6 +33,7 @@ other objects.
 
 | Feature Name | Purpose                                                                                |
 | :----------- | :------------------------------------------------------------------------------------- |
+| `$branch`    | Branch Protections API validation in Github                                            |
 | `$colors`    | Automatic error logging and warn/notice stream logging with colors                     |
 | `$const`     | Declared generic constants for local system paths and GITHUB API                       |
 | `$compare`   | Comparison functions for deep YML objects.                                             |
@@ -206,4 +207,4 @@ package. (it's a stop gap measure)
 
 This code uses the [MIT License](LICENSE) for OSS.
 
-> © Lynsei Asynynivynya 2025.
+> © Lyns 2025.
