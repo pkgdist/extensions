@@ -11,6 +11,7 @@ _An abstract extension system for inspection of Github scopes and settings_
 - Repository: [@pkgdist/extensions](https://github.com/pkgdist/extensions)
 
 ## ^0.3.7
+
 - Added branch protection functions
 
 ## ^0.3.6

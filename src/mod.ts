@@ -15,6 +15,7 @@ import * as $ruleset from './func_rules.ts'
 import * as $branch from './func_branch.ts'
 
 export {
+  $branch,
   $colors,
   $const,
   $deep,
@@ -24,7 +25,6 @@ export {
   $report,
   $reporting,
   $ruleset,
-  $branch,
   $streams,
   $token,
   $webhook,

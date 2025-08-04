@@ -41,5 +41,7 @@ const branch_results2 = $branch.findParamPaths(
 )
 
 console.log(
-  Array.isArray(branch_results2) && branch_results2.length > 0 ? 'true' : 'false',
+  Array.isArray(branch_results2) && branch_results2.length > 0
+    ? 'true'
+    : 'false',
 )
