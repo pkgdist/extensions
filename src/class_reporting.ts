@@ -182,16 +182,16 @@ export class Reporting<T> {
       }
     }
 
-      // Write the combined data to the final output file
-      const finalTempFile = `${filename}.tmp`
-      await Deno.writeTextFile(
-        finalTempFile,
-        JSON.stringify(combinedData, null, 2),
-      )
-      await Deno.rename(finalTempFile, filename)
-      console.log(
-        `Combined all repo data into final report: ${filename}`,
-      )
+    // Write the combined data to the final output file
+    const finalTempFile = `${filename}.tmp`
+    await Deno.writeTextFile(
+      finalTempFile,
+      JSON.stringify(combinedData, null, 2),
+    )
+    await Deno.rename(finalTempFile, filename)
+    console.log(
+      `Combined all repo data into final report: ${filename}`,
+    )
   }
 
   // Optionally, load an existing report file
