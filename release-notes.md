@@ -10,6 +10,10 @@ _An abstract extension system for inspection of Github scopes and settings_
 - Package: [@softdist/extensions](https://jsr.io/@softdist/extensions)
 - Repository: [@pkgdist/extensions](https://github.com/pkgdist/extensions)
 
+## ^0.3.7
+
+- Added branch protection functions
+
 ## ^0.3.6
 
 - Implement a new saveRepo object in `class_reporting.ts` because repos keep
@@ -365,4 +369,4 @@ package. (it's a stop gap measure)
 
 This code uses the [MIT License](LICENSE) for OSS.
 
-> © Lynsei Asynynivynya 2025.
+> © Lyns 2025.
