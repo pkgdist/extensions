@@ -203,6 +203,8 @@ package. (it's a stop gap measure)
 
 &nbsp;
 
+![Alt](https://repobeats.axiom.co/api/embed/95b8e38fb09af755dd13d4a83e5c36f9b7f4fd20.svg "Repobeats analytics image")
+
 # LICENSE
 
 This code uses the [MIT License](LICENSE) for OSS.

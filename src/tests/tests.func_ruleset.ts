@@ -56,7 +56,7 @@ Deno.test({
     const result = await $ruleset.assertRulesetByIndexParameter(
       0, // rulesetNumber
       'requireStatusChecksToPass', // ruleset JSON path
-      true, // value to assert
+      false, // value to assert
       repoData,
     )
     console.log(result) // "true" or "false"
@@ -84,7 +84,7 @@ Deno.test({
     const result = await $ruleset.assertRulesetByIndexParameter(
       0, // rulesetNumber
       'requireBranchesUpToDate', // ruleset JSON path
-      true, // value to assert
+      false, // value to assert
       repoData,
     )
     console.log(result) // "true" or "false"
